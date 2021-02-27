@@ -23,6 +23,7 @@ SRC_URI = "https://downloads.sourceforge.net/project/lirc/LIRC/0.9.0/lirc-${PV}.
     file://lircd_amiko8900.conf \
     file://lircd_amikoalien.conf \
     file://lircd_spark.conf \
+    file://lircd_sparktriplex.conf \
 "
 SRC_URI[md5sum] = "b232aef26f23fe33ea8305d276637086"
 SRC_URI[sha256sum] = "6323afae6ad498d4369675f77ec3dbb680fe661bea586aa296e67f2e2daba4ff"
