@@ -11,7 +11,7 @@ DEPENDS = "tslib mpfr gmp"
 SRCREV = "${AUTOREV}"
 PV = "${IMAGE_VERSION}+gitr${SRCPV}"
 PKGV = "${IMAGE_VERSION}+gitr${GITPKGV}"
-PR = "r280"
+PR = "r285"
 
 SRC_URI="git://github.com/oe-alliance/3rdparty-plugins.git;protocol=git"
 
@@ -48,12 +48,12 @@ THIRDPARTY_PLUGINS = " \
     ${@bb.utils.contains("TARGET_ARCH", "mipsel", "enigma2-plugin-extensions-isettinge2-3.4.4-oe2.0-all-mips.ipk" , "", d)} \
     ${@bb.utils.contains("TARGET_ARCH", "arm", "enigma2-plugin-extensions-isettinge2-3.4.4-oe2.0-all-arm.ipk" , "", d)} \
     enigma2-plugin-extensions-livefootball_7.1_all.ipk \
-    enigma2-plugin-extensions-mediainfo_3.0.7_all.ipk \
+    enigma2-plugin-extensions-mediainfo_3.0.8_all.ipk \
     enigma2-plugin-extensions-mediaportal_all.ipk \
     enigma2-plugin-extensions-moviebrowser_3.7rc3_all.ipk \
     enigma2-plugin-extensions-mp3browser_2.0rc1_all.ipk \
     enigma2-plugin-extensions-mspfs_1.06_all.ipk \
-    enigma2-plugin-extensions-netspeedtest_1.0rc1_all.ipk \
+    enigma2-plugin-extensions-netspeedtest_2.1.3_all.ipk \
     ${@bb.utils.contains('MACHINE_BRAND', 'Vu+', '' , 'enigma2-plugin-extensions-openopera_1.0-r0_mips32el.ipk', d)} \
     ${@bb.utils.contains("TARGET_ARCH", "mipsel", "enigma2-plugin-extensions-opkg-tools_1.4_mips32el.ipk" , "", d)} \
     ${@bb.utils.contains("TARGET_ARCH", "arm", "enigma2-plugin-extensions-opkg-tools_1.4_cortexa15hf-neon-vfpv4.ipk" , "", d)} \
@@ -68,22 +68,19 @@ THIRDPARTY_PLUGINS = " \
     enigma2-plugin-extensions-pzyemail_0.8-20150614_all.ipk \
     enigma2-plugin-extensions-screengrabber_2.5_all.ipk \
     enigma2-plugin-extensions-screensaver_5.7.1_all.ipk \
-    enigma2-plugin-extensions-serienrecorder_4.1.5_all.ipk \
+    enigma2-plugin-extensions-serienrecorder_4.3.0_all.ipk \
     enigma2-plugin-extensions-sherlock_5.01r1_mipsel.ipk \
     enigma2-plugin-extensions-skyrecorder_1.9.7_all.ipk \
     enigma2-plugin-extensions-songs-to_0.1_mips32el.ipk \
     enigma2-plugin-extensions-spinnerselector_2.3_all.ipk \
     enigma2-plugin-extensions-sport1ticker_1.3_all.ipk \
     enigma2-plugin-extensions-sundtekcontrolcenter_20200915-2_all.ipk \
-    enigma2-plugin-extensions-tectimetv_3.1_all.ipk \
     enigma2-plugin-extensions-thetvdb_0.7-20120607-r3_mips32el.ipk \
     enigma2-plugin-extensions-timfs_2.32_all.ipk \
     enigma2-plugin-extensions-theweather_5.0r05_all.ipk \
     enigma2-plugin-extensions-tmbd_8.6_all.ipk \
-    enigma2-plugin-extensions-tmdb_0.7-r2_all.ipk \
     enigma2-plugin-extensions-transmission_2.92-r2_all.ipk \
     enigma2-plugin-extensions-tsmedia_15.0_all.ipk \
-    enigma2-plugin-extensions-tstube_1.2_all.ipk \
     enigma2-plugin-extensions-tvspielfilm_6.6rc4_all.ipk \
     enigma2-plugin-extensions-verkehrsinfo_1.2rc3_all.ipk \
     enigma2-plugin-extensions-vcs_2.9_all.ipk \
@@ -93,13 +90,14 @@ THIRDPARTY_PLUGINS = " \
     enigma2-plugin-extensions-wikipedia_2.3rc3_all.ipk \
     enigma2-plugin-extensions-wwech_1.03_all.ipk \
     enigma2-plugin-extensions-xbmcwetter_1.4rc1_all.ipk \
-    enigma2-plugin-extensions-xcplugin-forever_1.5_all.ipk \
+    enigma2-plugin-extensions-xcplugin-forever_1.6_all.ipk \
     enigma2-plugin-extensions-xcplugin-iptv-mod-lululla_6.7_all \
     enigma2-plugin-picons-snp-full.220x132-190x102.light.on.transparent_2021-02-05--01-33-49_all.ipk \
     enigma2-plugin-systemplugins-bouquetsprotection_0.2-rc1_all.ipk \
     enigma2-plugin-systemplugins-channelselectionnavigator_1.5_mipsel.ipk \
     enigma2-plugin-systemplugins-extnumberzap_1.21_all.ipk \
     enigma2-plugin-systemplugins-recinfobar_1.22rc2_mips32el.ipk \
+    streamlinksrv_1.6.0_all.ipk \
     "
 #     Install any packages t_append =hat are only For this machines feed here, uncomment the line below and change as required
 THIRDPARTY_MACHINE_PLUGINS_vuuno = " \

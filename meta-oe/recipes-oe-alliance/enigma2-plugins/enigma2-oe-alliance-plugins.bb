@@ -40,6 +40,7 @@ PROVIDES += " \
     enigma2-plugin-extensions-fempa \
     enigma2-plugin-extensions-lcd4linux \
     enigma2-plugin-extensions-remotechannelstreamconverter \
+    enigma2-plugin-extensions-tmdb \
     ${@bb.utils.contains('MACHINE_FEATURES', 'legacykernel', '' , 'enigma2-plugin-systemplugins-wirelessaccesspoint', d)} \
     ${@bb.utils.contains('MACHINE', 'spark7162', 'enigma2-plugin-systemplugins-uniontunertype ' , ' ', d)} \
     ${@bb.utils.contains('MACHINE_FEATURES', 'sh4booster', 'enigma2-plugin-systemplugins-sh4boostercontrol' , ' ', d)} \
@@ -52,7 +53,7 @@ DEPENDS = "\
     ${@bb.utils.contains('MACHINE_FEATURES', 'transcoding', 'virtual/transtreamproxy' , '', d)} \
     python-dnspython python-beautifulsoup4 python-lxml python-simplejson python-pyamf python-icalendar python-pyusb \
     djmount \
-    librtmp \
+    rtmpdump \
     minidlna \
     hddtemp \
     ppp \
@@ -81,7 +82,7 @@ DESCRIPTION_enigma2-plugin-systemplugins-firmwareupgrade = "Upgrade your system 
 DESCRIPTION_enigma2-plugin-systemplugins-fpgaupgrade = "Upgrade your system FPGA"
 DESCRIPTION_enigma2-plugin-systemplugins-vfdcontrol = "vfd controller"
 DESCRIPTION_enigma2-plugin-extensions-streamtv = "iptv player"
-RDEPENDS_enigma2-plugin-extensions-streamtv = "librtmp1"
+RDEPENDS_enigma2-plugin-extensions-streamtv = "rtmpdump"
 DESCRIPTION_enigma2-plugin-systemplugins-tempfancontrol = "Control your internal system fan."
 DESCRIPTION_enigma2-plugin-systemplugins-channelsimporter = "Imports a copy of the channel list from a remote receiver and loads it on the local receiver."
 DESCRIPTION_enigma2-plugin-systemplugins-abmcustommiximporter = "Imports ABM CustomMix files from Github."
@@ -118,6 +119,8 @@ FILES_enigma2-plugin-extensions-lcd4linux-src_append = "${libdir}/enigma2/python
 DESCRIPTION_enigma2-plugin-extensions-remotechannelstreamconverter = "Fetch channels from remote bouquets and make them available locally"
 RDEPENDS_enigma2-plugin-extensions-remotechannelstreamconverter = "python-shell"
 RREPLACES_enigma2-plugin-extensions-remotechannelstreamconverter = "enigma2-plugin-extensions-remotestreamconvert"
+DESCRIPTION_enigma2-plugin-extensions-tmdb = "Show TMDb information"
+RDEPENDS_enigma2-plugin-extensions-tmdb = "python-json python-requests"
 DESCRIPTION_enigma2-plugin-systemplugins-wirelessaccesspoint = "Using a Wireless module as AP."
 RDEPENDS_enigma2-plugin-systemplugins-wirelessaccesspoint = "hostapd bridge-utils"
 DESCRIPTION_enigma2-plugin-extensions-rcuselect = "Change Remote for Wetek"

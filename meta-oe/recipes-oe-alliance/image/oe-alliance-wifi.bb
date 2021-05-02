@@ -51,8 +51,8 @@ RDEPENDS_${PN} = "\
     ${@bb.utils.contains("MACHINE", "8100s", "enigma2-plugin-drivers-network-usb-mt7601u", "", d)} \
     ${@bb.utils.contains("BRAND_OEM", "xcore", "enigma2-plugin-drivers-network-usb-rt8723bs", "", d)} \
     ${@bb.utils.contains("MACHINE", "osnino", "enigma2-plugin-drivers-network-usb-rt8723bs", "", d)} \
-    ${@bb.utils.contains("MACHINE", "osninoplus", "enigma2-plugin-drivers-network-usb-rt8723bs", "", d)} \
-    ${@bb.utils.contains("MACHINE", "osninopro", "enigma2-plugin-drivers-network-usb-rt8723bs", "", d)} \
+    ${@bb.utils.contains("MACHINE", "osninoplus", "enigma2-plugin-drivers-network-usb-rt8723bs enigma2-plugin-drivers-network-usb-rt8723ds", "", d)} \
+    ${@bb.utils.contains("MACHINE", "osninopro", "enigma2-plugin-drivers-network-usb-rt8723bs enigma2-plugin-drivers-network-usb-rt8723ds", "", d)} \
     ${@bb.utils.contains("MACHINEBUILD", "spycat4k", "enigma2-plugin-drivers-network-usb-qca9377", "", d)} \
     ${@bb.utils.contains("MACHINEBUILD", "spycat4kcombo", "enigma2-plugin-drivers-network-usb-qca9377", "", d)} \
     ${@bb.utils.contains("BRAND_OEM", "dinobot", "enigma2-plugin-drivers-network-usb-rtl8192eu enigma2-plugin-drivers-network-usb-rtl8822bu enigma2-plugin-drivers-network-usb-rtl8188fu", "", d)} \
@@ -67,6 +67,7 @@ RDEPENDS_${PN} = "\
     ${@bb.utils.contains("MACHINE", "h9combo", "enigma2-plugin-drivers-network-usb-rtl8192eu kernel-module-mt7601u firmware-mt7601u enigma2-plugin-drivers-network-usb-rtl8192fu", "", d)} \
     ${@bb.utils.contains("MACHINE", "h9combose", "enigma2-plugin-drivers-network-usb-rtl8192eu kernel-module-mt7601u firmware-mt7601u enigma2-plugin-drivers-network-usb-rtl8192fu", "", d)} \
     ${@bb.utils.contains("MACHINE", "h10", "enigma2-plugin-drivers-network-usb-rtl8192eu kernel-module-mt7601u firmware-mt7601u enigma2-plugin-drivers-network-usb-rtl8822bu enigma2-plugin-drivers-network-usb-rtl8192fu", "", d)} \
+    ${@bb.utils.contains("MACHINE", "h11", "enigma2-plugin-drivers-network-usb-rtl8192eu kernel-module-mt7601u firmware-mt7601u enigma2-plugin-drivers-network-usb-rtl8822bu enigma2-plugin-drivers-network-usb-rtl8192fu", "", d)} \
     ${@bb.utils.contains("MACHINE", "i55plus", "enigma2-plugin-drivers-network-usb-rtl8192eu kernel-module-mt7601u firmware-mt7601u enigma2-plugin-drivers-network-usb-rtl8192fu", "", d)} \
     ${@bb.utils.contains("MACHINE", "i55se", "enigma2-plugin-drivers-network-usb-rtl8192eu kernel-module-mt7601u firmware-mt7601u enigma2-plugin-drivers-network-usb-rtl8192fu", "", d)} \
     ${@bb.utils.contains("MACHINE", "ustym4kpro", "enigma2-plugin-drivers-network-usb-rtl8192eu enigma2-plugin-drivers-network-usb-rtl8822cu", "", d)} \

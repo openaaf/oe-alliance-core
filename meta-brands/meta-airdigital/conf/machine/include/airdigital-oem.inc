@@ -27,12 +27,12 @@ ${@bb.utils.contains('MACHINEBUILD', 'zgemmah32tc', 'H3.2TC' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'zgemmah7', 'H7' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'zgemmah52splus', 'H5.2S PLUS' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'zgemmah2splus', 'H.2S PLUS' , '', d)}\
-${@bb.utils.contains('MACHINEBUILD', 'zgemmah9s', 'H9S' , '', d)}\
-${@bb.utils.contains('MACHINEBUILD', 'zgemmah9t', 'H9T' , '', d)}\
-${@bb.utils.contains('MACHINEBUILD', 'zgemmah92s', 'H92S' , '', d)}\
-${@bb.utils.contains('MACHINEBUILD', 'zgemmah92h', 'H92H' , '', d)}\
-${@bb.utils.contains('MACHINEBUILD', 'zgemmah9splus', 'H9S PLUS' , '', d)}\
-${@bb.utils.contains('MACHINEBUILD', 'zgemmah92hse', 'H92H SE ' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'zgemmah9s', 'H9.S' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'zgemmah9t', 'H9.T' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'zgemmah92s', 'H9.2S' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'zgemmah92h', 'H9.2H' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'zgemmah9splus', 'H9.S PLUS' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'zgemmah92hse', 'H9.2H SE ' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'zgemmah9sse', 'H9S SE ' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'zgemmai55plus', 'I55 Plus' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'zgemmai55se', 'I55 SE' , '', d)}\
@@ -40,10 +40,12 @@ ${@bb.utils.contains('MACHINEBUILD', 'zgemmah9combo', 'H9 COMBO' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'zgemmah9combose', 'H9 COMBO SE' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'zgemmah9twin', 'H9 TWIN' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'zgemmah10combo', 'H10 COMBO' , '', d)}\
-${@bb.utils.contains('MACHINEBUILD', 'zgemmah102s', 'H102S' , '', d)}\
-${@bb.utils.contains('MACHINEBUILD', 'zgemmah102h', 'H102H' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'zgemmah102s', 'H10.2S' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'zgemmah102h', 'H10.2H' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'zgemmahzeros', 'Hzero S' , '', d)}\
-${@bb.utils.contains('MACHINEBUILD', 'zgemmah82h', 'H82H' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'zgemmah82h', 'H8.2H' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'zgemmah11s', 'H11.S' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'zgemmah112h', 'H11.2H' , '', d)}\
 "
 
 MACHINE_BRAND = "\
@@ -86,7 +88,9 @@ ${@bb.utils.contains('MACHINEBUILD', 'zgemmah10combo', 'Zgemma' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'zgemmah102s', 'Zgemma' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'zgemmah102h', 'Zgemma' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'zgemmahzeros', 'Zgemma' , '', d)}\
-${@bb.utils.contains('MACHINEBUILD', 'zgemmahz82H', 'Zgemma' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'zgemmah82h', 'Zgemma' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'zgemmah11s', 'Zgemma' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'zgemmah112h', 'Zgemma' , '', d)}\
 "
 
 IMAGEDIR ?= "\
@@ -129,7 +133,9 @@ ${@bb.utils.contains('MACHINEBUILD', 'zgemmah10combo', 'h10' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'zgemmah102s', 'h10' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'zgemmah102h', 'h10' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'zgemmahzeros', 'hzero' , '', d)}\
-${@bb.utils.contains('MACHINEBUILD', 'zgemmahz82H', 'h8' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'zgemmah82h', 'h8' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'zgemmah11s', 'h11' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'zgemmah112h', 'h11' , '', d)}\
 "
 
 MACHINE_DRIVER = "\
@@ -172,7 +178,9 @@ ${@bb.utils.contains('MACHINEBUILD', 'zgemmah10combo', 'h10' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'zgemmah102s', 'h10' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'zgemmah102h', 'h10' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'zgemmahzeros', 'hzero' , '', d)}\
-${@bb.utils.contains('MACHINEBUILD', 'zgemmahz82H', 'h8' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'zgemmah82h', 'h8' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'zgemmah11s', 'h11' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'zgemmah112h', 'h11' , '', d)}\
 "
 
 MACHINE_ESSENTIAL_EXTRA_RDEPENDS += "\
@@ -209,6 +217,7 @@ DVBMEDIASINK_CONFIG = "--with-wma --with-wmv --with-pcm --with-dts --with-eac3 \
     ${@bb.utils.contains('MACHINE', 'i55plus', '--with-h265 --with-vb6 --with-vb8 --with-vb9 --with-spark' , '', d)} \
     ${@bb.utils.contains('MACHINE', 'i55se', '--with-h265 --with-vb6 --with-vb8 --with-vb9 --with-spark' , '', d)} \
     ${@bb.utils.contains('MACHINE', 'h10', '--with-h265 --with-vb6 --with-vb8 --with-vb9 --with-spark' , '', d)} \
+    ${@bb.utils.contains('MACHINE', 'h11', '--with-h265 --with-vb6 --with-vb8 --with-vb9 --with-spark' , '', d)} \
     ${@bb.utils.contains('MACHINE', 'hzero', '--with-h265 --with-vb6 --with-vb8 -with-spark' , '', d)} \
     ${@bb.utils.contains('MACHINE', 'h8', '--with-h265 --with-vb6 --with-vb8 -with-spark' , '', d)} \
     "

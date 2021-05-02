@@ -43,4 +43,4 @@ WLAN_EXTRA = " \
     enigma2-plugin-drivers-network-usb-rtl8821cu", d)} \
 "
 
-PR = "r0"
+PR = "r1"
