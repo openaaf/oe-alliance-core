@@ -11,7 +11,7 @@ DEPENDS = "tslib mpfr gmp"
 SRCREV = "${AUTOREV}"
 PV = "${IMAGE_VERSION}+gitr${SRCPV}"
 PKGV = "${IMAGE_VERSION}+gitr${GITPKGV}"
-PR = "r285"
+PR = "r289"
 
 SRC_URI="git://github.com/oe-alliance/3rdparty-plugins.git;protocol=git"
 
@@ -66,9 +66,9 @@ THIRDPARTY_PLUGINS = " \
     enigma2-plugin-extensions-pluginupdater_0.1r2_all.ipk \
     enigma2-plugin-extensions-pravoslavietv_0.2_all.ipk \
     enigma2-plugin-extensions-pzyemail_0.8-20150614_all.ipk \
-    enigma2-plugin-extensions-screengrabber_2.5_all.ipk \
+    enigma2-plugin-extensions-screengrabber_2.6_all.ipk \
     enigma2-plugin-extensions-screensaver_5.7.1_all.ipk \
-    enigma2-plugin-extensions-serienrecorder_4.3.0_all.ipk \
+    enigma2-plugin-extensions-serienrecorder_4.4.0_all.ipk \
     enigma2-plugin-extensions-sherlock_5.01r1_mipsel.ipk \
     enigma2-plugin-extensions-skyrecorder_1.9.7_all.ipk \
     enigma2-plugin-extensions-songs-to_0.1_mips32el.ipk \
@@ -86,7 +86,7 @@ THIRDPARTY_PLUGINS = " \
     enigma2-plugin-extensions-vcs_2.9_all.ipk \
     enigma2-plugin-extensions-vhannibalautosettings_1.1_mips32el.ipk \
     enigma2-plugin-extensions-vuplusforum_0.8rc2_all.ipk \
-    enigma2-plugin-extensions-webradiofs_19.38_all.ipk \
+    enigma2-plugin-extensions-webradiofs_19.51_all.ipk \
     enigma2-plugin-extensions-wikipedia_2.3rc3_all.ipk \
     enigma2-plugin-extensions-wwech_1.03_all.ipk \
     enigma2-plugin-extensions-xbmcwetter_1.4rc1_all.ipk \
@@ -97,7 +97,6 @@ THIRDPARTY_PLUGINS = " \
     enigma2-plugin-systemplugins-channelselectionnavigator_1.5_mipsel.ipk \
     enigma2-plugin-systemplugins-extnumberzap_1.21_all.ipk \
     enigma2-plugin-systemplugins-recinfobar_1.22rc2_mips32el.ipk \
-    streamlinksrv_1.6.0_all.ipk \
     "
 #     Install any packages t_append =hat are only For this machines feed here, uncomment the line below and change as required
 THIRDPARTY_MACHINE_PLUGINS_vuuno = " \

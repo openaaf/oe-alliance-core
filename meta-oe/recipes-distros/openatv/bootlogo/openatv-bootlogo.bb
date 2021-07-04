@@ -9,7 +9,7 @@ require conf/license/license-gplv2.inc
 RDEPENDS_${PN} += "showiframe"
 
 PV = "${IMAGE_VERSION}"
-PR = "r1.8"
+PR = "r1.9"
 
 S = "${WORKDIR}"
 
@@ -42,6 +42,7 @@ SRC_URI_append_dags7362 = "file://splash1_power.bmp file://splash1_os1.bmp file:
 SRC_URI_append_dags73625 = "file://splash1_power.bmp file://splash1_os1.bmp file://splash1_os2.bmp file://splash2.bmp file://splash3.bmp"
 SRC_URI_append_dags7252 = "file://atv_splash.bmp"
 SRC_URI_append_dags72604 =" file://atv_splash.bmp"
+SRC_URI_append_dagsmv200 =" file://dagsmv200/radio.mvi"
 SRC_URI_append_7100s = "file://lcdsplash220.bin file://7100s/lcdwaitkey220.bin file://7100s/lcdwarning220.bin file://7100s/lcdcomplete220.bin"
 SRC_URI_append_7210s = "file://lcdsplash220.bin file://7100s/lcdwaitkey220.bin file://7100s/lcdwarning220.bin file://7100s/lcdcomplete220.bin"
 SRC_URI_append_7105s = "file://lcdsplash220.bin file://7100s/lcdwaitkey220.bin file://7100s/lcdwarning220.bin file://7100s/lcdcomplete220.bin"
@@ -60,6 +61,7 @@ SRC_URI_append_i55se = "file://logo.img"
 SRC_URI_append_hd60 = "file://logo.img"
 SRC_URI_append_hd61 = "file://logo.img"
 SRC_URI_append_pulse4k = "file://logo.img"
+SRC_URI_append_pulse4kmini = "file://logo.img"
 SRC_URI_append_cc1 = "file://logo.img"
 SRC_URI_append_sf8008 = "file://logo.img"
 SRC_URI_append_sf8008m = "file://logo.img"
