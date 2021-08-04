@@ -9,12 +9,12 @@ inherit gitpkgv
 SRCREV = "${AUTOREV}"
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
-PR = "r0"
+PR = "r1"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 DEPENDS = "freetype"
 
-SRC_URI = "git://github.com/oe-alliance/openmultiboot.git;protocol=git"
+SRC_URI = "git://github.com/oe-alliance/openmultiboot.git;protocol=git;branch=dev"
 
 inherit autotools-brokensep pkgconfig
 

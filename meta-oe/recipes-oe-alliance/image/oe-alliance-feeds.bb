@@ -9,7 +9,7 @@ ALLOW_EMPTY_${PN} = "1"
 PACKAGES = "${PN}"
 
 PV = "${IMAGE_VERSION}"
-PR = "r7"
+PR = "r9"
 
 DEPENDS = "enigma2-plugin-drivers-usbserial enigma2-plugin-systemplugins-hrtunerproxy enigma2-plugin-systemplugins-radiotimesemulator"
 
@@ -17,7 +17,6 @@ RDEPENDS_${PN} = " \
     bootlogos-enigma2-meta \
     dvb-usb-drivers-meta \
     network-usb-drivers-meta \
-    channelsettings-enigma2-meta \
     picons-enigma2-meta \
     packagegroup-openplugins \
     meta-enigma2-dvdburn \
@@ -135,6 +134,7 @@ RDEPENDS_${PN} = " \
     python-mechanize \
     python-netifaces \
     python-pexpect \
+    python-psutil \
     python-pyasn1-modules \
     python-requests \
     python-service-identity \
