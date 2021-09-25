@@ -6,7 +6,7 @@ PACKAGE_ARCH = "${MACHINEBUILD}"
 
 require conf/license/license-gplv2.inc
 
-RDEPENDS_${PN} += "showiframe"
+RDEPENDS:${PN} += "showiframe"
 
 PV = "${IMAGE_VERSION}"
 PR = "r1.3"
@@ -15,17 +15,17 @@ S = "${WORKDIR}"
 
 INITSCRIPT_NAME = "bootlogo"
 INITSCRIPT_PARAMS = "start 06 S ."
-INITSCRIPT_PARAMS_vuduo2 = "start 70 S ."
-INITSCRIPT_PARAMS_vusolo2 = "start 70 S ."
-INITSCRIPT_PARAMS_vusolose = "start 70 S ."
-INITSCRIPT_PARAMS_vusolo4k = "start 70 S ."
-INITSCRIPT_PARAMS_vuuno4k = "start 70 S ."
-INITSCRIPT_PARAMS_vuuno4kse = "start 70 S ."
-INITSCRIPT_PARAMS_vuultimo4k = "start 70 S ."
-INITSCRIPT_PARAMS_vuzero4k = "start 70 S ."
-INITSCRIPT_PARAMS_gb7252 = "start 70 S ."
+INITSCRIPT_PARAMS:vuduo2 = "start 70 S ."
+INITSCRIPT_PARAMS:vusolo2 = "start 70 S ."
+INITSCRIPT_PARAMS:vusolose = "start 70 S ."
+INITSCRIPT_PARAMS:vusolo4k = "start 70 S ."
+INITSCRIPT_PARAMS:vuuno4k = "start 70 S ."
+INITSCRIPT_PARAMS:vuuno4kse = "start 70 S ."
+INITSCRIPT_PARAMS:vuultimo4k = "start 70 S ."
+INITSCRIPT_PARAMS:vuzero4k = "start 70 S ."
+INITSCRIPT_PARAMS:gb7252 = "start 70 S ."
 PRECOMPILED_ARCH = "${MACHINE}"
-PRECOMPILED_ARCH_dm7020hdv2 = "dm7020hd"
+PRECOMPILED_ARCH:dm7020hdv2 = "dm7020hd"
 
 inherit update-rc.d
 
@@ -34,22 +34,22 @@ SRC_URI = "file://bootlogo.mvi file://restore.mvi file://radio.mvi file://bootlo
     ${@bb.utils.contains("MACHINE_FEATURES", "gigabluelcd400", "file://lcdsplash400.bin file://lcdwaitkey400.bin file://lcdwarning400.bin" , "", d)} \
 "
 
-SRC_URI_append_vuduo2 = "file://lcdbootlogo.png file://bootlogo.py"
-SRC_URI_append_dags7356 = "file://splash1.bmp file://splash1_os1.bmp file://splash1_os2.bmp file://splash2.bmp file://splash3.bmp"
-SRC_URI_append_dags7362 = "file://splash1_power.bmp file://splash1_os1.bmp file://splash1_os2.bmp file://splash2.bmp file://splash3.bmp"
-SRC_URI_append_dags73625 = "file://splash1_power.bmp file://splash1_os1.bmp file://splash1_os2.bmp file://splash2.bmp file://splash3.bmp"
-SRC_URI_append_dags7252 = "file://atv_splash.bmp"
-SRC_URI_append_7100s = "file://lcdsplash220.bin file://7100s/lcdwaitkey220.bin file://7100s/lcdwarning220.bin file://7100s/lcdcomplete220.bin"
-SRC_URI_append_7210s = "file://lcdsplash220.bin file://7100s/lcdwaitkey220.bin file://7100s/lcdwarning220.bin file://7100s/lcdcomplete220.bin"
-SRC_URI_append_7105s = "file://lcdsplash220.bin file://7100s/lcdwaitkey220.bin file://7100s/lcdwarning220.bin file://7100s/lcdcomplete220.bin"
-SRC_URI_append_7215s = "file://lcdsplash220.bin file://7100s/lcdwaitkey220.bin file://7100s/lcdwarning220.bin file://7100s/lcdcomplete220.bin"
-SRC_URI_append_8100s = "file://7100s/lcdwarning220.bin"
-SRC_URI_append_h9 = "file://logo.img"
-SRC_URI_append_i55plus = "file://logo.img"
-SRC_URI_append_hd60 = "file://logo.img"
-SRC_URI_append_cc1 = "file://logo.img"
-SRC_URI_append_sf8008 = "file://logo.img"
-SRC_URI_append_ustym4kpro = "file://logo.img"
+SRC_URI:append:vuduo2 = "file://lcdbootlogo.png file://bootlogo.py"
+SRC_URI:append:dags7356 = "file://splash1.bmp file://splash1_os1.bmp file://splash1_os2.bmp file://splash2.bmp file://splash3.bmp"
+SRC_URI:append:dags7362 = "file://splash1_power.bmp file://splash1_os1.bmp file://splash1_os2.bmp file://splash2.bmp file://splash3.bmp"
+SRC_URI:append:dags73625 = "file://splash1_power.bmp file://splash1_os1.bmp file://splash1_os2.bmp file://splash2.bmp file://splash3.bmp"
+SRC_URI:append:dags7252 = "file://atv_splash.bmp"
+SRC_URI:append:7100s = "file://lcdsplash220.bin file://7100s/lcdwaitkey220.bin file://7100s/lcdwarning220.bin file://7100s/lcdcomplete220.bin"
+SRC_URI:append:7210s = "file://lcdsplash220.bin file://7100s/lcdwaitkey220.bin file://7100s/lcdwarning220.bin file://7100s/lcdcomplete220.bin"
+SRC_URI:append:7105s = "file://lcdsplash220.bin file://7100s/lcdwaitkey220.bin file://7100s/lcdwarning220.bin file://7100s/lcdcomplete220.bin"
+SRC_URI:append:7215s = "file://lcdsplash220.bin file://7100s/lcdwaitkey220.bin file://7100s/lcdwarning220.bin file://7100s/lcdcomplete220.bin"
+SRC_URI:append:8100s = "file://7100s/lcdwarning220.bin"
+SRC_URI:append:h9 = "file://logo.img"
+SRC_URI:append:i55plus = "file://logo.img"
+SRC_URI:append:hd60 = "file://logo.img"
+SRC_URI:append:cc1 = "file://logo.img"
+SRC_URI:append:sf8008 = "file://logo.img"
+SRC_URI:append:ustym4kpro = "file://logo.img"
 
 BINARY_VERSION = "1.3"
 
@@ -68,7 +68,7 @@ SRC_URI[dm800sev2.sha256sum] = "af522a5d4dc75507f2cd96582a270236fedade35b8dca74c
 SRC_URI[dm500hdv2.md5sum] = "c0413bfe6c03efc5fa1825b6ad8ac7bd"
 SRC_URI[dm500hdv2.sha256sum] = "005b9e99566fdee4d76ec1532273dc3e29a14b723d0bf6108228988e2a30d013"
 
-FILES_${PN} = "/boot /usr/share /etc/init.d"
+FILES:${PN} = "/boot /usr/share /etc/init.d"
 
 do_install() {
     ${@bb.utils.contains("MACHINE_FEATURES", "dreamboxv1", "install -d ${D}/boot", "", d)}
@@ -87,40 +87,40 @@ do_install() {
     ${@bb.utils.contains("MACHINE_FEATURES", "gigabluelcd220", "install -m 0644 lcdwarning220.bin ${D}/usr/share/lcdwarning.bin" , "", d)}
 }
 
-do_install_append_vuduo2() {
+do_install:append:vuduo2() {
     install -m 0644 lcdbootlogo.png ${D}/usr/share/lcdbootlogo.png
     install -m 0644 bootlogo.py ${D}/${sysconfdir}/init.d/bootlogo.py
 }
 
-do_install_append_7100s() {
+do_install:append:7100s() {
     install -d ${D}/usr/share
     install -m 0644 ${WORKDIR}/7100s/lcdwaitkey220.bin ${D}/usr/share/lcdwaitkey.bin
     install -m 0644 ${WORKDIR}/7100s/lcdwarning220.bin ${D}/usr/share/lcdwarning.bin
     install -m 0644 ${WORKDIR}/7100s/lcdcomplete220.bin ${D}/usr/share/lcdcomplete.bin
 }
 
-do_install_append_7210s() {
+do_install:append:7210s() {
     install -d ${D}/usr/share
     install -m 0644 ${WORKDIR}/7100s/lcdwaitkey220.bin ${D}/usr/share/lcdwaitkey.bin
     install -m 0644 ${WORKDIR}/7100s/lcdwarning220.bin ${D}/usr/share/lcdwarning.bin
     install -m 0644 ${WORKDIR}/7100s/lcdcomplete220.bin ${D}/usr/share/lcdcomplete.bin
 }
 
-do_install_append_7105s() {
+do_install:append:7105s() {
     install -d ${D}/usr/share
     install -m 0644 ${WORKDIR}/7100s/lcdwaitkey220.bin ${D}/usr/share/lcdwaitkey.bin
     install -m 0644 ${WORKDIR}/7100s/lcdwarning220.bin ${D}/usr/share/lcdwarning.bin
     install -m 0644 ${WORKDIR}/7100s/lcdcomplete220.bin ${D}/usr/share/lcdcomplete.bin
 }
 
-do_install_append_7215s() {
+do_install:append:7215s() {
     install -d ${D}/usr/share
     install -m 0644 ${WORKDIR}/7100s/lcdwaitkey220.bin ${D}/usr/share/lcdwaitkey.bin
     install -m 0644 ${WORKDIR}/7100s/lcdwarning220.bin ${D}/usr/share/lcdwarning.bin
     install -m 0644 ${WORKDIR}/7100s/lcdcomplete220.bin ${D}/usr/share/lcdcomplete.bin
 }
 
-do_install_append_8100s() {
+do_install:append:8100s() {
     install -d ${D}/usr/share
     install -m 0644 ${WORKDIR}/7100s/lcdwarning220.bin ${D}/usr/share/lcdflashing.bmp
 }
@@ -165,7 +165,7 @@ do_deploy() {
 
 addtask deploy before do_build after do_install
 
-pkg_preinst_${PN}_dreamboxv1() {
+pkg_preinst:${PN}_dreamboxv1() {
 	if [ -z "$D" ]
 	then
 		if mountpoint -q /boot
@@ -177,14 +177,14 @@ pkg_preinst_${PN}_dreamboxv1() {
 	fi
 }
 
-pkg_postinst_${PN}_dreamboxv1() {
+pkg_postinst:${PN}_dreamboxv1() {
 	if [ -z "$D" ]
 	then
 		umount /boot
 	fi
 }
 
-pkg_prerm_${PN}_dreamboxv1() {
+pkg_prerm:${PN}_dreamboxv1() {
 	if [ -z "$D" ]
 	then
 		if mountpoint -q /boot
@@ -196,7 +196,7 @@ pkg_prerm_${PN}_dreamboxv1() {
 	fi
 }
 
-pkg_postrm_${PN}_dreamboxv1() {
+pkg_postrm:${PN}_dreamboxv1() {
 	if [ -z "$D" ]
 	then
 		umount /boot
@@ -204,4 +204,4 @@ pkg_postrm_${PN}_dreamboxv1() {
 }
 
 PACKAGE_ARCH := "${MACHINE_ARCH}"
-FILES_${PN} = "/boot /usr/share /etc/init.d"
+FILES:${PN} = "/boot /usr/share /etc/init.d"

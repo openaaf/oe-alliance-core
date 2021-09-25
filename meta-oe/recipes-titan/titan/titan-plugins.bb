@@ -26,7 +26,7 @@ DEPENDS = "titan \
 	libtirpc \
 	"
 
-RDEPENDS_${PN} = "python-ctypes"
+RDEPENDS:${PN} = "python-ctypes"
 
 S = "${WORKDIR}/titan"
 
@@ -48,7 +48,7 @@ CFLAGS = "\
 	-I${WORKDIR}/titan/libdreamdvd \
 	-I${WORKDIR}/titan/titan"
 
-CFLAGS_append = " \
+CFLAGS:append = " \
 	-I${STAGING_DIR_TARGET}/usr/include \
 	-I${STAGING_DIR_TARGET}/usr/include/freetype2 \
 	-I${STAGING_DIR_TARGET}/usr/include/openssl \
@@ -59,7 +59,7 @@ CFLAGS_append = " \
 	-I${WORKDIR}/titan/titan/include \
 	-I${WORKDIR}/titan/libeplayer3/include \
 	"
-CFLAGS_append_arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
+CFLAGS:append:arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
 	-I${STAGING_DIR_TARGET}/usr/include \
 	-I${STAGING_DIR_TARGET}/usr/lib/gstreamer-1.0/include \
 	-I${STAGING_DIR_TARGET}/usr/include/gstreamer-1.0 \
@@ -84,14 +84,14 @@ CFLAGS_append_arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
 	-I${WORKDIR}/titan/titan \
 ', d)}"
 
-CFLAGS_append_sh4 = " \
+CFLAGS:append:sh4 = " \
 	-I${STAGING_DIR_TARGET}/usr/include/libmmeimage \
 	-I${STAGING_KERNEL_DIR}/extra/bpamem \
 	"
 
-CFLAGS_append_sh4 = " -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DSH4 -DSH4NEW -DCAMSUPP -Os -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration"
-CFLAGS_append_mipsel = " -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
-CFLAGS_append_arm = " -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
+CFLAGS:append:sh4 = " -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DSH4 -DSH4NEW -DCAMSUPP -Os -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration"
+CFLAGS:append:mipsel = " -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
+CFLAGS:append:arm = " -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
 
 LDFLAGS_prepend = " -lcurl "
 
@@ -120,9 +120,9 @@ do_compile() {
 	${STRIP} ${S}/plugins/*/.libs/*.so
 }
 
-FILES_${PN} = "/usr/local/share/titan/plugins"
+FILES:${PN} = "/usr/local/share/titan/plugins"
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}/usr/local/share/titan/plugins
 	
 	LIST="`cat plugins/Makefile.am | sed 's/\\t\+/ /g' | sed 's/ \\+//g' | sed 's/\\\//g' | grep -v =`"

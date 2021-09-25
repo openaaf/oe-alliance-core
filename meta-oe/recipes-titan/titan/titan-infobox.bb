@@ -24,12 +24,12 @@ DEPENDS = " \
 
 S = "${WORKDIR}/"
 
-CFLAGS_append_sh4 = " -DSH4"
-CFLAGS_append_mipsel = " -DMIPSEL"
-CFLAGS_append_arm = " -DMIPSEL"
+CFLAGS:append:sh4 = " -DSH4"
+CFLAGS:append:mipsel = " -DMIPSEL"
+CFLAGS:append:arm = " -DMIPSEL"
 
-CFLAGS_append_arm_sf8008 = " -DEVENT0 -DDOUBLE"
-CFLAGS_append_mipsel_vusolo2 = " -DEVENT0 -DDOUBLE"
+CFLAGS:append:arm:sf8008 = " -DEVENT0 -DDOUBLE"
+CFLAGS:append:mipsel:vusolo2 = " -DEVENT0 -DDOUBLE"
 
 do_compile() {
 	cd ${WORKDIR}/infobox
@@ -43,7 +43,7 @@ do_compile() {
 	${CC} -Os readpng.o infobox.o -L${STAGING_DIR_TARGET}/usr/lib -ljpeg -lpng -lfreetype -lz -o infobox
 }
 
-FILES_${PN} = "/sbin"
+FILES:${PN} = "/sbin"
 
 do_install() {
 	install -d ${D}/sbin
