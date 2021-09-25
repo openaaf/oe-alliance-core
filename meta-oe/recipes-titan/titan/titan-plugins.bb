@@ -14,19 +14,19 @@ PR = "r1"
 SRC_URI = "svn://sbnc.dyndns.tv/svn/;module=titan;protocol=http"
 
 DEPENDS = "titan \
-	python-pyopenssl \
-	python-gdata \
+	${PYTHON_PN}-pyopenssl \
+	${PYTHON_PN}-gdata \
 	streamripper \
-	python-mutagen \
-	python-twisted \
-	python-daap \
-	python-google-api-client \
-	python-httplib2 \
-	python-youtube-dl \
+	${PYTHON_PN}-mutagen \
+	${PYTHON_PN}-twisted \
+	${PYTHON_PN}-daap \
+	${PYTHON_PN}-google-api-client \
+	${PYTHON_PN}-httplib2 \
+	${PYTHON_PN}-youtube-dl \
 	libtirpc \
 	"
 
-RDEPENDS:${PN} = "python-ctypes"
+RDEPENDS:${PN} = "${PYTHON_PN}-ctypes"
 
 S = "${WORKDIR}/titan"
 
