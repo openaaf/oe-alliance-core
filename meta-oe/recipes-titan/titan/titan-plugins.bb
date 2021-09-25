@@ -156,7 +156,7 @@ do_install:append() {
 	done
 }
 
-python populate_packages_prepend() {
+python populate_packages:prepend() {
     titan_plugindir = bb.data.expand('/usr/local/share/titan/plugins', d)
     do_split_packages(d, titan_plugindir, '^(\w+)/[a-zA-Z0-9_]+.*$', 'titan-plugin-%s', '%s', recursive=True, match_path=True, prepend=True, extra_depends="titan")
     do_split_packages(d, titan_plugindir, '^(\w+)/.*\.h$', 'titan-plugin-%s-src', '%s (source files)', recursive=True, match_path=True, prepend=True)
