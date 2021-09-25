@@ -10,21 +10,39 @@ PR = "r16"
 
 inherit packagegroup
 
-DEPENDS = " \
-	ca-certificates \
-	flip \
-	hddtemp \
-	openatv-enigma2 \
-	openatv-spinner \
-	oe-alliance-base \
-	packagegroup-base-smbfs-client \
-	python-imaging \
-	python-service-identity \
-	rtmpdump \
+RDEPENDS:${PN} = "\
+    autofs \
+    ca-certificates \
+    flip \
+    hddtemp \
+    oe-alliance-base \
+    openatv-bootlogo \
+    openatv-enigma2 \
+    openatv-spinner \
+    openssh-sftp-server \
+    ${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
+    ${PYTHON_PN}-service-identity \
+    ${PYTHON_PN}-requests \
+    ${PYTHON_PN}-future \
+    ${PYTHON_PN}-pexpect \
+    ${PYTHON_PN}-six \
+    rtmpdump \
+    zip \
+    ${@bb.utils.contains("TUNE_FEATURES", "armv", "glibc-compat", "", d)} \
+    ${@bb.utils.contains("MACHINE_FEATURES", "dreamboxv1", "", "ofgwrite", d)} \
+    ${@bb.utils.contains("MACHINE_FEATURES", "smallflash", "", " \
+        iproute2 \
+        tar \
+    ", d)} \
+    ${@bb.utils.contains_any("FLASHSIZE", "64 96", "", " \
+        ntfs-3g \
+        unrar \
+        wireless-tools \
+    ", d)} \
 	titan-netsurf \
 	titan-gmediarender \
 	${@bb.utils.contains('MACHINE', 'dm900', 'webkit-hbbtv-plugin' , '', d)} \
-	"
+    "
 
 RDEPENDS_${PN} = "\
 	aio-grab \
