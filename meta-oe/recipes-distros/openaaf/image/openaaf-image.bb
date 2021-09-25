@@ -48,57 +48,6 @@ IMAGE_INSTALL = "\
 	titan-plugin-weather \
     "
 
-IMAGE_INSTALL_append_mipsel_aus = "\
-	firmware-rtl8192cu \
-	firmware-rt2870 \
-	firmware-rt3070 \
-	firmware-atheros-ar9271 \
-	firmware-carl9170 \
-	firmware-htc9271 \
-	firmware-htc7010 \
-	firmware-rtl8712u \
-	firmware-rtl8192eu \
-	kernel-module-ath9k \
-	kernel-module-carl9170 \
-	kernel-module-rt2800usb \
-	rt3070 \
-	rt8812au \
-	rt8723a \
-    "
-
-IMAGE_INSTALL_append_arm_aus = "\
-	firmware-rtl8192cu \
-	firmware-rt2870 \
-	firmware-rt3070 \
-	firmware-atheros-ar9271 \
-	firmware-carl9170 \
-	firmware-htc9271 \
-	firmware-htc7010 \
-	firmware-rtl8712u \
-	firmware-rtl8192eu \
-	kernel-module-ath9k \
-	kernel-module-carl9170 \
-	kernel-module-rt2800usb \
-	rt8812au \
-	rt8723a \
-    "
-
-IMAGE_INSTALL_append_sh4_aus = "\
-	firmware-rtl8192cu \
-	firmware-rt2870 \
-	firmware-rt3070 \
-	firmware-atheros-ar9271 \
-	firmware-carl9170 \
-	firmware-htc9271 \
-	firmware-htc7010 \
-	firmware-rtl8712u \
-	firmware-rtl8192eu \
-	kernel-module-rt2800usb \
-	rt3070 \
-	rt8812au \
-	rt8723a \
-    "
-
 # Some additional comfort on the shell: Pre-install nano on boxes with 128 MB or more:
 IMAGE_INSTALL += "${@bb.utils.contains_any("FLASHSIZE", "64 96", "", "nano", d)}"
 
