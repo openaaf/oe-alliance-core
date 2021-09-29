@@ -38,10 +38,11 @@ RDEPENDS:${PN} = "\
         unrar \
         wireless-tools \
     ", d)} \
-	titan-netsurf \
 	titan-gmediarender \
 	${@bb.utils.contains('MACHINE', 'dm900', 'webkit-hbbtv-plugin' , '', d)} \
     "
+
+#	titan-netsurf
 
 RDEPENDS_${PN} = "\
 	aio-grab \
