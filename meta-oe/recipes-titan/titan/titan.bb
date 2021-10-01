@@ -540,7 +540,7 @@ FILES_${PN} = " \
 	/var/usr/local/share/titan/po/fr \
 	/var/usr/local/share/titan/po/it \
 	/var/usr/share/fonts \
-    /usr/local/bin"
+    /usr/local/bin/titan"
 
 
 do_install() {
