@@ -44,7 +44,7 @@ RDEPENDS:${PN} = "\
 
 #	titan-netsurf
 
-RDEPENDS_${PN} = "\
+RDEPENDS:${PN} = "\
 	aio-grab \
 	alsa-conf \
 	alsa-utils \

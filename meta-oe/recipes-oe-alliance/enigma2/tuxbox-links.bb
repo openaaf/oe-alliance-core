@@ -13,9 +13,7 @@ do_install () {
     install -d ${D}/etc/tuxbox/scce
     ln -s /usr/keys ${D}/var/
     ln -s /usr/bin ${D}/var/
-if [ "x${DISTRO}" != "xopenaaf" ]; then
     ln -s /etc ${D}/var/
-fi
     ln -s /etc/cron ${D}/var/spool/
     ln -s /etc/tuxbox/scce ${D}/var/
 }

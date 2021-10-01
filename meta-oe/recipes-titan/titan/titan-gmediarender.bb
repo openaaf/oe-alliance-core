@@ -10,11 +10,11 @@ DEPENDS = " \
     ${@bb.utils.contains("GST_VERSION", "1.0", "gstreamer1.0-plugins-base gstreamer1.0", "gst-plugins-base gstreamer", d)} \
 	"
 
-RDEPENDS_${PN} = " \
+RDEPENDS:${PN} = " \
     glib-networking \
     "
 
-RRECOMMENDS_${PN} = " \
+RRECOMMENDS:${PN} = " \
     glib-networking \
     ${@bb.utils.contains("GST_VERSION", "1.0", "gstreamer1.0-plugin-subsink", "gst-plugin-subsink", d)} \
     ${GST_BASE_RDEPS} \
@@ -145,5 +145,5 @@ S = "${WORKDIR}/git"
 
 inherit autotools pkgconfig
 
-FILES_${PN} = "/usr/bin"
-FILES_${PN} += "/usr/share/gmediarender"
+FILES:${PN} = "/usr/bin"
+FILES:${PN} += "/usr/share/gmediarender"
