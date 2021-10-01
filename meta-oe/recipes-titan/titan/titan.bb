@@ -429,7 +429,7 @@ do_compile() {
     ${CC} ${SOURCE_FILES} ${CFLAGS} -o titan ${LDFLAGS}
 }
 
-FILES_${PN} = " \
+FILES:${PN} = " \
 	/bin \
 	/etc \
 	/etc/titan.restore \
@@ -539,8 +539,7 @@ FILES_${PN} = " \
 	/var/usr/local/share/titan/po/es \
 	/var/usr/local/share/titan/po/fr \
 	/var/usr/local/share/titan/po/it \
-	/var/usr/share/fonts \
-    /usr/local/bin/titan"
+	/var/usr/share/fonts"
 
 
 do_install() {
