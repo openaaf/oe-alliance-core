@@ -40,6 +40,7 @@ RDEPENDS:${PN} = "\
     ", d)} \
 	titan-gmediarender \
 	${@bb.utils.contains('MACHINE', 'dm900', 'webkit-hbbtv-plugin' , '', d)} \
+    openaaf-feeds \
     "
 
 #	titan-netsurf
