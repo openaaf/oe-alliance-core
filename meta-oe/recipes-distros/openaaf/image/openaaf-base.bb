@@ -25,6 +25,7 @@ DEPENDS = " \
 	rtmpdump \
 	titan-gmediarender \
 	${@bb.utils.contains('MACHINE', 'dm900', 'webkit-hbbtv-plugin' , '', d)} \
+	oe-alliance-feeds \
 	"
 
 #	titan-netsurf
