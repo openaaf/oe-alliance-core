@@ -102,7 +102,7 @@ EXTRA_OECONF = " \
 
 FILES:${PN} = "/usr/local/share/titan/plugins"
 
-do_install:append() {
+do_install() {
 	install -d ${D}/usr/local/share/titan/plugins
 	LIST="`cat ../plugins/Makefile.am | sed 's/\\t\+/ /g' | sed 's/ \\+//g' | sed 's/\\\//g' | grep -v =`"
 	echo LIST $LIST
