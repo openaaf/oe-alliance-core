@@ -83,7 +83,7 @@ CFLAGS:append:arm = " -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-fl
 
 LDFLAGS:prepend = " -lcurl "
 
-do_configureq:prepend() {
+do_configure:prepend() {
 	cd ${S}
 
 	SVNVERSION=`echo ${WORKDIR} | sed -nr 's/.*svnr([^.*]+)-.*/\1/p'`
