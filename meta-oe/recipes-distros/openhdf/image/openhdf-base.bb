@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 ALLOW_EMPTY_${PN} = "1"
 
 PV = "1.0"
-PR = "r43"
+PR = "r47"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
@@ -41,9 +41,9 @@ RDEPENDS_${PN} = "\
     exteplayer3 \
     gstplayer \
     ffmpeg \
-    enigma2-plugin-systemplugins-serviceapp \
     zip \
     ", d)} \
+    ${@bb.utils.contains("MACHINE_FEATURES", "himedia", "" , "enigma2-plugin-systemplugins-serviceapp", d)} \
     ${@bb.utils.contains("MACHINE_FEATURES", "dreambox", "", "ofgwrite", d)} \
     ${@bb.utils.contains("TUNE_FEATURES", "armv", "glibc-compat", "", d)} \
     ${@bb.utils.contains("MACHINE_FEATURES", "singlecore", "", \
