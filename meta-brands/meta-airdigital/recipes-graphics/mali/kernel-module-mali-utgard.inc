@@ -32,12 +32,13 @@ python() {
     platform = d.getVar('MALI_DRIVER_PLATFORM', True)
     if not platform:
         platform = "devicetree"
-    TARGET_PLATFORM=" mali450"
+        TARGET_PLATFORM=" mali450"
 
     config = ["CONFIG_MALI_SHARED_INTERRUPTS=y",
         "CONFIG_MALI400=m",
         "CONFIG_MALI450=y",
         "CONFIG_MALI_DVFS=y",
+        "CHIP_TYPE_hi3798mv200=y",
         "CONFIG_GPU_AVS_ENABLE=y"]
 
     for c in config:
