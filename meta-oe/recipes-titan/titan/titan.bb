@@ -555,6 +555,7 @@ do_install() {
 		cp ${D}/etc/titan.restore/mnt/config/rcconfig.${MACHINE} ${D}/etc/titan.restore/mnt/config/rcconfig
 	fi
 }
-do_install[vardepsexclude] += "DATETIME"
+#do_install[vardepsexclude] += "DATETIME"
 
-
+do_configure[nostamp] = "1"
+do_install[vardepsexclude] += "DATE"
