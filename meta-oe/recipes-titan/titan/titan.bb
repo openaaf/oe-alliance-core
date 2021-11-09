@@ -355,7 +355,8 @@ do_compile() {
         DRIVERSDATE='N/A'
     fi
 
-	CACHEDIR=$(echo ${TMPDIR} | sed "s!builds/${DISTRO_NAME}/${DISTRO_TYPE}/${MACHINE}/tmp!svncache!")
+#	CACHEDIR=$(echo ${TMPDIR} | sed "s!builds/${DISTRO_NAME}/${DISTRO_TYPE}/${MACHINE}/tmp!svncache!")
+	CACHEDIR=${TMPDIR}/svncache"
 	echo "CACHEDIR ${CACHEDIR}"
 
 	KERNELDIR=${TMPDIR}/deploy/images/${MACHINE}/uImage
