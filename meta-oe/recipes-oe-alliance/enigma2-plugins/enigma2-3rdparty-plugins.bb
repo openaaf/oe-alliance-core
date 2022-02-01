@@ -11,7 +11,7 @@ DEPENDS = "tslib mpfr gmp"
 SRCREV = "${AUTOREV}"
 PV = "${IMAGE_VERSION}+gitr${SRCPV}"
 PKGV = "${IMAGE_VERSION}+gitr${GITPKGV}"
-PR = "r296"
+PR = "r300"
 
 SRC_URI="git://github.com/oe-alliance/3rdparty-plugins.git;protocol=https"
 
@@ -37,7 +37,6 @@ THIRDPARTY_PLUGINS = " \
     enigma2-plugin-extensions-customsubservices_0.1.3_all.ipk \
     enigma2-plugin-extensions-cyrussettings_1.0.0_all.ipk \
     enigma2-plugin-extensions-dvrproviderplayer_2.06_all.ipk \
-    enigma2-plugin-extensions-e2piconizer_1.14.20201213_all.ipk \
     enigma2-plugin-extensions-ehue_0.2-r0_all.ipk \
     enigma2-plugin-extensions-filesearchfs_3.0_all.ipk \
     enigma2-plugin-extensions-gmailreader-oe2.0_1.3_all.ipk \
@@ -59,7 +58,6 @@ THIRDPARTY_PLUGINS = " \
     ${@bb.utils.contains("TARGET_ARCH", "arm", "enigma2-plugin-extensions-opkg-tools_1.4_cortexa15hf-neon-vfpv4.ipk" , "", d)} \
     enigma2-plugin-extensions-oscamstatusview_1.0rc1_all.ipk \
     enigma2-plugin-extensions-piconmanager_2.2-20150329-r0_all.ipk \
-    enigma2-plugin-extensions-piconsupdater_0.3.7_mips32el.ipk \
     enigma2-plugin-extensions-picturecenterfs_8.39_all.ipk \
     enigma2-plugin-extensions-planerfs_9.43_all.ipk \
     enigma2-plugin-extensions-pluginspanel_1.0_r01_all.ipk \
@@ -70,11 +68,11 @@ THIRDPARTY_PLUGINS = " \
     enigma2-plugin-extensions-screensaver_5.7.1_all.ipk \
     enigma2-plugin-extensions-serienrecorder_4.4.2_all.ipk \
     enigma2-plugin-extensions-sherlock_5.01r1_mipsel.ipk \
-    enigma2-plugin-extensions-skyrecorder_2.0.3a-py2_all.ipk \
+    enigma2-plugin-extensions-skyrecorder_2.0.3c-py2_all.ipk \
     enigma2-plugin-extensions-songs-to_0.1_mips32el.ipk \
     enigma2-plugin-extensions-spinnerselector_2.3_all.ipk \
     enigma2-plugin-extensions-sport1ticker_1.3_all.ipk \
-    enigma2-plugin-extensions-sundtekcontrolcenter_20200915-2_all.ipk \
+    enigma2-plugin-extensions-sundtekcontrolcenter_20210624-2_all.ipk \
     enigma2-plugin-extensions-thetvdb_0.7-20120607-r3_mips32el.ipk \
     enigma2-plugin-extensions-timfs_2.32_all.ipk \
     enigma2-plugin-extensions-theweather_5.0r05_all.ipk \
@@ -90,9 +88,8 @@ THIRDPARTY_PLUGINS = " \
     enigma2-plugin-extensions-wikipedia_2.3rc3_all.ipk \
     enigma2-plugin-extensions-wwech_1.03_all.ipk \
     enigma2-plugin-extensions-xbmcwetter_1.4rc1_all.ipk \
-    enigma2-plugin-extensions-xcplugin-forever_1.8rc1_all.ipk \
+    enigma2-plugin-extensions-xcplugin-forever_1.9_all.ipk \
     enigma2-plugin-extensions-xcplugin-iptv-mod-lululla_6.7_all \
-    enigma2-plugin-picons-snp-full.220x132-190x102.light.on.transparent_2021-02-05--01-33-49_all.ipk \
     enigma2-plugin-systemplugins-bouquetsprotection_0.2-rc1_all.ipk \
     enigma2-plugin-systemplugins-channelselectionnavigator_1.5_mipsel.ipk \
     enigma2-plugin-systemplugins-extnumberzap_1.21_all.ipk \

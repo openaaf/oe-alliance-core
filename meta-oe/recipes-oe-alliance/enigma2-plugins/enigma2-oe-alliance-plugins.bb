@@ -39,6 +39,7 @@ PROVIDES += " \
     enigma2-plugin-extensions-ondemand \
     enigma2-plugin-extensions-fempa \
     enigma2-plugin-extensions-lcd4linux \
+    enigma2-plugin-extensions-piconsupdater \
     enigma2-plugin-extensions-remotechannelstreamconverter \
     enigma2-plugin-extensions-tmdb \
     ${@bb.utils.contains('MACHINE_FEATURES', 'legacykernel', '' , 'enigma2-plugin-systemplugins-wirelessaccesspoint', d)} \
@@ -90,7 +91,7 @@ DESCRIPTION_enigma2-plugin-systemplugins-fancontrol = "Control your internal sys
 RDEPENDS_enigma2-plugin-systemplugins-fancontrol_et9x00 = "hddtemp"
 DESCRIPTION_enigma2-plugin-systemplugins-remotecontrolcode = "Change Remote Control Code"
 RDEPENDS_enigma2-plugin-systemplugins-3gmodemmanager = "ppp usbmodeswitch usbmodeswitch-data wvdial wvstreams libwvutils4.6 libwvstreams-extras libuniconf4.6 kernel-module-ppp-async kernel-module-ppp-deflate kernel-module-ppp-synctty kernel-module-ppp-generic kernel-module-slhc kernel-module-usbserial kernel-module-cdc-acm kernel-module-ppp-mppe kernel-module-pppoe kernel-module-pppox kernel-module-option kernel-module-bsd-comp usbutils"
-FILES_enigma2-plugin-systemplugins-3gmodemmanager_append = "$(sysconfdir)/ppp"
+FILES_enigma2-plugin-systemplugins-3gmodemmanager_append = "/etc/ppp/"
 DESCRIPTION_enigma2-plugin-extensions-webbrowser = "Webbrowser launcher"
 RDEPENDS_enigma2-plugin-extensions-webbrowser = "python-gdata libqtwebkite4 webbrowser-utils qt4-embedded-fonts qt4-embedded-plugin-imageformat-gif qt4-embedded-plugin-imageformat-ico qt4-embedded-plugin-imageformat-jpeg qt4-embedded-plugin-imageformat-mng qt4-embedded-plugin-imageformat-svg qt4-embedded-plugin-imageformat-tiff qt4-embedded-plugin-iconengine-svgicon"
 FILES_enigma2-plugin-extensions-webbrowser_append = "${datadir}/keymaps"
@@ -125,13 +126,16 @@ DESCRIPTION_enigma2-plugin-systemplugins-wirelessaccesspoint = "Using a Wireless
 RDEPENDS_enigma2-plugin-systemplugins-wirelessaccesspoint = "hostapd bridge-utils"
 DESCRIPTION_enigma2-plugin-extensions-rcuselect = "Change Remote for Wetek"
 DESCRIPTION_enigma2-plugin-extensions-rezap = "ReZap Sync Tool for Wetek"
+DESCRIPTION_enigma2-plugin-extensions-piconsupdater = "Download and install new Picons for your current bouquet channels. PiconsUpdater coded by svox and jbleyel, idea by arn354 and picons by mike99"
+RDEPENDS_enigma2-plugin-extensions-piconsupdater = "python-imaging python-textutils python-io python-compression pngquant"
+
 
 inherit autotools-brokensep gitpkgv pythonnative gettext
 
 SRCREV = "${AUTOREV}"
 PV = "${IMAGE_VERSION}+git${SRCPV}"
 PKGV = "${IMAGE_VERSION}+git${GITPKGV}"
-PR = "r1"
+PR = "r2"
 
 SRC_URI = "${OEA_PLUGINS_URI}"
 
