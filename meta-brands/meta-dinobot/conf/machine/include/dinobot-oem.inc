@@ -260,11 +260,11 @@ ${@bb.utils.contains('MACHINEBUILD', 'jdhdduo', 'dinobot/${MACHINE}' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'turing', 'atto/turing' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'arivatwin', 'e2/update' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'arivacombo', 'e2/update' , '', d)}\
-${@bb.utils.contains('MACHINEBUILD', 'vipertwin', 'dinobot/${MACHINE}' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'vipertwin', 'e2/update' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'vipersingle', 'amiko/${MACHINE}' , '', d)}\
-${@bb.utils.contains('MACHINEBUILD', 'viper4kv20', 'amiko/${MACHINE}' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'viper4kv20', 'e2/update' , '', d)}\
 ${@bb.utils.contains('MACHINEBUILD', 'viper4kv30', 'amiko/${MACHINE}' , '', d)}\
-${@bb.utils.contains('MACHINEBUILD', 'viper4kv40', 'amiko/${MACHINE}' , '', d)}\
+${@bb.utils.contains('MACHINEBUILD', 'viper4kv40', 'e2/update' , '', d)}\
 "
 
 RCNAME = "\
@@ -321,7 +321,7 @@ MACHINE_ESSENTIAL_EXTRA_RDEPENDS += "\
     kernel-module-xhci-plat-hcd \
     kernel-module-ehci-platform \
     kernel-module-ohci-platform \
-    ${@bb.utils.contains('MACHINE_FEATURES', 'kodi20', 'dinobot-opengl-${SOC_FAMILY}', '',d)} \
+    ${@bb.utils.contains_any("MACHINE_FEATURES", "kodi19 kodi20", 'dinobot-opengl-${SOC_FAMILY}', '',d)} \
     ${@bb.utils.contains('MACHINE_FEATURES', 'emmc', 'resizerootfs' , '', d)} \
     dinobot-partitions-${SOC_FAMILY} \
     dinobot-libs-${MACHINE} \

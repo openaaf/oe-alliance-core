@@ -35,4 +35,6 @@ do_install:arm() {
     chmod -R 777 ${D}${libdir}/enigma2/python/Plugins/Extensions/dBackup
 }
 
+require conf/python/python3-compileall.inc
+
 do_package_qa[noexec] = "1"

@@ -34,4 +34,6 @@ do_install:append() {
     cp -aRf ${S}/HbbTV/* ${D}${libdir}/${DESTDIR}
 }
 
+require conf/python/python3-compileall.inc
+
 FILES:${PN} = "/"

@@ -33,9 +33,11 @@ do_install:append() {
     install -d ${D}${PLUGINPATH}
     cp -rp ${S}/src/* ${D}${PLUGINPATH}
     cp -rp ${S}/po/* ${D}${PLUGINPATH}/locale
-	install -d ${D}/etc/enigma2
-	install -m 0644 ${S}/YouTube.key ${D}/etc/enigma2/YouTube.key
+    install -d ${D}/etc/enigma2
+    install -m 0644 ${S}/YouTube.key ${D}/etc/enigma2/YouTube.key
 }
+
+require conf/python/python3-compileall.inc
 
 CONFFILES = "/etc/enigma2/YouTube.key"
 

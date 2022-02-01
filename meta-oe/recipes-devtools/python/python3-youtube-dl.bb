@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=7246f848faa4e9c9fc0ea91122d6e680"
 
 DEPENDS = "libxml2 bash-completion"
 
-inherit setuptools3 gittag
+inherit python3-dir setuptools3 gittag
 
 SRCREV = "${AUTOREV}"
 PV = "git${SRCPV}"
@@ -32,9 +32,11 @@ do_install:append() {
     install -m 0644 youtube-dl.bash-completion ${D}${sysconfdir}/bash_completion.d
 }
 
+include ${PYTHON_PN}-package-split.inc
+
 RDEPENDS:${PN} = " \
     ${PYTHON_PN}-email \
-    ${PYTHON_PN}-gdata \
+    ${PYTHON_PN}-gdata-python3 \
     ${PYTHON_PN}-unixadmin \
     ${PYTHON_PN}-ctypes \
     ${PYTHON_PN}-html \
@@ -42,6 +44,10 @@ RDEPENDS:${PN} = " \
 
 RDEPENDS:{PN}-src = "${PN}"
 FILES:${PN}-src = " \
+    ${libdir}/${PYTHON_DIR}/site-packages/*/*.py \
+    ${libdir}/${PYTHON_DIR}/site-packages/*/*/*.py \
+    ${libdir}/${PYTHON_DIR}/site-packages/*/*/*/*.py \
+    ${libdir}/${PYTHON_DIR}/site-packages/*/*/*/*/*.py \
     ${datadir}/etc/* \
     "
 

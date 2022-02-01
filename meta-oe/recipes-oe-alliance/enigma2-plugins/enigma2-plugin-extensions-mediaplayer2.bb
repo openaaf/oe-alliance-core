@@ -19,6 +19,8 @@ do_install:append () {
     cp -r ${S}/plugin/* ${D}/${libdir}/enigma2/python/Plugins/Extensions/mediaplayer2/
 }
 
+require conf/python/python3-compileall.inc
+
 FILES:${PN} = "${libdir}/enigma2/python/Plugins/Extensions/mediaplayer2"
 
-inherit autotools-brokensep 
+inherit autotools-brokensep

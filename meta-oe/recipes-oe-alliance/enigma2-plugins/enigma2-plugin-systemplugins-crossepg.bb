@@ -2,6 +2,7 @@ DESCRIPTION = "Handle your EPG on enigma2 from various sources (opentv, xmltv, c
 HOMEPAGE = "https://github.com/oe-alliance/e2openplugin-CrossEPG"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM = "file://LICENSE.TXT;md5=4fbd65380cdd255951079008b364516c"
+require conf/python/python3-compileall.inc
 
 DEPENDS += "curl libxml2 ${PYTHON_PN} swig-native zlib"
 RDEPENDS:${PN} += "enigma2 libcurl ${PYTHON_PN}-core ${PYTHON_PN}-compression ${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-backports-lzma", "", d)} xz"
@@ -11,13 +12,13 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 inherit gitpkgv ${PYTHON_PN}native
 
 SRCREV = "${AUTOREV}"
-PV = "0.8.9+gitr${SRCPV}"
-PKGV = "0.8.9+gitr${GITPKGV}"
-PR = "r2"
+PV = "0.9.0+gitr${SRCPV}"
+PKGV = "0.9.0+gitr${GITPKGV}"
+PR = "r3"
 
 SRC_URI = "git://github.com/oe-alliance/e2openplugin-CrossEPG.git;protocol=https;branch=dev \
         file://fix-build-with-fno-common.patch \
-        file://use-python-3.9-path.patch"
+        "
 
 inherit ${PYTHON_PN}-dir
 
@@ -37,7 +38,7 @@ do_compile() {
 }
 
 do_install() {
-    oe_runmake 'D=${D}' install
+    oe_runmake 'D=${D}' install 'PYTHON_BASEVERSION=${PYTHON_BASEVERSION}'
     mv ${D}/usr/crossepg/libcrossepg.so ${D}${libdir}/
 }
 

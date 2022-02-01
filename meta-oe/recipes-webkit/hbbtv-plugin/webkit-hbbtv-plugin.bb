@@ -91,4 +91,6 @@ do_install:append() {
     install -m 0755 ${S}/libhbbtvplugin.so ${D}/usr/lib/mozilla/plugins/
 }
 
+require conf/python/python3-compileall.inc
+
 FILES:${PN} = "/"

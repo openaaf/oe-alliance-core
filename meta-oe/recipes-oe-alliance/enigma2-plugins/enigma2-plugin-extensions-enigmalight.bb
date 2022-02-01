@@ -1,5 +1,5 @@
 DESCRIPTION = "An Ambilight clone for broadcom based linux receivers."
-HOMEPAGE = "https://github.com/nickersk/enigmalight"
+HOMEPAGE = "https://github.com/oe-mirrors/enigmalight"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=156f94b2a67a05ad45ff99bec65b2c81"
 
@@ -12,7 +12,7 @@ PV = "1.42+git${SRCPV}"
 PKGV = "1.42+git${GITPKGV}"
 PR = "r12"
 
-SRC_URI = "git://github.com/nickersk/enigmalight.git;protocol=https;branch=python3"
+SRC_URI = "git://github.com/oe-mirrors/enigmalight.git;protocol=https;branch=python3"
 
 S = "${WORKDIR}/git"
 
@@ -33,6 +33,8 @@ do_install:append() {
     cp -R ${WORKDIR}/git/elight-addons/wifilight ${D}/home/elight-addons/
     cp -R ${WORKDIR}/git/elight-addons/config_samples ${D}/home/elight-addons/wifilight
 }
+
+require conf/python/python3-compileall.inc
 
 FILES:${PN} += "${libdir}/enigma2/python/Plugins/Extensions/EnigmaLight/ \
                 /home/elight-addons"

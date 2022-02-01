@@ -33,14 +33,14 @@ DVBSKYPROVIDER = "kernel"
 
 MACHINE_ESSENTIAL_EXTRA_RDEPENDS += "\
     abcom-libs-${HICHIPSET} \
-	abcom-fastboot-${MACHINE} \
-	abcom-param-${MACHINE} \
-	abcom-bootlogo-${MACHINE} \
-	abcom-bootargs-${MACHINE} \
-	abcom-recovery-${MACHINE} \
-	abcom-tntfs-${HICHIPSET} \
+    abcom-fastboot-${MACHINE} \
+    abcom-param-${MACHINE} \
+    abcom-bootlogo-${MACHINE} \
+    abcom-bootargs-${MACHINE} \
+    abcom-recovery-${MACHINE} \
+    abcom-tntfs-${HICHIPSET} \
     abcom-dvb-modules-${MACHINE} \
-	kernel-module-mali-${HICHIPSET} \
+    kernel-module-mali-${HICHIPSET} \
     "
 
 MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS += "\
@@ -48,19 +48,11 @@ MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS += "\
     abcom-ethwol \
     resizerootfs \
     "
-	
+
 MACHINE_EXTRA_RRECOMMENDS += " \
     gstreamer1.0-plugin-dvbmediasink \
     ffmpeg \
-	gstreamer1.0-libav \
-    "
-
-EXTRA_IMAGEDEPENDS += " \
-    enigma2-plugin-systemplugins-remotecontrolcode \
-    "
-
-MACHINE_EXTRA_RDEPENDS_${PN} = " \
-    enigma2-plugin-systemplugins-remotecontrolcode \
+    gstreamer1.0-libav \
     "
 
 CMDLINE ?= "console=ttyAMA0,115200n8"
@@ -68,7 +60,6 @@ CMDLINE ?= "console=ttyAMA0,115200n8"
 KERNEL_MODULE_AUTOLOAD += "mali"
 
 PREFERRED_VERSION_linux-abcom = "4.4.35"
-
 
 IMAGEDIRRECOVERY ?= "${MACHINE}-recovery"
 
@@ -80,7 +71,7 @@ IMAGE_CMD:abfastboot8gb:append = " \
     cp ${DEPLOY_DIR_IMAGE}/abcom-partitions-${MACHINE}/bootargs.bin ${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}/bootargs.bin; \
     cp ${DEPLOY_DIR_IMAGE}/abcom-partitions-${MACHINE}/${MACHINE}/fastboot.bin ${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}/${IMAGEDIR}/fastboot.bin; \
     cp ${DEPLOY_DIR_IMAGE}/abcom-partitions-${MACHINE}/${MACHINE}/bootargs.bin ${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}/${IMAGEDIR}/bootargs.bin; \
-    cp ${DEPLOY_DIR_IMAGE}/abcom-partitions-${MACHINE}/${MACHINE}/pqparam.bin ${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}/${IMAGEDIR}/pqparam.bin; \
+    cp ${DEPLOY_DIR_IMAGE}/abcom-partitions-${MACHINE}/${MACHINE}/pq_param.bin ${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}/${IMAGEDIR}/pqparam.bin; \
     cp ${DEPLOY_DIR_IMAGE}/abcom-partitions-${MACHINE}/${MACHINE}/baseparam.img ${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}/${IMAGEDIR}/baseparam.img; \
     if [ -e ${DEPLOY_DIR_IMAGE}/abcom-partitions-${MACHINE}/${MACHINE}/recovery.bin ]; then \
         cp ${DEPLOY_DIR_IMAGE}/abcom-partitions-${MACHINE}/${MACHINE}/recovery.bin ${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}/${IMAGEDIR}/recovery.bin; \
@@ -96,11 +87,11 @@ IMAGE_CMD:abfastboot8gb:append = " \
     echo "Das ${IMAGE_NAME}_recovery_usb.zip sollte normalerweise einmal installiert werden (oder wenn es ein Update gibt.)" >>${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_lies.mich; \
     echo "Dies ist erforderlich, um Probleme mit dem Images zuvermeiden,wenn sich der Aufbau der Partition ändert (bootargs)." >>${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_lies.mich; \
     echo "Die Änderungen können alle Daten im Flash Löschen, nur Installieren wenn es notwendig ist." >>${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_lies.mich; \
-    echo "***** ATTENTION *****" >${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_READ.ME; \
-    echo "This RECOVERY only need when you have issue access the MULTIBOOT MENU" >>${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_READ.ME; \
-    echo "The ${IMAGE_NAME}_recovery_usb.zip should been install normally once (or if there is an update.)" >>${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_READ.ME; \
-    echo "This is needed for avoid images conflicts as the partition layout (bootargs) is of huge essential." >>${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_READ.ME; \
-    echo "A small change can destroy all your install images. So we can better leave it and not install it if it's not need." >>${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_READ.ME; \
+    echo "***** WARNING *****" >${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_READ.ME; \
+    echo "The RECOVERY is only needed if there are problems accessing the MULTIBOOT MENU" >>${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_READ.ME; \
+    echo "The ${IMAGE_NAME}_recovery_usb.zip should normally be installed only once (or if there is an update.)" >>${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_READ.ME; \
+    echo "This is necessary to avoid problems with the image if the structure of the partition changes (bootargs)." >>${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_READ.ME; \
+    echo "The changes will delete all data in the flash, only install it, if it is necessary." >>${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_READ.ME; \
     cd ${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY} ; \
     zip -r ../${IMAGE_NAME}_recovery_emmc.zip *; \
     rm -Rf ${DEPLOY_DIR_IMAGE}/${IMAGEDIRRECOVERY}; \
@@ -112,7 +103,7 @@ IMAGE_CMD:abfastboot8gb:append = " \
     echo "${IMAGE_NAME}" > ${DEPLOY_DIR_IMAGE}/${MACHINE}/${IMAGEDIR}/imageversion; \
     echo "${IMAGE_NAME}_usb.zip" > ${DEPLOY_DIR_IMAGE}/${MACHINE}/unforce_${MACHINE}.txt; \
     echo "Rename the unforce_${MACHINE}.txt to force_${MACHINE}.txt and move it to the root of your usb-stick" > ${DEPLOY_DIR_IMAGE}/${MACHINE}/${IMAGEDIR}/force_${MACHINE}_READ.ME; \
-    echo "When you enter the recovery menu then it will force to install the image ${IMAGE_NAME}_usb.zip in the linux1 selection" >> ${DEPLOY_DIR_IMAGE}/${MACHINE}/${IMAGEDIR}/force_${MACHINE}_READ.ME; \
+    echo "When you enter the recovery menu then it will then force the ${IMAGE_NAME}_usb.zip into the linux1 slot" >> ${DEPLOY_DIR_IMAGE}/${MACHINE}/${IMAGEDIR}/force_${MACHINE}_READ.ME; \
     cd ${DEPLOY_DIR_IMAGE}/${MACHINE}; \
     zip -r ../${IMAGE_NAME}_mmc.zip *; \
     rm -f ${DEPLOY_DIR_IMAGE}/*.manifest; \

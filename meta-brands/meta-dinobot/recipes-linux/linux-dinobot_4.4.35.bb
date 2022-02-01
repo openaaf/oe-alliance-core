@@ -3,7 +3,7 @@ SECTION = "kernel"
 LICENSE = "GPLv2"
 
 KERNEL_RELEASE = "4.4.35"
-SRCDATE_u5pvr = "20180502"
+SRCDATE:u5pvr = "20180502"
 SRCDATE = "20180828"
 
 inherit kernel machine_kernel_pr
@@ -26,7 +26,8 @@ PKG:${KERNEL_PACKAGE_NAME}-image = "kernel-image"
 RPROVIDES:${KERNEL_PACKAGE_NAME}-base = "kernel-${KERNEL_VERSION}"
 RPROVIDES:${KERNEL_PACKAGE_NAME}-image = "kernel-image-${KERNEL_VERSION}"
 
-SRC_URI_u5pvr += "http://source.mynonpublic.com/dinobot/dinobot-linux-${PV}-${SRCDATE}.tar.gz \
+SRC_URI:u5pvr += "http://source.mynonpublic.com/dinobot/dinobot-linux-${PV}-${SRCDATE}.tar.gz \
+    file://initramfs-subdirboot.cpio.gz;unpack=0 \
     file://defconfig \
     file://sdio-platform.patch \
     file://accelmem.patch \
@@ -41,6 +42,7 @@ SRC_URI_u5pvr += "http://source.mynonpublic.com/dinobot/dinobot-linux-${PV}-${SR
 "
 
 SRC_URI = "http://source.mynonpublic.com/dinobot/dinobot-linux-${PV}-${SRCDATE}.tar.gz;name=new \
+    file://initramfs-subdirboot.cpio.gz;unpack=0 \
     file://defconfig \
     file://410dts.patch \
     file://0001-mmc-switch-1.8V.patch \
@@ -50,6 +52,7 @@ SRC_URI = "http://source.mynonpublic.com/dinobot/dinobot-linux-${PV}-${SRCDATE}.
     file://0004-makefile-disable-warnings.patch \
     file://0005-kallsyms-allow-bigger-ksym_name_len.patch \
     file://cmav2.patch \
+    file://fix-multiple-defs-yyloc.patch \
 "
 
 S = "${WORKDIR}/linux-${PV}"
@@ -63,6 +66,11 @@ FILES:${KERNEL_PACKAGE_NAME}-image = "${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}"
 
 KERNEL_IMAGETYPE = "uImage"
 KERNEL_OUTPUT = "arch/${ARCH}/boot/${KERNEL_IMAGETYPE}"
+
+kernel_do_configure:prepend() {
+	install -d ${B}/usr
+	install -m 0644 ${WORKDIR}/initramfs-subdirboot.cpio.gz ${B}/
+}
 
 kernel_do_install:append() {
 	install -d ${D}/${KERNEL_IMAGEDEST}

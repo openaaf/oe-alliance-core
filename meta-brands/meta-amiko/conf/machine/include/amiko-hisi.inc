@@ -40,7 +40,7 @@ MACHINE_ESSENTIAL_EXTRA_RDEPENDS += "\
     gptfdisk \
 "
 
-MACHINE_FEATURES += "hisil switchoff 7segment hdmicec skins1080 emmc mmc blindscan-dvbs kodi20 alsa hbbtv-browser-webkit qtstalker qtnetflix openhbbtv"
+MACHINE_FEATURES += "hisil switchoff 7segment hdmicec skins1080 emmc mmc blindscan-dvbs kodi19 alsa hbbtv-browser-webkit qtstalker qtnetflix openhbbtv"
 
 IMAGE_CLASSES  += "amiko-emmc_image"
 IMAGE_FSTYPES += "amikoemmc"
@@ -101,6 +101,7 @@ IMAGE_CMD:amikoemmc:append = "\
     rm -f -f ${DEPLOY_DIR_IMAGE}/*.json; \
     rm -Rf ${DEPLOY_DIR_IMAGE}/usb_update.bin; \
     rm -Rf ${IMAGEDIR}; \
+    rm -Rf ${IMGDEPLOYDIR}/userdata; \
     "
 
 # Add "MACHINEBUILD" override for recipes

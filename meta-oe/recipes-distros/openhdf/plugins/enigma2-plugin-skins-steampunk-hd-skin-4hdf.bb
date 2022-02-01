@@ -2,6 +2,7 @@ SUMMARY = "Steampunk Skin for HDF Images"
 MAINTAINER = "stein17"
 
 require conf/license/license-gplv2.inc
+require conf/python/python3-compileall.inc
 
 inherit gitpkgv 
 
@@ -14,10 +15,6 @@ RDEPENDS:${PN} = "enigma2-plugin-systemplugins-weathercomponenthandler, enigma2-
 SRC_URI="git://github.com/stein17/Skins-for-openHDF.git;protocol=https"
 
 S = "${WORKDIR}/git/Steampunk-HD-Skin-4HDF"
-
-do_compile() {
-    python -O -m compileall ${S}
-}
 
 do_install() {
     install -d ${D}${libdir}

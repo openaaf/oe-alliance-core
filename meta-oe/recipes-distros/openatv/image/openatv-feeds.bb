@@ -7,9 +7,13 @@ ALLOW_EMPTY:${PN} = "1"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 PV = "1.0"
-PR = "r49"
+PR = "r50"
 
 inherit packagegroup
+
+#not py3 ready
+#    enigma2-plugin-skins-dmcconcinnityhd 
+
 
 DEPENDS += "oe-alliance-feeds enigma2-3rdparty-plugins"
 
@@ -26,7 +30,6 @@ RRECOMMENDS:${PN} = "\
     openssl-old \
     enigma2-plugin-extensions-enhancedmoviecenter \
     enigma2-plugin-extensions-bmediacenter \
-    enigma2-plugin-skins-dmcconcinnityhd \
     enigma2-plugin-settings-defaultsat \
     enigma2-plugin-extensions-specialjump \
     enigma2-plugin-extensions-gbipboxclient \
@@ -49,9 +52,9 @@ RRECOMMENDS:${PN} = "\
     enigma2-plugin-skins-iflatfhd \
     enigma2-plugin-skins-glamouraurafhd-atv \
     enigma2-plugin-skins-madmax-impossible \
+    enigma2-plugin-skins-overlayhd \
     enigma2-plugin-skincomponents-mediaportal-atv-metrix-style \
     enigma2-plugin-extensions-chocholousek-picons \
-    ${@bb.utils.contains("MACHINE_FEATURES", "skins1080", "hd-skins-meta", "", d)} \
     "
 
 # remove close cant update to py3

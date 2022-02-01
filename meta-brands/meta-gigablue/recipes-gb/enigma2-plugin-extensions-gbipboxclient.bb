@@ -4,6 +4,7 @@ SECTION = "base"
 LICENSE = "GPLv2"
 
 require conf/license/license-gplv2.inc
+require conf/python/python3-compileall.inc
 
 inherit gitpkgv ${PYTHON_PN}native autotools-brokensep gettext 
 
@@ -29,14 +30,6 @@ EXTRA_OECONF = "\
     STAGING_LIBDIR=${STAGING_LIBDIR} \
     "
 
-do_install:append() {
-    # remove unused .pyc files
-    find ${D}/usr/lib/enigma2/python/Plugins/Extensions/${PLUGIN}/ -name '*.pyc' -exec rm {} \;
-    
-    # remove helper .pyo file
-    find ${D}/usr/lib/enigma2/python/Plugins/Extensions/${PLUGIN}/ -name '*helper.pyo' -exec rm {} \;
-}
-
 # skip this!
 install_egg_info() {
 }
@@ -57,3 +50,5 @@ python populate_packages:prepend() {
     do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/(.*/)?\.debug/.*$', 'enigma2-plugin-%s-dbg', '%s (debug)', recursive=True, match_path=True, prepend=True)
     do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/.*\/.*\.po$', 'enigma2-plugin-%s-po', '%s (translations)', recursive=True, match_path=True, prepend=True)
 }
+
+do_package_qa[noexec] = "1"

@@ -2,6 +2,7 @@ SUMMARY = "KravenHD Skin for Enigma2 by Team Kraven"
 MAINTAINER = "Team Kraven"
 
 require conf/license/license-gplv2.inc
+require conf/python/python3-compileall.inc
 
 inherit gitpkgv allarch gettext
 
@@ -23,7 +24,6 @@ FILES:${PN} = "/usr/*"
 S = "${WORKDIR}/git"
 
 do_compile() {
-    python -O -m compileall ${S}/usr
     for f in $(find ${S}/locale -name *.po ); do
         l=$(echo ${f%} | sed 's/\.po//' | sed 's/.*locale\///')
         #mkdir -p ${S}/usr/lib/enigma2/python/Plugins/Extensions/KravenHD/locale/${l%}/LC_MESSAGES

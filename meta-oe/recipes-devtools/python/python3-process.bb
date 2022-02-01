@@ -3,6 +3,9 @@ SECTION = "devel/python"
 PRIORITY = "optional"
 SRCNAME = "process"
 
+include ${PYTHON_PN}-package-split.inc
+require conf/python/python3-compileall.inc
+
 require conf/license/license-gplv2.inc
 
 inherit distutils3-base
@@ -14,9 +17,10 @@ SRC_URI = "file://process.py"
 
 S = "${WORKDIR}"
 
-PACKAGES = "${PN}"
+PACKAGES = "${PN} ${PN}-src"
 
-FILES:${PN} = "${PYTHON_SITEPACKAGES_DIR}/process.py"
+FILES:${PN} = "${PYTHON_SITEPACKAGES_DIR}/process.pyc"
+FILES:${PN}-src = "${PYTHON_SITEPACKAGES_DIR}/process.py"
 
 do_install() {
     install -d ${D}${PYTHON_SITEPACKAGES_DIR}

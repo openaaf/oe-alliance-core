@@ -1,14 +1,14 @@
-DESCRIPTION = "Open BlackHole extra files"
+DESCRIPTION = "OpenBh extra files"
 SECTION = "base"
 PRIORITY = "required"
-MAINTAINER = "Black Hole team"
+MAINTAINER = "OpenBh Team"
 
 require conf/license/license-gplv2.inc
 
 SRC_URI = "file://Ncam_Ci.sh file://StartBhCam file://Delete_all_Crashlogs.sh file://Ifconfig.sh \
-	file://openvpn.log file://Netstat.sh file://Uptime.sh file://bh_swap"
+	file://openvpn.log file://Netstat.sh file://Uptime.sh file://bh_swap file://skin_plugins.xml"
 
-PR = "r11"
+PR = "r15"
 
 FILES:${PN} = "/"
 
@@ -27,6 +27,9 @@ do_install() {
 	install -d ${D}/etc
 	install -m 0644 ${WORKDIR}/bhmachine ${D}/etc/bhmachine
 	install -m 0644 ${WORKDIR}/bhversion ${D}/etc/bhversion
+
+	install -d ${D}/usr/share/enigma2
+	install -m 0644 ${WORKDIR}/skin_plugins.xml ${D}/usr/share/enigma2/skin_plugins.xml
 
 
 	install -d ${D}/usr/bin
@@ -52,10 +55,9 @@ do_install() {
 	install -m 0755 ${WORKDIR}/bh_swap ${D}/etc/init.d/bh_swap
 
 	install -d ${D}/etc/rc3.d
-#	ln -sf /etc/init.d/openvpn ${D}/etc/rc3.d/S20openvpn
 	ln -sf /etc/init.d/bh_swap ${D}/etc/rc3.d/S40bh_swap
 
-	install -d ${D}/etc/rc4.d
-	ln -s /etc/init.d/openvpn ${D}/etc/rc4.d/S20openvpn
+#	install -d ${D}/etc/rc4.d
+#	ln -s /etc/init.d/openvpn ${D}/etc/rc4.d/S20openvpn
 
 }

@@ -52,7 +52,7 @@ EXTRA_OECONF = " \
     --with-mkubifs="${MKUBIFS_ARGS}" \
     --with-ubinize="${UBINIZE_ARGS}" \
     --with-driverdate="${DRIVERSDATE}" \
-    --with-arch="${DEFAULTTUNE}" \
+    --with-arch="${TUNE_PKGARCH}" \
     --with-display-type="${DISPLAY_TYPE}" \
     --with-hdmi="${HAVE_HDMI}" \
     --with-yuv="${HAVE_YUV}" \
@@ -263,11 +263,10 @@ do_install:append() {
     ln -sf /usr/share/enigma2/rc_models ${D}${libdir}/enigma2/python/Plugins/Extensions/OpenWebif/public/static/remotes
 }
 
+require conf/python/python3-compileall.inc
 
-FILES:${PN} = "${libdir}/enigma2/python/*.so /usr/share \
-    ${libdir}/enigma2/python/Components/*.py ${libdir}/enigma2/python/Plugins \
-    ${libdir}/enigma2/python/Components/*/*.pyc ${libdir}/enigma2/python/Plugins"
+FILES:${PN}-src = "${libdir}/enigma2/python/Components/*.py"
+FILES:${PN} = "${libdir}/enigma2/python/*.so /usr/share ${libdir}/enigma2/python/Components/*.pyc ${libdir}/enigma2/python/Plugins"
 FILES:${PN}-dev += "${libdir}/enigma2/python/*.la"
 FILES:${PN}-staticdev += "${libdir}/enigma2/python/*.a"
 FILES:${PN}-dbg += "${libdir}/enigma2/python/.debug"
-

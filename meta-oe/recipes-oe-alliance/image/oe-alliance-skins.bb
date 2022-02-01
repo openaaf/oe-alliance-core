@@ -7,22 +7,21 @@ ALLOW_EMPTY:${PN} = "1"
 PACKAGES = "${PN}"
 
 PV = "${IMAGE_VERSION}"
-PR = "r3"
+PR = "r6"
 
 inherit packagegroup
 
 DEPENDS = "enigma2"
 
 RDEPENDS:${PN} = "\
-	enigma2-plugin-skins-mynovumhd2 \
-	enigma2-plugin-skins-mynovumhd2black \
-	enigma2-plugin-skins-novum-hd-slim \
-	enigma2-plugin-skins-novum-fhd-light \
+	${@bb.utils.contains("DISTRO_NAME", "openvix", "" , "enigma2-plugin-skins-mynovumhd2", d)} \
+	${@bb.utils.contains("DISTRO_NAME", "openvix", "" , "enigma2-plugin-skins-mynovumhd2black", d)} \
+	${@bb.utils.contains("DISTRO_NAME", "openvix", "" , "enigma2-plugin-skins-novum-hd-slim", d)} \
+	${@bb.utils.contains("MACHINE_FEATURES", "skins1080", "enigma2-plugin-skins-novum-fhd-light", "", d)} \
 	enigma2-plugin-skins-army-moodblue-hd \
-	enigma2-plugin-skins-kravenhd \
+	${@bb.utils.contains("DISTRO_NAME", "openvix", "" , "enigma2-plugin-skins-kravenhd", d)} \
 	enigma2-plugin-skins-pli-hd-fullnight \
-	enigma2-plugin-skins-kiddac-1080-onyx \
-	enigma2-plugin-skins-kiddac-1080-slyk-q \
-	enigma2-plugin-skins-kiddac-1080-slyk-r19 \
-	enigma2-plugin-skins-overlayhd \
+	${@bb.utils.contains("MACHINE_FEATURES", "skins1080", "enigma2-plugin-skins-kiddac-1080-onyx", "", d)} \
+	${@bb.utils.contains("MACHINE_FEATURES", "skins1080", "enigma2-plugin-skins-kiddac-1080-slyk-q", "", d)} \
+	${@bb.utils.contains("MACHINE_FEATURES", "skins1080", "enigma2-plugin-skins-kiddac-1080-slyk-r19", "", d)} \
 	"

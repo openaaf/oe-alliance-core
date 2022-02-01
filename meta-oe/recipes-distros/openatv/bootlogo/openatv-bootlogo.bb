@@ -9,7 +9,7 @@ require conf/license/license-gplv2.inc
 RDEPENDS:${PN} += "showiframe"
 
 PV = "${IMAGE_VERSION}"
-PR = "r2.3"
+PR = "r2.5"
 
 S = "${WORKDIR}"
 
@@ -31,7 +31,7 @@ PRECOMPILED_ARCH:dm7020hdv2 = "dm7020hd"
 
 inherit update-rc.d
 
-SRC_URI = "file://bootlogo.mvi file://restore.mvi file://radio.mvi file://bootlogo.sh file://splash576.bmp file://splash480.bmp file://splash1280.jpg \
+SRC_URI = "file://bootlogo_hd.mvi file://restore_hd.mvi file://bootlogo_fhd.mvi file://restore_fhd.mvi file://radio.mvi file://bootlogo.sh file://splash576.bmp file://splash480.bmp file://splash1280.jpg \
     ${@bb.utils.contains("MACHINE_FEATURES", "gigabluelcd220", "file://lcdsplash220.bin file://lcdwaitkey220.bin file://lcdwarning220.bin" , "", d)} \
     ${@bb.utils.contains("MACHINE_FEATURES", "gigabluelcd400", "file://lcdsplash400.bin file://lcdwaitkey400.bin file://lcdwarning400.bin" , "", d)} \
 "
@@ -66,7 +66,9 @@ SRC_URI:append:cc1 = "file://logo.img"
 SRC_URI:append:sf8008 = "file://logo.img"
 SRC_URI:append:sf8008m = "file://logo.img"
 SRC_URI:append:sf8008opt = "file://logo.img"
+SRC_URI:append:sx988 = "file://logo.img"
 SRC_URI:append:ustym4kpro = "file://logo.img"
+SRC_URI:append:ustym4kottpremium = "file://logo.img"
 SRC_URI:append:multiboxse = "file://logo.img"
 SRC_URI:append:multibox = "file://logo.img"
 SRC_URI:append:gbmv200 = "file://logo.img"
@@ -96,8 +98,8 @@ do_install() {
     ${@bb.utils.contains("MACHINE_FEATURES", "dreamboxv1", "install -d ${D}/boot", "", d)}
     ${@bb.utils.contains("MACHINE_FEATURES", "dreamboxv1", "install -m 0755 ${S}/dreambox-bootlogo_${BINARY_VERSION}_${PRECOMPILED_ARCH}/bootlogo-${PRECOMPILED_ARCH}.elf.gz ${D}/boot/; install -m 0755 ${S}/splash1280.jpg ${D}/boot/bootlogo-${PRECOMPILED_ARCH}.jpg", "", d)}
     install -d ${D}/usr/share
-    install -m 0644 bootlogo.mvi ${D}/usr/share/bootlogo.mvi
-    install -m 0644 restore.mvi ${D}/usr/share/restore.mvi
+    install -m 0644 bootlogo_fhd.mvi ${D}/usr/share/bootlogo.mvi
+    install -m 0644 restore_fhd.mvi ${D}/usr/share/restore.mvi
     ln -sf /usr/share/bootlogo.mvi ${D}/usr/share/backdrop.mvi
     install -d ${D}/usr/share/enigma2
     install -m 0644 radio.mvi ${D}/usr/share/enigma2/radio.mvi
@@ -185,9 +187,9 @@ do_deploy() {
     fi
 }
 
-addtask deploy before do_build after do_install
+addtask deploy before do_package after do_install
 
-pkg_preinst:${PN}_dreamboxv1() {
+pkg_preinst:${PN}:dreamboxv1() {
 	if [ -z "$D" ]
 	then
 		if mountpoint -q /boot
@@ -199,14 +201,14 @@ pkg_preinst:${PN}_dreamboxv1() {
 	fi
 }
 
-pkg_postinst:${PN}_dreamboxv1() {
+pkg_postinst:${PN}:dreamboxv1() {
 	if [ -z "$D" ]
 	then
 		umount /boot
 	fi
 }
 
-pkg_prerm:${PN}_dreamboxv1() {
+pkg_prerm:${PN}:dreamboxv1() {
 	if [ -z "$D" ]
 	then
 		if mountpoint -q /boot
@@ -218,7 +220,7 @@ pkg_prerm:${PN}_dreamboxv1() {
 	fi
 }
 
-pkg_postrm:${PN}_dreamboxv1() {
+pkg_postrm:${PN}:dreamboxv1() {
 	if [ -z "$D" ]
 	then
 		umount /boot

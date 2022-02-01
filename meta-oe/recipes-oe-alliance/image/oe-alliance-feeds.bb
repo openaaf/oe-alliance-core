@@ -13,12 +13,18 @@ PR = "r15"
 
 DEPENDS = "enigma2-plugin-drivers-usbserial enigma2-plugin-systemplugins-radiotimesemulator enigma2-plugin-systemplugins-hrtunerproxy"
 
+#not python3 ready
+#    ${PYTHON_PN}-cocy
+#    enigma2-plugin-extensions-moviearchiver
+
+
 RDEPENDS:${PN} = " \
     packagegroup-openplugins \
     bootlogos-enigma2-meta \
     dvb-usb-drivers-meta \
     network-usb-drivers-meta \
     picons-enigma2-meta \
+    ${@bb.utils.contains("MACHINE_FEATURES", "skins1080", "dreamplex-skins-meta", "", d)} \
     meta-enigma2-dvdburn \
     enigma2-plugins \
     enigma2-plugin-drivers-ntfs-3g \
@@ -29,18 +35,18 @@ RDEPENDS:${PN} = " \
     enigma2-plugin-extensions-enigmalight \
     enigma2-plugin-extensions-mediatomb \
     enigma2-plugin-extensions-dreamplex \
-    enigma2-plugin-extensions-et-portal \
-    enigma2-plugin-extensions-moviearchiver \
-    enigma2-plugin-extensions-yahooweather \
     enigma2-plugin-extensions-youtube \
     enigma2-plugin-extensions-autobouquets \
     enigma2-plugin-extensions-e2m3u2bouquet \
+    enigma2-plugin-extensions-e2piconizer \
+    enigma2-plugin-extensions-et-portal \
     enigma2-plugin-extensions-jedimakerxtream \
     enigma2-plugin-extensions-serienrecorder \
     enigma2-plugin-systemplugins-misplslcnscan \
     enigma2-plugin-systemplugins-radiotimesemulator \
     enigma2-plugin-extensions-subssupport \
     enigma2-plugin-extensions-xstreamity \
+    enigma2-plugin-extensions-yahooweather \
     enigma2-plugin-systemplugins-terrestrialscan \
     enigma2-plugin-systemplugins-satscanlcn \
     exteplayer3 \
@@ -94,7 +100,6 @@ RDEPENDS:${PN} = " \
     livestreamersrv \
     streamlinksrv \
     streamlink \
-    satpi \
     llmnr-query \
     mc \
     mergerfs \
@@ -108,7 +113,7 @@ RDEPENDS:${PN} = " \
     nss \
     ntfs-3g \
     ntp \
-    ${@bb.utils.contains("DEFAULTTUNE", "sh4", "" , "nodejs dvb-apps ", d)} \
+    ${@bb.utils.contains("DEFAULTTUNE", "sh4", "" , "nodejs dvb-apps satpi", d)} \
     odhcp6c \
     ofgwrite \
     openresolv \
@@ -133,7 +138,6 @@ RDEPENDS:${PN} = " \
     ${PYTHON_PN}-circuits \
     ${PYTHON_PN}-circuits-bricks \
     ${PYTHON_PN}-cfscrape \
-    ${PYTHON_PN}-cocy \
     ${PYTHON_PN}-future \
     ${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-futures", "${PYTHON_PN}-futures3", d)} \
     ${PYTHON_PN}-fuzzywuzzy \
@@ -153,6 +157,7 @@ RDEPENDS:${PN} = " \
     ${PYTHON_PN}-levenshtein \
     ${PYTHON_PN}-soco \
     ${PYTHON_PN}-pyexecjs \
+    ${PYTHON_PN}-scrapy \
     ${@bb.utils.contains("DEFAULTTUNE", "sh4", "" , "rclone zerotier", d)} \
     rapidxml \
     rsync \
