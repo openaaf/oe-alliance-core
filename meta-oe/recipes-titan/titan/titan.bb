@@ -356,7 +356,7 @@ do_compile() {
     fi
 
 #	CACHEDIR=$(echo ${TMPDIR} | sed "s!builds/${DISTRO_NAME}/${DISTRO_TYPE}/${MACHINE}/tmp!svncache!")
-	CACHEDIR=${TMPDIR}/svncache
+	CACHEDIR=${TMPDIR}/svncache/${MACHINEBUILD}
 	echo "CACHEDIR ${CACHEDIR}"
 
 	KERNELDIR=${TMPDIR}/deploy/images/${MACHINE}/uImage
