@@ -11,6 +11,7 @@ PKGV = "1.0+git${GITPKGV}"
 PR = "r3"
 
 SRC_URI = "git://git.linuxtv.org/edid-decode.git;protocol=https"
+SRC_URI_append_sh4 += "file://sh4-gcc-unrecognized-command-line-option-implicit-fallthrough.patch"
 
 S = "${WORKDIR}/git"
 
