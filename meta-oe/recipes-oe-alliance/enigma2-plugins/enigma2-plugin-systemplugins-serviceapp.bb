@@ -9,6 +9,7 @@ RCONFLICTS_${PN} = "enigma2-plugin-extensions-serviceapp"
 RREPLACES_${PN} = "enigma2-plugin-extensions-serviceapp"
 
 SRCREV = "251520b6879456c529295d5a767de0144a54d165"
+SRCREV_openaaf = "02956ea6b05a0186667582f9f25491f18334d31b"
 SRCREV_openatv = "02956ea6b05a0186667582f9f25491f18334d31b"
 SRCREV_openeight = "02956ea6b05a0186667582f9f25491f18334d31b"
 SRCREV_opendroid = "02956ea6b05a0186667582f9f25491f18334d31b"
