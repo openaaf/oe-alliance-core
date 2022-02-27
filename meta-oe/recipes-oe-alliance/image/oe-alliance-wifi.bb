@@ -74,10 +74,12 @@ RDEPENDS_${PN} = "\
     ${@bb.utils.contains("MACHINE", "i55se", "enigma2-plugin-drivers-network-usb-rtl8192eu enigma2-plugin-drivers-network-usb-mt7601u enigma2-plugin-drivers-network-usb-rtl8192fu", "", d)} \
     ${@bb.utils.contains("MACHINE", "ustym4kpro", "enigma2-plugin-drivers-network-usb-rtl8192eu enigma2-plugin-drivers-network-usb-rtl8822cu", "", d)} \
     ${@bb.utils.contains("MACHINE", "ustym4kottpremium", "enigma2-plugin-drivers-network-usb-rtl8192eu enigma2-plugin-drivers-network-usb-rtl8822cu", "", d)} \
+    ${@bb.utils.contains("MACHINE", "og2ott4k", "enigma2-plugin-drivers-network-usb-rtl8821cu enigma2-plugin-drivers-network-usb-rtl8192eu enigma2-plugin-drivers-network-usb-mt7601u enigma2-plugin-drivers-network-usb-rtl8822cu", "", d)} \
     ${@bb.utils.contains("MACHINEBUILD", "osmio4k", "enigma2-plugin-drivers-network-usb-qca6174", "", d)} \
     ${@bb.utils.contains("MACHINEBUILD", "osmio4kplus", "enigma2-plugin-drivers-network-usb-qca6174", "", d)} \
     ${@bb.utils.contains("MACHINEBUILD", "formuler1", "enigma2-plugin-drivers-network-usb-rtl8822bu", "", d)} \
     ${@bb.utils.contains("MACHINEBUILD", "hd51", "enigma2-plugin-drivers-network-usb-rtl8822bu", "", d)} \
+    ${@bb.utils.contains("MACHINE_BRAND", "NOVALER", "enigma2-plugin-drivers-network-usb-rtl8821cu enigma2-plugin-drivers-network-usb-rtl8192eu enigma2-plugin-drivers-network-usb-mt7601u enigma2-plugin-drivers-network-usb-rtl8822cu enigma2-plugin-drivers-network-usb-r8188eu", "", d)} \
     "
 
 RDEPENDS_${PN}_remove_odroidc2 = "enigma2-plugin-drivers-network-usb-rtl8192cu"

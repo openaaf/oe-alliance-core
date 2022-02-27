@@ -7,7 +7,7 @@ ALLOW_EMPTY_${PN} = "1"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 PV = "1.0"
-PR = "r49"
+PR = "r51"
 
 inherit packagegroup
 
@@ -24,6 +24,7 @@ RRECOMMENDS_${PN} = "\
     cdfs \
     tvheadend \
     openssl-old \
+    sysbench \
     enigma2-plugin-extensions-sdgradio \
     enigma2-plugin-extensions-enhancedmoviecenter \
     enigma2-plugin-extensions-cooltvguide \
@@ -32,6 +33,7 @@ RRECOMMENDS_${PN} = "\
     enigma2-plugin-skins-iflatfhd \
     enigma2-plugin-skins-ax-blue-fhd-4atv \
     enigma2-plugin-skins-blue-line-oe-4atv \
+    enigma2-plugin-skins-blueaccents-hd-4atv \
     enigma2-plugin-skins-multibox-fhd-4atv \
     enigma2-plugin-skins-steampunk \
     enigma2-plugin-skins-ultimate-hd-4atv \
