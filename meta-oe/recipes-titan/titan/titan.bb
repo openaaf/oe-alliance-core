@@ -9,11 +9,9 @@ require conf/license/license-gplv2.inc
 inherit gitpkgv gettext
 
 SRCREV = "${AUTOREV}"
-PKGV = "2.0+svnr${GITPKGV}"
-PV = "2.0+svnr${SRCPV}"
-PR = "r3"
+PV = "${SRCPV}"
 
-SRC_URI = "svn://sbnc.dyndns.tv/svn/;module=titan;protocol=http"
+SRC_URI = "svn://public:public@sbnc.dyndns.tv;module=svn;protocol=http"
 
 DEPENDS = " \
 	curl \
@@ -45,136 +43,7 @@ RRECOMMENDS_append_sh4_${PN} = " \
 	libmme-host \
 	"
 
-RRECOMMENDS_append_arm_${PN} = " \
-	glib-networking \
-	glibc-gconv-utf-16 \
-	${@bb.utils.contains("GST_VERSION", "1.0", "gstreamer1.0-plugins-base gstreamer1.0", "gst-plugins-base gstreamer", d)} \
-	${@bb.utils.contains("GST_VERSION", "1.0", "gstreamer1.0-plugin-subsink", "gst-plugin-subsink", d)} \
-	${@bb.utils.contains("GST_VERSION", "1.0", "gstreamer1.0-plugin-dvbmediasink", "gst-plugin-dvbmediasink", d)} \
-	${GST_BASE_RDEPS} \
-	${GST_GOOD_RDEPS} \
-	${GST_BAD_RDEPS} \
-	${GST_UGLY_RDEPS} \
-	${GST_BASE_DVD} \
-	${@bb.utils.contains("GST_VERSION", "1.0", "${GST_BAD_OPUS}", "", d)} \
-	"
-
-GST_BASE_RDEPS = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
-	gstreamer1.0-plugins-base-alsa \
-	gstreamer1.0-plugins-base-app \
-	gstreamer1.0-plugins-base-audioconvert \
-	gstreamer1.0-plugins-base-audioresample \
-	gstreamer1.0-plugins-base-audiorate \
-	gstreamer1.0-plugins-base-videoconvert \
-	gstreamer1.0-plugins-base-ivorbisdec \
-	gstreamer1.0-plugins-base-ogg \
-	gstreamer1.0-plugins-base-playback \
-	gstreamer1.0-plugins-base-subparse \
-	gstreamer1.0-plugins-base-typefindfunctions \
-	gstreamer1.0-plugins-base-vorbis \
-	gstreamer1.0-plugins-base-rawparse \
-	', ' \
-	gst-plugins-base-alsa \
-	gst-plugins-base-app \
-	gst-plugins-base-audioconvert \
-	gst-plugins-base-audioresample \
-	gst-plugins-base-decodebin \
-	gst-plugins-base-decodebin2 \
-	gst-plugins-base-ogg \
-	gst-plugins-base-playbin \
-	gst-plugins-base-subparse \
-	gst-plugins-base-typefindfunctions \
-	gst-plugins-base-vorbis \
-	', d)}"
-
-GST_GOOD_RDEPS = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
-	gstreamer1.0-plugins-good-apetag \
-	gstreamer1.0-plugins-good-audioparsers \
-	gstreamer1.0-plugins-good-autodetect \
-	gstreamer1.0-plugins-good-avi \
-	gstreamer1.0-plugins-good-flac \
-	gstreamer1.0-plugins-good-flv \
-	gstreamer1.0-plugins-good-icydemux \
-	gstreamer1.0-plugins-good-id3demux \
-	gstreamer1.0-plugins-good-isomp4 \
-	gstreamer1.0-plugins-good-matroska \
-	gstreamer1.0-plugins-good-rtp \
-	gstreamer1.0-plugins-good-rtpmanager \
-	gstreamer1.0-plugins-good-rtsp \
-	gstreamer1.0-plugins-good-soup \
-	gstreamer1.0-plugins-good-udp \
-	gstreamer1.0-plugins-good-wavparse \
-	gstreamer1.0-plugins-good-wavpack \
-	', ' \
-	gst-plugins-good-apetag \
-	gst-plugins-good-audioparsers \
-	gst-plugins-good-autodetect \
-	gst-plugins-good-avi \
-	gst-plugins-good-flac \
-	gst-plugins-good-flv \
-	gst-plugins-good-icydemux \
-	gst-plugins-good-id3demux \
-	gst-plugins-good-isomp4 \
-	gst-plugins-good-matroska \
-	gst-plugins-good-rtp \
-	gst-plugins-good-rtpmanager \
-	gst-plugins-good-rtsp \
-	gst-plugins-good-souphttpsrc \
-	gst-plugins-good-udp \
-	gst-plugins-good-wavparse \
-	', d)}"
-
-GST_BAD_RDEPS = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
-	gstreamer1.0-plugins-bad-dashdemux \
-	gstreamer1.0-plugins-bad-mms \
-	gstreamer1.0-plugins-bad-mpegpsdemux \
-	gstreamer1.0-plugins-bad-mpegtsdemux \
-	gstreamer1.0-plugins-bad-rtmp \
-	gstreamer1.0-plugins-bad-smoothstreaming \
-	gstreamer1.0-plugins-bad-faad \
-	gstreamer1.0-plugins-bad-hls \
-	gstreamer1.0-plugins-bad-videoparsersbad \
-	gstreamer1.0-plugins-bad-autoconvert \
-	', ' \
-	gst-plugins-bad-cdxaparse \
-	gst-plugins-bad-mms \
-	gst-plugins-bad-mpegdemux \
-	gst-plugins-bad-rtmp \
-	gst-plugins-bad-vcdsrc \
-	gst-plugins-bad-fragmented \
-	gst-plugins-bad-faad \
-	', d)}"
-
-GST_BAD_OPUS = " \
-	${@bb.utils.contains("TARGET_ARCH", "arm", " gstreamer1.0-plugins-base-opus gstreamer1.0-plugins-bad-opusparse", "", d)} \
-	"
-
-GST_UGLY_RDEPS = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
-	gstreamer1.0-plugins-ugl42938y-amrnb \
-	gstreamer1.0-plugins-ugly-amrwbdec \
-	gstreamer1.0-plugins-ugly-asf \
-	gstreamer1.0-plugins-ugly-cdio \
-	gstreamer1.0-plugins-ugly-dvdsub \
-	', ' \
-	gst-plugins-ugly-amrnb \
-	gst-plugins-ugly-amrwbdec \
-	gst-plugins-ugly-asf \
-	gst-plugins-ugly-cdio \
-	gst-plugins-ugly-dvdsub \
-	gst-plugins-ugly-mad \
-	gst-plugins-ugly-mpegaudioparse \
-	gst-plugins-ugly-mpegstream \
-	', d)}"
-
-GST_BASE_DVD = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
-	gstreamer1.0-plugins-bad-videoparsersbad \
-	gstreamer1.0-plugins-bad-mpegtsmux \
-	', ' \
-	gst-plugins-bad-videoparsersbad \
-	gst-plugins-bad-mpegtsmux \
-	', d)}"
-
-S = "${WORKDIR}/titan"
+S = "${WORKDIR}/svn/titan"
 
 CFLAGS_append = " \
 	-I${STAGING_DIR_TARGET}/usr/include \
@@ -183,36 +52,11 @@ CFLAGS_append = " \
 	-I${STAGING_DIR_TARGET}/usr/include/dreamdvd \
 	-I${STAGING_DIR_TARGET}/usr/include/libdreamdvd \
 	-I${STAGING_DIR_TARGET}/usr/include/curl \
-	-I${WORKDIR}/titan/libdreamdvd \
-	-I${WORKDIR}/titan/titan \
-	-I${WORKDIR}/titan/titan/include \
-	-I${WORKDIR}/titan/libeplayer3/include \
+	-I${WORKDIR}/svn/titan/libdreamdvd \
+	-I${WORKDIR}/svn/titan/titan \
+	-I${WORKDIR}/svn/titan/titan/include \
+	-I${WORKDIR}/svn/titan/libeplayer3/include \
 	"
-
-CFLAGS_append_arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
-	-I${STAGING_DIR_TARGET}/usr/include \
-	-I${STAGING_DIR_TARGET}/usr/lib/gstreamer-1.0/include \
-	-I${STAGING_DIR_TARGET}/usr/include/gstreamer-1.0 \
-	-I${STAGING_DIR_TARGET}/usr/include/glib-2.0 \
-	-I${STAGING_DIR_TARGET}/usr/include/libxml2 \
-	-I${STAGING_DIR_TARGET}/usr/lib/glib-2.0/include \
-	-I${STAGING_DIR_TARGET}/usr/include/freetype2 \
-	-I${STAGING_DIR_TARGET}/usr/include/dreamdvd \
-	-I${STAGING_DIR_TARGET}/usr/include/libdreamdvd \	
-	-I${WORKDIR}/titan/libdreamdvd \
-	-I${WORKDIR}/titan/titan \
-    ', ' \
-	-I${STAGING_DIR_TARGET}/usr/include \
-	-I${STAGING_DIR_TARGET}/usr/include/gstreamer-0.10 \
-	-I${STAGING_DIR_TARGET}/usr/include/glib-2.0 \
-	-I${STAGING_DIR_TARGET}/usr/include/libxml2 \
-	-I${STAGING_DIR_TARGET}/usr/lib/glib-2.0/include \
-	-I${STAGING_DIR_TARGET}/usr/include/freetype2 \
-	-I${STAGING_DIR_TARGET}/usr/include/dreamdvd \
-	-I${STAGING_DIR_TARGET}/usr/include/libdreamdvd \	
-	-I${WORKDIR}/titan/libdreamdvd \
-	-I${WORKDIR}/titan/titan \
-', d)}"
 
 CFLAGS_append_sh4 = " \
 	-I${STAGING_DIR_TARGET}/usr/include/libmmeimage \
@@ -245,7 +89,8 @@ LDFLAGS_prepend_sh4 = " -lmmeimage "
 SOURCE_FILES = "titan.c"
 
 do_compile() {
-	cd ${WORKDIR}/titan/titan/tools
+#	cd ${WORKDIR}/titan/titan/tools
+    cd ${S}/titan/tools
 
     if [ "${MACHINE}" = "vusolo4k" -o "${MACHINE}" = "vusolo2" -o "${MACHINE}" = "vusolose" -o "${MACHINE}" = "vuduo2" -o "${MACHINE}" = "vuuno4k" -o "${MACHINE}" = "vuuno4kse" -o "${MACHINE}" = "vuultimo4k" -o "${MACHINE}" = "vuzero4k" -o "${MACHINE}" = "vuduo4k" -o "${MACHINE}" = "vuduo4kse" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-VUPLUS-BASE}/recipes-drivers/vuplus-dvb-proxy-${MACHINE}.bb | cut -b 12-19`
@@ -388,7 +233,8 @@ do_compile() {
 
 	echo "IMAGE_NAME: ${IMAGE_NAME}"
 
-	SVNVERSION=$(echo ${WORKDIR} | sed -nr 's/.*svnr([^.*]+)-.*/\1/p')
+#	SVNVERSION=$(echo ${WORKDIR} | sed -nr 's/.*svnr([^.*]+)-.*/\1/p')
+    SVNVERSION=${SRCPV}
 	echo "SVNVERSION: ${SVNVERSION}"
 
 	SVNVERSIONHTTP=$(svn info http://sbnc.dyndns.tv/svn/titan | grep Revision | sed s/'Revision: '//g)
@@ -415,17 +261,9 @@ do_compile() {
 	echo "./oealliance.sh ${CACHEDIR} ${KERNELDIR} ${ROOTDIR} ${TYPE} ${SRCDIR} ${CPU} ${STM} ${BOXNAME} ${DISTRO_NAME} ${DISTRO_TYPE} ${SWTYPE} ${IMAGE_NAME} ${GITVERSION} ${SVNVERSION} ${MACHINE_BRAND} ${MACHINE_NAME} ${DRIVERSDATE} ${DISTRO_VERSION} ${DISTRO_TYPE}"
 	./oealliance.sh "${CACHEDIR}" "${KERNELDIR}" "${ROOTDIR}" "${TYPE}" "${SRCDIR}" "${CPU}" "${STM}" "${BOXNAME}" "${DISTRO_NAME}" "${DISTRO_TYPE}" "${SWTYPE}" "${IMAGE_NAME}" "${GITVERSION}" "${SVNVERSION}" "${MACHINE_BRAND}" "${MACHINE_NAME}" "${DRIVERSDATE}" "${DISTRO_VERSION}" "${DISTRO_TYPE}"
 
-	cd ${WORKDIR}/titan/titan
+	cd ${S}/titan
 
 	cp Makefile.am.4.3 Makefile.am
-
-#	libtoolize --force
-#	aclocal -I ${STAGING_DIR_TARGET}/usr/share/aclocal
-#	autoconf
-#	automake --foreign --add-missing
-#	./configure --host=${HOST_SYS} --build=${BUILD_SYS}
-
-#	make -f Makefile titan
 
     ${CC} ${SOURCE_FILES} ${CFLAGS} -o titan ${LDFLAGS}
 }
@@ -557,5 +395,6 @@ do_install() {
 }
 #do_install[vardepsexclude] += "DATETIME"
 
-do_configure[nostamp] = "1"
+#do_configure[nostamp] = "1"
+# build allways is disable
 do_install[vardepsexclude] += "DATE"

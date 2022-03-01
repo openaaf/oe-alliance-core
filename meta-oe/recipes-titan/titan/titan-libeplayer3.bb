@@ -8,15 +8,12 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 require conf/license/license-gplv2.inc
 
-#inherit autotools pkgconfig
 inherit pkgconfig
 
 SRCREV = "${AUTOREV}"
-PKGV = "2.0+git${GITPKGV}"
-PV = "2.0+gitr${SRCPV}"
-PR = "r3"
+PV = "${SRCPV}"
 
-SRC_URI = "svn://sbnc.dyndns.tv/svn/titan;module=libeplayer3;protocol=http"
+SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/titan;module=libeplayer3;protocol=http"
 
 DEPENDS = "ffmpeg libbluray"
 RDEPENDS_${PN} = "ffmpeg libbluray"

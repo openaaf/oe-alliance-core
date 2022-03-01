@@ -9,12 +9,9 @@ require conf/license/license-gplv2.inc
 inherit gitpkgv
 
 SRCREV = "${AUTOREV}"
-PKGV = "2.0+svnr${GITPKGV}"
-PV = "2.0+svnr${SRCPV}"
-PR = "r3"
+PV = "${SRCPV}"
 
-
-SRC_URI = "svn://sbnc.dyndns.tv/svn/tools;module=infobox;protocol=http"
+SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/tools;module=infobox;protocol=http"
 
 DEPENDS = " \
 	freetype \

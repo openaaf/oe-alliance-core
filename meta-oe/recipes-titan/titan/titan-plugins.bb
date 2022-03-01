@@ -8,10 +8,9 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 require conf/license/license-gplv2.inc
 
 SRCREV = "${AUTOREV}"
-PV = "2.0+svnr${SRCPV}"
-PR = "r1"
+PV = "${SRCPV}"
 
-SRC_URI = "svn://sbnc.dyndns.tv/svn/;module=titan;protocol=http"
+SRC_URI = "svn://public:public@sbnc.dyndns.tv;module=svn;protocol=http"
 
 DEPENDS = "titan \
 	python-pyopenssl \
@@ -28,9 +27,10 @@ DEPENDS = "titan \
 
 RDEPENDS_${PN} = "python-ctypes"
 
-S = "${WORKDIR}/titan"
+S = "${WORKDIR}/svn/titan/plugins"
 
 #inherit autotools-brokensep pkgconfig
+inherit autotools-brokensep
 
 CFLAGS = "\
 	-I${STAGING_DIR_TARGET}/usr/include \
@@ -38,51 +38,15 @@ CFLAGS = "\
 	-I${STAGING_DIR_TARGET}/usr/include/python2.7 \
 	-include Python.h \
 	-I${STAGING_DIR_TARGET}/usr/include/tirpc \
-	-I${STAGING_DIR_TARGET}/usr/include/gstreamer-0.10 \
-	-I${STAGING_DIR_TARGET}/usr/include/glib-2.0 \
-	-I${STAGING_DIR_TARGET}/usr/include/libxml2 \
-	-I${STAGING_DIR_TARGET}/usr/lib/glib-2.0/include \
-	-I${STAGING_DIR_TARGET}/usr/include/freetype2 \
-	-I${STAGING_DIR_TARGET}/usr/include/dreamdvd \
-	-I${STAGING_DIR_TARGET}/usr/include/libdreamdvd \	
-	-I${WORKDIR}/titan/libdreamdvd \
-	-I${WORKDIR}/titan/titan"
-
-CFLAGS_append = " \
 	-I${STAGING_DIR_TARGET}/usr/include \
 	-I${STAGING_DIR_TARGET}/usr/include/freetype2 \
 	-I${STAGING_DIR_TARGET}/usr/include/openssl \
 	-I${STAGING_DIR_TARGET}/usr/include/dreamdvd \
 	-I${STAGING_DIR_TARGET}/usr/include/libdreamdvd \
-	-I${WORKDIR}/titan/libdreamdvd \
-	-I${WORKDIR}/titan/titan \
-	-I${WORKDIR}/titan/titan/include \
-	-I${WORKDIR}/titan/libeplayer3/include \
-	"
-CFLAGS_append_arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
-	-I${STAGING_DIR_TARGET}/usr/include \
-	-I${STAGING_DIR_TARGET}/usr/lib/gstreamer-1.0/include \
-	-I${STAGING_DIR_TARGET}/usr/include/gstreamer-1.0 \
-	-I${STAGING_DIR_TARGET}/usr/include/glib-2.0 \
-	-I${STAGING_DIR_TARGET}/usr/include/libxml2 \
-	-I${STAGING_DIR_TARGET}/usr/lib/glib-2.0/include \
-	-I${STAGING_DIR_TARGET}/usr/include/freetype2 \
-	-I${STAGING_DIR_TARGET}/usr/include/dreamdvd \
-	-I${STAGING_DIR_TARGET}/usr/include/libdreamdvd \	
-	-I${WORKDIR}/titan/libdreamdvd \
-	-I${WORKDIR}/titan/titan \
-    ', ' \
-	-I${STAGING_DIR_TARGET}/usr/include \
-	-I${STAGING_DIR_TARGET}/usr/include/gstreamer-0.10 \
-	-I${STAGING_DIR_TARGET}/usr/include/glib-2.0 \
-	-I${STAGING_DIR_TARGET}/usr/include/libxml2 \
-	-I${STAGING_DIR_TARGET}/usr/lib/glib-2.0/include \
-	-I${STAGING_DIR_TARGET}/usr/include/freetype2 \
-	-I${STAGING_DIR_TARGET}/usr/include/dreamdvd \
-	-I${STAGING_DIR_TARGET}/usr/include/libdreamdvd \	
-	-I${WORKDIR}/titan/libdreamdvd \
-	-I${WORKDIR}/titan/titan \
-', d)}"
+	-I${WORKDIR}/svn/titan/libdreamdvd \
+	-I${WORKDIR}/svn/titan/titan \
+	-I${WORKDIR}/svn/titan/titan/include \
+	-I${WORKDIR}/svn/titan/libeplayer3/include"
 
 CFLAGS_append_sh4 = " \
 	-I${STAGING_DIR_TARGET}/usr/include/libmmeimage \
@@ -96,9 +60,9 @@ CFLAGS_append_arm = " -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-fl
 LDFLAGS_prepend = " -lcurl "
 
 do_configure() {
-	cd ${S}/plugins
+    cd ${S}
 
-	SVNVERSION=`echo ${WORKDIR} | sed -nr 's/.*svnr([^.*]+)-.*/\1/p'`
+    SVNVERSION=${SRCPV}
 	echo SVNVERSION: ${SVNVERSION}
 
 	sed "s/^#define PLUGINVERSION .*/#define PLUGINVERSION $SVNVERSION/" -i  ../titan/struct.h
@@ -111,47 +75,45 @@ do_configure() {
 	./configure --host=${HOST_SYS} --build=${BUILD_SYS}
 }
 
-
-
 do_compile() {
-	cd ${S}/plugins
+	cd ${S}
 	make clean
 	make -f Makefile
-	${STRIP} ${S}/plugins/*/.libs/*.so
+	${STRIP} ${S}/*/.libs/*.so
 }
 
 FILES_${PN} = "/usr/local/share/titan/plugins"
 
-do_install_append() {
+do_install() {
 	install -d ${D}/usr/local/share/titan/plugins
 	
-	LIST="`cat plugins/Makefile.am | sed 's/\\t\+/ /g' | sed 's/ \\+//g' | sed 's/\\\//g' | grep -v =`"
+	LIST="`cat ../plugins/Makefile.am | sed 's/\\t\+/ /g' | sed 's/ \\+//g' | sed 's/\\\//g' | grep -v =`"
 	echo LIST $LIST
 	for ROUND in $LIST;do
 		echo ROUND $ROUND
 		install -d ${D}/usr/local/share/titan/plugins/$ROUND
-		install -m 0644 plugins/$ROUND/.libs/*.so ${D}/usr/local/share/titan/plugins/$ROUND
+		install -m 0644 ../plugins/$ROUND/.libs/*.so ${D}/usr/local/share/titan/plugins/$ROUND
 
-		if test -e plugins/$ROUND/$ROUND.sh;then
-			install -m 0655 plugins/$ROUND/*.sh ${D}/usr/local/share/titan/plugins/$ROUND
+		if test -e ../plugins/$ROUND/$ROUND.sh;then
+			install -m 0655 ../plugins/$ROUND/*.sh ${D}/usr/local/share/titan/plugins/$ROUND
 		fi
-		if test -e plugins/$ROUND/files;then
-			cp -a plugins/$ROUND/files ${D}/usr/local/share/titan/plugins/$ROUND/
+		if test -e ../plugins/$ROUND/files;then
+			cp -a ../plugins/$ROUND/files ${D}/usr/local/share/titan/plugins/$ROUND/
 		fi
-		if test -e skins/$ROUND/picons;then
-			cp -a skins/$ROUND/picons ${D}/usr/local/share/titan/plugins/$ROUND/
+		if test -e ../skins/$ROUND/picons;then
+			cp -a ../skins/$ROUND/picons ${D}/usr/local/share/titan/plugins/$ROUND/
 		fi
-		if test -e skins/$ROUND/skin;then
-			cp -a skins/$ROUND/skin ${D}/usr/local/share/titan/plugins/$ROUND/
+		if test -e ../skins/$ROUND/skin;then
+			cp -a ../skins/$ROUND/skin ${D}/usr/local/share/titan/plugins/$ROUND/
 		fi
-		if test -e skins/$ROUND/skin.xml;then
-			install -m 0644 skins/$ROUND/skin.xml ${D}/usr/local/share/titan/plugins/$ROUND/
+		if test -e ../skins/$ROUND/skin.xml;then
+			install -m 0644 ../skins/$ROUND/skin.xml ${D}/usr/local/share/titan/plugins/$ROUND/
 		fi
-		if test -e skins/$ROUND/plugin.png;then
-			install -m 0644 skins/$ROUND/plugin.png ${D}/usr/local/share/titan/plugins/$ROUND/
+		if test -e ../skins/$ROUND/plugin.png;then
+			install -m 0644 ../skins/$ROUND/plugin.png ${D}/usr/local/share/titan/plugins/$ROUND/
 		fi
-		if test -e skins/$ROUND/default.jpg;then
-			install -m 0644 skins/$ROUND/default.jpg ${D}/usr/local/share/titan/plugins/$ROUND/
+		if test -e ../skins/$ROUND/default.jpg;then
+			install -m 0644 ../skins/$ROUND/default.jpg ${D}/usr/local/share/titan/plugins/$ROUND/
 		fi
 	done
 }
