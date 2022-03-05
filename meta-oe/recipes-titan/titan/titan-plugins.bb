@@ -1,4 +1,4 @@
-SUMMARY = "TitanNit is a fast Linux Framebuffer Gui"
+SUMMARY = "Plugins for Titan"
 MAINTAINER = "TitanNit Team"
 SECTION = "plugins"
 #PRIORITY = "optional"
@@ -100,20 +100,20 @@ do_install() {
 		if test -e ../plugins/$ROUND/files;then
 			cp -a ../plugins/$ROUND/files ${D}/usr/local/share/titan/plugins/$ROUND/
 		fi
-		if test -e ../skins/$ROUND/picons;then
-			cp -a ../skins/$ROUND/picons ${D}/usr/local/share/titan/plugins/$ROUND/
+		if test -e ../plugins/$ROUND/picons;then
+			cp -a ../plugins/$ROUND/picons ${D}/usr/local/share/titan/plugins/$ROUND/
 		fi
-		if test -e ../skins/$ROUND/skin;then
-			cp -a ../skins/$ROUND/skin ${D}/usr/local/share/titan/plugins/$ROUND/
+		if test -e ../plugins/$ROUND/skin;then
+			cp -a ../plugins/$ROUND/skin ${D}/usr/local/share/titan/plugins/$ROUND/
 		fi
-		if test -e ../skins/$ROUND/skin.xml;then
-			install -m 0644 ../skins/$ROUND/skin.xml ${D}/usr/local/share/titan/plugins/$ROUND/
+		if test -e ../plugins/$ROUND/skin.xml;then
+			install -m 0644 ../plugins/$ROUND/skin.xml ${D}/usr/local/share/titan/plugins/$ROUND/
 		fi
-		if test -e ../skins/$ROUND/plugin.png;then
-			install -m 0644 ../skins/$ROUND/plugin.png ${D}/usr/local/share/titan/plugins/$ROUND/
+		if test -e ../plugins/$ROUND/plugin.png;then
+			install -m 0644 ../plugins/$ROUND/plugin.png ${D}/usr/local/share/titan/plugins/$ROUND/
 		fi
-		if test -e ../skins/$ROUND/default.jpg;then
-			install -m 0644 ../skins/$ROUND/default.jpg ${D}/usr/local/share/titan/plugins/$ROUND/
+		if test -e ../plugins/$ROUND/default.jpg;then
+			install -m 0644 ../plugins/$ROUND/default.jpg ${D}/usr/local/share/titan/plugins/$ROUND/
 		fi
 	done
 }

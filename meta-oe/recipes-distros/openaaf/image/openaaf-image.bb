@@ -35,7 +35,6 @@ IMAGE_INSTALL = "\
 	${@bb.utils.contains("MACHINE_FEATURES", "chromiumos", "enigma2-plugin-extensions-chromium", "", d)} \
 	${DISTRO}-base \
    	titan \
-   	titan-plugins \
 	titan-plugin-filemanager \
 	titan-plugin-imdbapi \
 	titan-plugin-imdb \
@@ -46,6 +45,7 @@ IMAGE_INSTALL = "\
 	titan-plugin-tithek \
 	titan-plugin-tmdb \
 	titan-plugin-weather \
+	titan-skin-default \
     "
 
 IMAGE_INSTALL_append_mipsel_aus = "\
