@@ -12,6 +12,8 @@ PV = "${SRCPV}"
 
 SRC_URI = "svn://buildbin:buildbin@sbnc.dyndns.tv;module=svn;protocol=http"
 
+DEPENDS = "titan"
+
 S = "${WORKDIR}/svn/titan/skins"
 
 FILES_${PN} = "/usr/local/share/titan/skin"
@@ -32,7 +34,7 @@ do_install() {
 
 python populate_packages_prepend() {
     titan_skindir = bb.data.expand('/usr/local/share/titan/skin', d)
-    do_split_packages(d, titan_skindir, '(.*?)/.*', 'titan-skin-%s', 'Titan Skin: %s', recursive=True, match_path=True, prepend=True)
+    do_split_packages(d, titan_skindir, '(.*?)/.*', 'titan-skin-%s', 'Titan Skin: %s', recursive=True, match_path=True, prepend=True, extra_depends="titan")
 }
 
 PACKAGES_DYNAMIC = "titan-skin-*"
