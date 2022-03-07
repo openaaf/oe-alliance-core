@@ -37,7 +37,7 @@ IMAGE_INSTALL = "\
 	titan-plugin-player-tithek \
 	titan-plugin-infos-tmdb \
 	titan-plugin-infos-weather \
-	titan-plugin-skin-default \
+	titan-plugin-skins-default \
     "
 
 IMAGE_INSTALL_append_mipsel_aus = "\
