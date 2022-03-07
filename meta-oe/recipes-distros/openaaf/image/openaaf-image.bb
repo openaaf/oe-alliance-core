@@ -24,28 +24,20 @@ DEPENDS = " \
 do_rootfs[deptask] = "do_rm_work"
 
 IMAGE_INSTALL = "\
-	${@bb.utils.contains("MACHINE_FEATURES", "smallflash", "", "enigma2-plugin-extensions-enhancedmoviecenter", d)} \
-	${@bb.utils.contains("MACHINE_FEATURES", "dreamboxv1", "enigma2-plugin-extensions-dflash mtd-utils-jffs2", "", d)} \
-	${@bb.utils.contains("MACHINE_FEATURES", "dreamboxv2", "enigma2-plugin-extensions-dbackup e2fsprogs-badblocks", "", d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "boxmodel", "boxmodel", "", d)} \
-	${@bb.utils.contains("MACHINE_FEATURES", "uianimation", "enigma2-plugin-systemplugins-animationsetup" , "", d)} \
-	${@bb.utils.contains("MACHINE_FEATURES", "osdanimation", "enigma2-plugin-systemplugins-animationsetup" , "", d)} \
-	${@bb.utils.contains("MACHINE_FEATURES", "webkithbbtv", "enigma2-plugin-extensions-webkithbbtv", "", d)} \
-	${@bb.utils.contains("MACHINE_FEATURES", "grautec", "enigma2-plugin-extensions-grautec", "", d)} \
-	${@bb.utils.contains("MACHINE_FEATURES", "chromiumos", "enigma2-plugin-extensions-chromium", "", d)} \
 	${DISTRO}-base \
    	titan \
-	titan-plugin-filemanager \
-	titan-plugin-imdbapi \
-	titan-plugin-imdb \
-	titan-plugin-mc \
-	titan-plugin-networkbrowser \
-	titan-plugin-readerconfig \
-	titan-plugin-streaminfo \
-	titan-plugin-tithek \
-	titan-plugin-tmdb \
-	titan-plugin-weather \
-	titan-skin-default \
+	titan-plugin-tools-filemanager \
+	titan-plugin-infos-imdbapi \
+	titan-plugin-infos-imdb \
+	titan-plugin-player-mc \
+	titan-plugin-network-networkbrowser \
+	titan-plugin-tools-readerconfig \
+	titan-plugin-infos-streaminfo \
+	titan-plugin-player-tithek \
+	titan-plugin-infos-tmdb \
+	titan-plugin-infos-weather \
+	titan-plugin-skin-default \
     "
 
 IMAGE_INSTALL_append_mipsel_aus = "\
