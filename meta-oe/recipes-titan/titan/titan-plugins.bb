@@ -31,7 +31,8 @@ RDEPENDS_${PN} = "python-ctypes"
 S = "${WORKDIR}/svn/titan/plugins"
 
 #inherit autotools-brokensep pkgconfig
-inherit autotools-brokensep
+#inherit autotools-brokensep
+inherit autotools-brokensep gitpkgv pythonnative pkgconfig gettext
 
 CFLAGS = "\
 	-I${STAGING_DIR_TARGET}/usr/include \
@@ -85,9 +86,6 @@ do_compile() {
 
 FILES_${PN} = "/usr/local/share/titan/plugins"
 
-PROVIDES += " \
-    titan-plugin-extensions-imdb"
-
 do_install() {
 	install -d ${D}/usr/local/share/titan/plugins
 	
@@ -125,68 +123,37 @@ do_install() {
 python populate_packages_prepend() {
     titan_plugindir = bb.data.expand('/usr/local/share/titan/plugins', d)
     do_split_packages(d, titan_plugindir, '(.*?_.*?)/.*', 'titan-plugin-%s', '%s', recursive=True, match_path=True, prepend=True, extra_depends="titan")
-#    do_split_packages(d, titan_plugindir, '^(\w+)/[a-zA-Z0-9_]+.*$', 'titan-plugin-%s', '%s', recursive=True, match_path=True, prepend=True, extra_depends="titan")
-#    do_split_packages(d, titan_plugindir, '^(\w+)/.*\.h$', 'titan-plugin-%s-src', '%s (source files)', recursive=True, match_path=True, prepend=True)
-#    do_split_packages(d, titan_plugindir, '^(\w+)/.*\.la$', 'titan-plugin-%s-dev', '%s (development)', recursive=True, match_path=True, prepend=True)
-#    do_split_packages(d, titan_plugindir, '^(\w+)/.*\.a$', 'titan-plugin-%s-staticdev', '%s (static development)', recursive=True, match_path=True, prepend=True)
-#    do_split_packages(d, titan_plugindir, '^(\w+)/(.*/)?\.debug/.*$', 'titan-plugin-%s-dbg', '%s (debug)', recursive=True, match_path=True, prepend=True)
 
     def getControlLines(mydir, d, package):
         packagename = package[-1]
 
         import os
         try:
-            #ac3lipsync is renamed since 20091121 to audiosync.. but rename in cvs is not possible without lost of revision history..
-            #so the foldername is still ac3lipsync
-            if packagename == 'audiosync':
-                packagename = 'ac3lipsync'
-            print("mydir2 ", mydir)
-            print("packagename2 ", packagename)
-            src = open(mydir + packagename + "/CONTROL/control").read()
-            print("src ", src)
+            if(len(package) != 4):
+                print("5 return")                
+                return
+            section = package[2]
+            src = open(mydir + section + "_" + packagename + "/CONTROL/control").read()
         except IOError:
             return
         for line in src.split("\n"):
-            print("full_package1")
-            print("package[0] ", package[0])
-            print("package[1] ", package[1])
-            print("package[2] ", package[2])
-            print("package[3] ", package[3])
-
             full_package = package[0] + '-' + package[1] + '-' + package[2] + '-' + package[3]
             print("full_package ", full_package)
-            if line.startswith('Depends: '):
-                # some plugins still reference twisted-* dependencies, these packages are now called python-twisted-*
-                rdepends = []
-                for depend in line[9:].split(','):
-                    depend = depend.strip()
-                    if depend.startswith('twisted-'):
-                        rdepends.append(depend.replace('twisted-', 'python-twisted-'))
-                    elif depend.startswith('enigma2') and not depend.startswith('enigma2-'):
-                        pass # Ignore silly depends on enigma2 with all kinds of misspellings
-                    else:
-                        rdepends.append(depend)
-                rdepends = ' '.join(rdepends)
-                d.setVar('RDEPENDS_' + full_package, rdepends)
-            elif line.startswith('Recommends: '):
-                d.setVar('RRECOMMENDS_' + full_package, line[12:])
-            elif line.startswith('Description: '):
+            if line.startswith('Description: '):
+                print("found decription ", line[13:])
                 d.setVar('DESCRIPTION_' + full_package, line[13:])
-            elif line.startswith('Replaces: '):
-                d.setVar('RREPLACES_' + full_package, ' '.join(line[10:].split(', ')))
-            elif line.startswith('Conflicts: '):
-                d.setVar('RCONFLICTS_' + full_package, ' '.join(line[11:].split(', ')))
+                d.setVar('SUMMARY_' + full_package, line[13:])
+            elif line.startswith('Showname: '):
+                print("found showname ", line[10:])
+                d.setVar('SHOWNAME_' + full_package, line[10:])
             elif line.startswith('Maintainer: '):
                 d.setVar('MAINTAINER_' + full_package, line[12:])
 
     mydir = d.getVar('D', True) + "/../svn/titan/plugins/"
-    print("mydir3 ", mydir)
-#    for package in d.getVar('PACKAGES', d, 1).split():
-#        getControlLines(mydir, d, package.split('-'))
+    print("1mydir ", mydir)
+    for package in d.getVar('PACKAGES', d, 1).split():
+        getControlLines(mydir, d, package.split('-'))
 }
 
-#do_package_qa() {
-#}
-
-#PACKAGES_DYNAMIC = "titan-plugin-* titan-locale-*"
-
+do_package_qa() {
+}
