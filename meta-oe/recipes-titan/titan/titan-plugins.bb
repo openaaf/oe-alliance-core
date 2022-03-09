@@ -81,7 +81,7 @@ do_compile() {
 	cd ${S}
 	make clean
 	make -f Makefile
-	${STRIP} ${S}/*/.libs/*.so
+	${STRIP} ${S}/*/*/.libs/*.so
 }
 
 FILES_${PN} = "/usr/local/share/titan/plugins"
@@ -89,40 +89,45 @@ FILES_${PN} = "/usr/local/share/titan/plugins"
 do_install() {
 	install -d ${D}/usr/local/share/titan/plugins
 	
-	LIST="`cat ../plugins/Makefile.am | sed 's/\\t\+/ /g' | sed 's/ \\+//g' | sed 's/\\\//g' | grep -v =`"
-	echo LIST $LIST
-	for ROUND in $LIST;do
-		echo ROUND $ROUND
-		install -d ${D}/usr/local/share/titan/plugins/$ROUND
-		install -m 0644 ../plugins/$ROUND/.libs/*.so ${D}/usr/local/share/titan/plugins/$ROUND
+	SECTIONLIST="`cat ../plugins/Makefile.am | sed 's/\\t\+/ /g' | sed 's/ \\+//g' | sed 's/\\\//g' | grep -v =`"
+	echo SECTIONLIST $SECTIONLIST
+	for SECTION in $SECTIONLIST;do
+		echo SECTION $SECTION
+    	PLUGINLIST="`cat ../plugins/$SECTION/Makefile.am | sed 's/\\t\+/ /g' | sed 's/ \\+//g' | sed 's/\\\//g' | grep -v =`"
 
-		if test -e ../plugins/$ROUND/$ROUND.sh;then
-			install -m 0655 ../plugins/$ROUND/*.sh ${D}/usr/local/share/titan/plugins/$ROUND
-		fi
-		if test -e ../plugins/$ROUND/files;then
-			cp -a ../plugins/$ROUND/files ${D}/usr/local/share/titan/plugins/$ROUND/
-		fi
-		if test -e ../plugins/$ROUND/picons;then
-			cp -a ../plugins/$ROUND/picons ${D}/usr/local/share/titan/plugins/$ROUND/
-		fi
-		if test -e ../plugins/$ROUND/skin;then
-			cp -a ../plugins/$ROUND/skin ${D}/usr/local/share/titan/plugins/$ROUND/
-		fi
-		if test -e ../plugins/$ROUND/skin.xml;then
-			install -m 0644 ../plugins/$ROUND/skin.xml ${D}/usr/local/share/titan/plugins/$ROUND/
-		fi
-		if test -e ../plugins/$ROUND/plugin.png;then
-			install -m 0644 ../plugins/$ROUND/plugin.png ${D}/usr/local/share/titan/plugins/$ROUND/
-		fi
-		if test -e ../plugins/$ROUND/default.jpg;then
-			install -m 0644 ../plugins/$ROUND/default.jpg ${D}/usr/local/share/titan/plugins/$ROUND/
-		fi
+	    for PLUGIN in $PLUGINLIST;do
+		    echo PLUGIN $PLUGIN
+		    install -d ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN
+		    install -m 0644 ../plugins/$SECTION/$PLUGIN/.libs/*.so ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
+
+		    if test -e ../plugins/$SECTION/$PLUGIN/$NAME.sh;then
+			    install -m 0655 ../plugins/$SECTION/$PLUGIN/*.sh ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN
+		    fi
+		    if test -e ../plugins/$SECTION/$PLUGIN/files;then
+			    cp -a ../plugins/$SECTION/$PLUGIN/files ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
+		    fi
+		    if test -e ../plugins/$SECTION/$PLUGIN/picons;then
+			    cp -a ../plugins/$SECTION/$PLUGIN/picons ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
+		    fi
+		    if test -e ../plugins/$SECTION/$PLUGIN/skin;then
+			    cp -a ../plugins/$SECTION/$PLUGIN/skin ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
+		    fi
+		    if test -e ../plugins/$SECTION/$PLUGIN/skin.xml;then
+			    install -m 0644 ../plugins/$SECTION/$PLUGIN/skin.xml ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
+		    fi
+		    if test -e ../plugins/$SECTION/$PLUGIN/plugin.png;then
+			    install -m 0644 ../plugins/$SECTION/$PLUGIN/plugin.png ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
+		    fi
+		    if test -e ../plugins/$SECTION/$PLUGIN/default.jpg;then
+			    install -m 0644 ../plugins/$SECTION/$PLUGIN/default.jpg ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
+		    fi
+	    done
 	done
 }
 
 python populate_packages_prepend() {
     titan_plugindir = bb.data.expand('/usr/local/share/titan/plugins', d)
-    do_split_packages(d, titan_plugindir, '(.*?_.*?)/.*', 'titan-plugin-%s', '%s', recursive=True, match_path=True, prepend=True, extra_depends="titan")
+    do_split_packages(d, titan_plugindir, '(.*?/.*?)/.*', 'titan-plugin-%s', '%s', recursive=True, match_path=True, prepend=True, extra_depends="titan")
 
     def getControlLines(mydir, d, package):
         packagename = package[-1]
@@ -133,7 +138,7 @@ python populate_packages_prepend() {
                 print("5 return")                
                 return
             section = package[2]
-            src = open(mydir + section + "_" + packagename + "/CONTROL/control").read()
+            src = open(mydir + section + "-" + packagename + "/CONTROL/control").read()
         except IOError:
             return
         for line in src.split("\n"):
