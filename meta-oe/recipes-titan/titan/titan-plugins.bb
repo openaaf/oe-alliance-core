@@ -134,20 +134,51 @@ python populate_packages_prepend() {
 
         import os
         try:
+            print("package1 ", package)
             if(len(package) != 4):
                 print("5 return")                
                 return
             section = package[2]
-            src = open(mydir + section + "-" + packagename + "/CONTROL/control").read()
+            src = open(mydir + section + "/" + packagename + "/CONTROL/control").read()
         except IOError:
             return
         for line in src.split("\n"):
+            rev = bb.data.expand('${SRCPV}', d)
+            box = bb.data.expand('${MACHINEBUILD}', d)
+            pr = bb.data.expand('${PR}', d)
+            workdir = bb.data.expand('${WORKDIR}', d)
+
+#sftp://obiwan@94.23.201.11/home/titandev/build-enviroment-4.4/builds/openaaf/release/sf8008/tmp/work/sf8008-oe-linux-gnueabi/titan-plugins/45910-r0/deploy-ipks
+#titan-plugin-games-wins3_45910-r0_sf8008.ipk
+
             full_package = package[0] + '-' + package[1] + '-' + package[2] + '-' + package[3]
+            pic = package[0] + '-' + package[1] + '-' + package[2] + '-' + package[3] + '_' + rev + '-' + pr + '_' + box + '.png'
             print("full_package ", full_package)
+            print("pic ", pic)
+
+            cmd = 'ls -al ' + mydir + section + '/' + packagename + '/preview/prev.png'
+            print("cmd1 ", cmd)
+            print(" ")
+            os.system(cmd)
+
+#            cmd = 'mkdir -p ' + workdir + '/deploy-png/' + box + '/'
+            cmd = 'mkdir -p ' + workdir + '/deploy-png/' + box + '/preview/'
+            print("cmd2 ", cmd)
+            print(" ")
+            os.system(cmd)
+
+#            cmd = 'cp -a ' + mydir + section + '/' + packagename + '/preview/prev.png ' + workdir + '/deploy-png/' + box + '/' + pic
+            cmd = 'cp -a ' + mydir + section + '/' + packagename + '/preview/prev.png ' + workdir + '/deploy-png/' + box + '/preview/titan-pluginpreview-' + packagename + '.png'
+
+            print("cmd ", cmd)
+            print(" ")
+            os.system(cmd)
+            print("package ", package)
             if line.startswith('Description: '):
                 print("found decription ", line[13:])
                 d.setVar('DESCRIPTION_' + full_package, line[13:])
                 d.setVar('SUMMARY_' + full_package, line[13:])
+                d.setVar('PIC_' + full_package, full_package)
             elif line.startswith('Showname: '):
                 print("found showname ", line[10:])
                 d.setVar('SHOWNAME_' + full_package, line[10:])
@@ -162,3 +193,10 @@ python populate_packages_prepend() {
 
 do_package_qa() {
 }
+
+do_package_write_ipk_append() {
+    bb.process.run("cp -a ../deploy-png/* .")
+#    bb.process.run("cp -a ../preview .")
+}
+
+
