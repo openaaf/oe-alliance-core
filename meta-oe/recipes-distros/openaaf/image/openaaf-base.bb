@@ -26,6 +26,7 @@ DEPENDS = " \
 	${@bb.utils.contains('MACHINE', 'dm900', 'webkit-hbbtv-plugin' , '', d)} \
    	titan-plugins \
    	titan-skins \
+    titan-screensaver \
 	"
 
 RDEPENDS_${PN} = "\

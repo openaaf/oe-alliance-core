@@ -148,9 +148,6 @@ python populate_packages_prepend() {
             pr = bb.data.expand('${PR}', d)
             workdir = bb.data.expand('${WORKDIR}', d)
 
-#sftp://obiwan@94.23.201.11/home/titandev/build-enviroment-4.4/builds/openaaf/release/sf8008/tmp/work/sf8008-oe-linux-gnueabi/titan-plugins/45910-r0/deploy-ipks
-#titan-plugin-games-wins3_45910-r0_sf8008.ipk
-
             full_package = package[0] + '-' + package[1] + '-' + package[2] + '-' + package[3]
             pic = package[0] + '-' + package[1] + '-' + package[2] + '-' + package[3] + '_' + rev + '-' + pr + '_' + box + '.png'
             print("full_package ", full_package)
@@ -161,18 +158,21 @@ python populate_packages_prepend() {
             print(" ")
             os.system(cmd)
 
-#            cmd = 'mkdir -p ' + workdir + '/deploy-png/' + box + '/'
             cmd = 'mkdir -p ' + workdir + '/deploy-png/' + box + '/preview/'
             print("cmd2 ", cmd)
             print(" ")
             os.system(cmd)
 
-#            cmd = 'cp -a ' + mydir + section + '/' + packagename + '/preview/prev.png ' + workdir + '/deploy-png/' + box + '/' + pic
-            cmd = 'cp -a ' + mydir + section + '/' + packagename + '/preview/prev.png ' + workdir + '/deploy-png/' + box + '/preview/titan-pluginpreview-' + packagename + '.png'
-
-            print("cmd ", cmd)
+            cmd = 'cp -a ' + mydir + section + '/' + packagename + '/preview/prev.png ' + workdir + '/deploy-png/' + box + '/' + pic
+            print("cmd3 ", cmd)
             print(" ")
             os.system(cmd)
+
+            cmd = 'cp -a ' + mydir + section + '/' + packagename + '/preview/prev.png ' + workdir + '/deploy-png/' + box + '/preview/titan-pluginpreview-' + packagename + '.png'
+            print("cmd4 ", cmd)
+            print(" ")
+            os.system(cmd)
+
             print("package ", package)
             if line.startswith('Description: '):
                 print("found decription ", line[13:])
