@@ -47,15 +47,6 @@ python populate_packages_prepend() {
             section = package[2]
 
             path = mydir + "/screensaver_" + packagename + "/CONTROL/control"
-            if not os.path.exists(path):
-                path = mydir + "/screensaver_" + packagename + "_1.0/CONTROL/control"
-
-            if not os.path.exists(path):
-                path = mydir + "/screensaver_" + packagename + "_2.0/CONTROL/control"
-            
-            if not os.path.exists(path):
-                path = mydir + "/screensaver_" + packagename + "_1_0/CONTROL/control"
-
             src = open(path).read()
         except IOError:
             return
@@ -70,7 +61,7 @@ python populate_packages_prepend() {
             print("full_package ", full_package)
             print("pic ", pic)
 
-            cmd = 'ls -al ' + mydir + '/screensaver_' + packagename + '_*/preview/prev.png'
+            cmd = 'ls -al ' + mydir + '/screensaver_' + packagename + '/preview/prev.png'
             print("cmd1 ", cmd)
             print(" ")
             os.system(cmd)
@@ -80,12 +71,12 @@ python populate_packages_prepend() {
             print(" ")
             os.system(cmd)
 
-            cmd = 'cp -a ' + mydir + '/screensaver_' + packagename + '_*/preview/prev.png ' + workdir + '/deploy-png/' + box + '/' + pic
+            cmd = 'cp -a ' + mydir + '/screensaver_' + packagename + '/preview/prev.png ' + workdir + '/deploy-png/' + box + '/' + pic
             print("cmd3 ", cmd)
             print(" ")
             os.system(cmd)
 
-#            cmd = 'cp -a ' + mydir + '/screensaver_' + packagename + '_*/preview/prev.png ' + workdir + '/deploy-png/' + box + '/preview/titan-pluginpreview-' + packagename + '.png'
+#            cmd = 'cp -a ' + mydir + '/screensaver_' + packagename + '/preview/prev.png ' + workdir + '/deploy-png/' + box + '/preview/titan-pluginpreview-' + packagename + '.png'
 #            print("cmd4 ", cmd)
 #            print(" ")
 #            os.system(cmd)
