@@ -113,43 +113,19 @@ inherit image
 do_package_index[nostamp] = "1"
 do_package_index[depends] += "${PACKAGEINDEXDEPS}"
 
-python do_package_index() {
+python do_package_index_preview() {
     box = bb.data.expand('${MACHINEBUILD}', d)
-    print("box ", box)
-
-    mydir = d.getVar('D', True)
-    print("mydir1 ", mydir)
-    
-    mydir2 = d.getVar('D', True) + "/../oe-rootfs-repo/" + box + "/preview"
-    print("mydir2 ", mydir2)
-
-    mydir3 = d.getVar('D', True) + "/../oe-rootfs-repo/" + box
-    print("mydir3 ", mydir3)
-
-    mydir4 = d.getVar('DEPLOY_DIR_IMAGE')
-    print("mydir4 ", mydir4)
-
-    mydir5 = d.getVar('DEPLOY_DIR_IPK')
-    print("mydir5 ", mydir5)
-
-    bb.process.run("pwd > /tmp/pwd2")
-
-    bb.process.run("cd %s/%s; tar czvf Packages.preview.tar.gz ./preview" % (mydir5, box))
-
-#cd "$HOMEDIR"
-#tar czvf Packages.preview.tar.gz ./preview
-
-#    deploydir = bb.data.expand('${DEPLOYDIR}', d)
-#print("deploydir ", deploydir)
-
-
-#bb.process.run("cp -a ../preview .")
+    mydir = d.getVar('DEPLOY_DIR_IPK')
+    print("mydir ", mydir)
+    bb.process.run("cd %s/%s; tar czvf Packages.preview.tar.gz ./preview" % (mydir, box))
 
     from oe.rootfs import generate_index_files
     generate_index_files(d)
+}
 
-    bb.process.run("pwd > /tmp/pwd3")
-
+python do_package_index() {
+    from oe.rootfs import generate_index_files
+    generate_index_files(d)
 }
 addtask do_package_index after do_rootfs before do_image_complete
 

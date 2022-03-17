@@ -168,10 +168,10 @@ python populate_packages_prepend() {
             print(" ")
             os.system(cmd)
 
-            cmd = 'cp -a ' + mydir + section + '/' + packagename + '/preview/prev.png ' + workdir + '/deploy-png/' + box + '/preview/titan-pluginpreview-' + packagename + '.png'
-            print("cmd4 ", cmd)
-            print(" ")
-            os.system(cmd)
+#            cmd = 'cp -a ' + mydir + section + '/' + packagename + '/preview/prev.png ' + workdir + '/deploy-png/' + box + '/preview/titan-pluginpreview-' + packagename + '.png'
+#            print("cmd4 ", cmd)
+#            print(" ")
+#            os.system(cmd)
 
             print("package ", package)
             if line.startswith('Description: '):

@@ -1,6 +1,6 @@
-SUMMARY = "Skins for Titan"
+SUMMARY = "Screensaver for Titan"
 MAINTAINER = "TitanNit Team"
-SECTION = "skins"
+SECTION = "screensaver"
 #PRIORITY = "optional"
 LICENSE = "GPLv2"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
@@ -10,31 +10,31 @@ require conf/license/license-gplv2.inc
 SRCREV = "${AUTOREV}"
 PV = "${SRCPV}"
 
-SRC_URI = "svn://buildbin:buildbin@sbnc.dyndns.tv/svn/titan;module=skins;protocol=http"
+SRC_URI = "svn://public:public@svn.dyndns.tv/svn/ipk;module=source;protocol=http"
 
-#DEPENDS = "titan"
+DEPENDS = "titan"
 
-S = "${WORKDIR}/skins"
+S = "${WORKDIR}/source"
 
-FILES_${PN} = "/usr/local/share/titan/skin"
+FILES_${PN} = "/usr/local/share/titan/saver"
 
 do_install() {
     cd ${S}
 
-	install -d ${D}/usr/local/share/titan/skin
-	LIST="$(ls -1)"
+	install -d ${D}/usr/local/share/titan/saver
+	LIST="$(ls -1 screensaver_* | grep : | cut -d: -f1)"
 	echo LIST2 $LIST
 
 	for ROUND in $LIST;do
 		echo ROUND $ROUND
-		install -d ${D}/usr/local/share/titan/skin/$ROUND
-        cp -a $ROUND/* ${D}/usr/local/share/titan/skin/$ROUND
+        cp -a $ROUND/_path_/* ${D}/
 	done
 }
 
 python populate_packages_prepend() {
-    titan_skindir = bb.data.expand('/usr/local/share/titan/skin', d)
-    do_split_packages(d, titan_skindir, '(.*?)/.*', 'titan-plugin-skins-%s', 'Titan Skin: %s', recursive=True, match_path=True, prepend=True, extra_depends="")
+    titan_screensaverdir = bb.data.expand('/usr/local/share/titan/saver', d)
+    do_split_packages(d, titan_screensaverdir, '(.*?)/.*', 'titan-plugin-screensaver-%s', 'Titan Skin: %s', recursive=True, match_path=True, prepend=True, extra_depends="")
+
     def getControlLines(mydir, d, package):
         packagename = package[-1]
 
@@ -45,7 +45,18 @@ python populate_packages_prepend() {
                 print("5 return")                
                 return
             section = package[2]
-            src = open(mydir + "/" + packagename + "/CONTROL/control").read()
+
+            path = mydir + "/screensaver_" + packagename + "/CONTROL/control"
+            if not os.path.exists(path):
+                path = mydir + "/screensaver_" + packagename + "_1.0/CONTROL/control"
+
+            if not os.path.exists(path):
+                path = mydir + "/screensaver_" + packagename + "_2.0/CONTROL/control"
+            
+            if not os.path.exists(path):
+                path = mydir + "/screensaver_" + packagename + "_1_0/CONTROL/control"
+
+            src = open(path).read()
         except IOError:
             return
         for line in src.split("\n"):
@@ -59,7 +70,7 @@ python populate_packages_prepend() {
             print("full_package ", full_package)
             print("pic ", pic)
 
-            cmd = 'ls -al ' + mydir + '/' + packagename + '/preview/prev.png'
+            cmd = 'ls -al ' + mydir + '/screensaver_' + packagename + '_*/preview/prev.png'
             print("cmd1 ", cmd)
             print(" ")
             os.system(cmd)
@@ -69,12 +80,12 @@ python populate_packages_prepend() {
             print(" ")
             os.system(cmd)
 
-            cmd = 'cp -a ' + mydir + '/' + packagename + '/prev.png ' + workdir + '/deploy-png/' + box + '/' + pic
+            cmd = 'cp -a ' + mydir + '/screensaver_' + packagename + '_*/preview/prev.png ' + workdir + '/deploy-png/' + box + '/' + pic
             print("cmd3 ", cmd)
             print(" ")
             os.system(cmd)
 
-#            cmd = 'cp -a ' + mydir + '/' + packagename + '/prev.png ' + workdir + '/deploy-png/' + box + '/preview/titan-pluginpreview-' + packagename + '.png'
+#            cmd = 'cp -a ' + mydir + '/screensaver_' + packagename + '_*/preview/prev.png ' + workdir + '/deploy-png/' + box + '/preview/titan-pluginpreview-' + packagename + '.png'
 #            print("cmd4 ", cmd)
 #            print(" ")
 #            os.system(cmd)
@@ -91,7 +102,7 @@ python populate_packages_prepend() {
             elif line.startswith('Maintainer: '):
                 d.setVar('MAINTAINER_' + full_package, line[12:])
 
-    mydir = d.getVar('D', True) + "/../skins/"
+    mydir = d.getVar('D', True) + "/../source/"
     print("1mydir ", mydir)
     for package in d.getVar('PACKAGES', d, 1).split():
         getControlLines(mydir, d, package.split('-'))
@@ -104,4 +115,4 @@ do_package_write_ipk_append() {
     bb.process.run("cp -a ../deploy-png/* .")
 }
 
-PACKAGES_DYNAMIC = "titan-plugin-skins-*"
+PACKAGES_DYNAMIC = "titan-plugin-screensaver-*"
