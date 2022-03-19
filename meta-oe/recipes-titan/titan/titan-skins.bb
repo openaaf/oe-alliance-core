@@ -12,8 +12,6 @@ PV = "${SRCPV}"
 
 SRC_URI = "svn://buildbin:buildbin@sbnc.dyndns.tv/svn/titan;module=skins;protocol=http"
 
-#DEPENDS = "titan"
-
 S = "${WORKDIR}/skins"
 
 FILES_${PN} = "/usr/local/share/titan/skin"

@@ -12,8 +12,6 @@ PV = "${SRCPV}"
 
 SRC_URI = "svn://public:public@svn.dyndns.tv/svn/ipk;module=source;protocol=http"
 
-DEPENDS = "titan"
-
 S = "${WORKDIR}/source"
 
 FILES_${PN} = "/usr/local/share/titan/saver"
