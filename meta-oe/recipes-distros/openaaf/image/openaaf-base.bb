@@ -27,6 +27,7 @@ DEPENDS = " \
    	titan-plugins \
    	titan-skins \
     titan-screensaver \
+    titan-picons \
 	"
 
 RDEPENDS_${PN} = "\
