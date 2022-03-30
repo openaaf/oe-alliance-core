@@ -10,9 +10,9 @@ require conf/license/license-gplv2.inc
 SRCREV = "${AUTOREV}"
 PV = "${SRCPV}"
 
-SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source;module=picons_black3d_SAT23_5;protocol=http"
+SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source;module=picons_KabelDblack3d;protocol=http"
 
-S = "${WORKDIR}/picons_black3d_SAT23_5"
+S = "${WORKDIR}/picons_KabelDblack3d"
 
 FILES_${PN} = "/usr/local/share/titan/picons"
 
