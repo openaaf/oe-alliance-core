@@ -19,7 +19,7 @@ FILES_${PN} = "/etc/boot"
 do_install() {
     cd ${S}
     install -d ${D}/etc
-    cp -a /etc/boot ${D}/etc
+    cp -a _path_/etc/boot ${D}/etc
 
 }
 
