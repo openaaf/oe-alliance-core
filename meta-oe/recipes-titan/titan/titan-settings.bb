@@ -10,8 +10,8 @@ DEPENDS = "\
   titan-plugin-settings-bulldog.sat \
   titan-plugin-settings-bulldog.3xsat.unitymedia.sat \
   titan-plugin-settings-default.cable \
-  titan-plugin-settings-test \
   titan-plugin-settings-default \
+  titan-plugin-settings-default.all \
   titan-plugin-settings-kabelplus.cable \
   titan-plugin-settings-matze70.neue.design.sat \
   titan-plugin-settings-matze70.sat \
