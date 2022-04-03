@@ -38,6 +38,7 @@ IMAGE_INSTALL = "\
 	titan-plugin-infos-tmdb \
 	titan-plugin-infos-weather \
 	titan-plugin-skins-default \
+    titan-plugin-settings-default.all \
     "
 
 IMAGE_INSTALL_append_mipsel_aus = "\
