@@ -14,13 +14,12 @@ SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source;module=lcdpearlskin
 
 S = "${WORKDIR}/lcdpearlskins_schwarz_ohne_picons"
 
-FILES_${PN} = "/usr/local/share/titan/plugins/lcdpearlskins/skin2"
+FILES_${PN} = "/usr/local/share/titan"
 
 do_install() {
     cd ${S}
-    install -d ${D}/usr/local/share/titan/plugins
-    cp -a _path_/usr/local/share/titan/plugins/lcdpearlskins ${D}/usr/local/share/titan/plugins
-
+    install -d ${D}/usr/local/share
+    cp -a _path_/usr/local/share/titan ${D}/usr/local/share
 }
 
 python populate_packages_prepend() {
