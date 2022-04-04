@@ -5,10 +5,10 @@ require conf/license/license-gplv2.inc
 
 DEPENDS = "\
   titan-plugin-lcdsamsungskins-channel.analog.uhr \
-  titan-plugin-lcdsamsungskins-channel_digital_uhr_gelb \
-  titan-plugin-lcdsamsungskins-channel_digital_uhr_gelb_mod \
-  titan-plugin-lcdsamsungskins-channel_digital_uhr_trikots \
-  titan-plugin-lcdsamsungskins-digitaluhr_blau \
+  titan-plugin-lcdsamsungskins-channel.digital.uhr.gelb \
+  titan-plugin-lcdsamsungskins-channel.digital.uhr.gelb.mod \
+  titan-plugin-lcdsamsungskins-channel.digital.uhr.trikots \
+  titan-plugin-lcdsamsungskins-digitaluhr.blau \
   titan-plugin-lcdsamsungskins-holzuhr.standby \
 "
 
