@@ -26,19 +26,6 @@ do_rootfs[deptask] = "do_rm_work"
 IMAGE_INSTALL = "\
 	${@bb.utils.contains("MACHINE_FEATURES", "boxmodel", "boxmodel", "", d)} \
 	${DISTRO}-base \
-   	titan \
-	titan-plugin-tools-filemanager \
-	titan-plugin-infos-imdbapi \
-	titan-plugin-infos-imdb \
-	titan-plugin-player-mc \
-	titan-plugin-network-networkbrowser \
-	titan-plugin-tools-readerconfig \
-	titan-plugin-infos-streaminfo \
-	titan-plugin-player-tithek \
-	titan-plugin-infos-tmdb \
-	titan-plugin-infos-weather \
-	titan-plugin-skins-default \
-    titan-plugin-settings-default.all \
     "
 
 IMAGE_INSTALL_append_mipsel_aus = "\

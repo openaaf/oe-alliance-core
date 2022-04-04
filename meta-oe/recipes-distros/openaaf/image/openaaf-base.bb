@@ -21,16 +21,7 @@ DEPENDS = " \
 	python-imaging \
 	python-service-identity \
 	rtmpdump \
-	titan-netsurf \
-	titan-gmediarender \
-	${@bb.utils.contains('MACHINE', 'dm900', 'webkit-hbbtv-plugin' , '', d)} \
-   	titan-plugins \
-   	titan-skins \
-    titan-screensaver \
-    titan-picons \
-    titan-settings \
-    titan-bootlogos \
-    titan-fonts \
+    titan-base \
 	"
 
 RDEPENDS_${PN} = "\
@@ -118,11 +109,7 @@ RDEPENDS_${PN} = "\
 	oe-alliance-feeds-configs \
 	openatv-version-info \
 	\
-	titan-autorestore \
- 	titan-infobox \
-	titan-rarfs \
-	titan-fbread \
-	titan-tuxtxt \
+	titan-image \
 	${@bb.utils.contains("MACHINE_FEATURES", "dreamboxv1", "", "oe-alliance-wifi", d)} \
  	"
 
