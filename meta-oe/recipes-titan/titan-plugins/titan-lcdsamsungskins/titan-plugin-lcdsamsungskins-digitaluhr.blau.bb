@@ -14,13 +14,12 @@ SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source;module=lcdsamsungsk
 
 S = "${WORKDIR}/lcdsamsungskins_Digitaluhr_blau"
 
-FILES_${PN} = "/usr/local/share/titan/plugins/lcdsamsung/skin2"
+FILES_${PN} = "/usr/local/share/titan"
 
 do_install() {
     cd ${S}
-    install -d ${D}/usr/local/share/titan/plugins
-    cp -a _path_/usr/local/share/titan/plugins/lcdsamsung ${D}/usr/local/share/titan/plugins
-
+    install -d ${D}/usr/local/share
+    cp -a _path_/usr/local/share/titan ${D}/usr/local/share
 }
 
 python populate_packages_prepend() {
