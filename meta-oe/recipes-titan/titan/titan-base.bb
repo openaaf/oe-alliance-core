@@ -20,4 +20,5 @@ DEPENDS = "\
     titan-settings \
     titan-bootlogos \
     titan-fonts \
+    titan-lcdsamsungskins \
     "
