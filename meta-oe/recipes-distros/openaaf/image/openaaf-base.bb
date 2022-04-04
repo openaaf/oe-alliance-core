@@ -30,6 +30,7 @@ DEPENDS = " \
     titan-picons \
     titan-settings \
     titan-bootlogos \
+    titan-fonts \
 	"
 
 RDEPENDS_${PN} = "\
