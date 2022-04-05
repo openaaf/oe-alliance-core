@@ -56,6 +56,15 @@ python populate_packages_prepend() {
             pic = package[0] + '-' + package[1] + '-' + package[2] + '-' + package[3] + '_' + rev + '-' + pr + '_' + box + '.png'
             print("pic ", pic)
 
+            dest = package[0] + '-' + package[1] + '-' + package[2] + '-' + package[3] + '_' + rev + '-' + pr + '_' + box + '.dest'
+            print("dest ", dest)
+
+            usepath = package[0] + '-' + package[1] + '-' + package[2] + '-' + package[3] + '_' + rev + '-' + pr + '_' + box + '.usepath'
+            print("usepath ", usepath)
+
+            showname = package[0] + '-' + package[1] + '-' + package[2] + '-' + package[3] + '_' + rev + '-' + pr + '_' + box + '.showname'
+            print("showname ", showname)
+
             cmd = 'ls -al ' + mydir + '/preview/prev.png'
             print("cmd1 ", cmd)
             print(" ")
@@ -77,7 +86,19 @@ python populate_packages_prepend() {
                 d.setVar('SUMMARY_' + full_package, line[13:])
             elif line.startswith('Showname: '):
                 print("found showname ", line[10:])
-                d.setVar('SHOWNAME_' + full_package, line[10:])
+                cmd = 'echo "' + line[10:] + '" > ' + workdir + '/deploy-png/' + box + '/' + showname
+                print("cmd4 ", cmd)
+                print(" ")
+                os.system(cmd)
+                d.setVar('MAINTAINER_' + full_package, line[10:])
+            elif line.startswith('Usepath: '):
+                print("found Usepath ", line[9:])
+                cmd = 'echo "' + line[9:] + '" > ' + workdir + '/deploy-png/' + box + '/' + usepath
+                print("cmd5 ", cmd)
+                print(" ")
+                os.system(cmd)
+            elif line.startswith('Homepage: '):
+                d.setVar('HOMEPAGE_' + full_package, line[10:])
             elif line.startswith('Maintainer: '):
                 d.setVar('MAINTAINER_' + full_package, line[12:])
 

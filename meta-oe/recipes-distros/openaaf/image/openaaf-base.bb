@@ -109,7 +109,11 @@ RDEPENDS_${PN} = "\
 	oe-alliance-feeds-configs \
 	openatv-version-info \
 	\
-	titan-image \
+	titan-autorestore \
+ 	titan-infobox \
+	titan-rarfs \
+	titan-fbread \
+	titan-tuxtxt \
 	${@bb.utils.contains("MACHINE_FEATURES", "dreamboxv1", "", "oe-alliance-wifi", d)} \
  	"
 
