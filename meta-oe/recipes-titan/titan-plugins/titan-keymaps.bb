@@ -1,4 +1,4 @@
-SUMMARY = "meta file for Titan Player Plugins"
+SUMMARY = "meta file for Titan Keymaps Plugins"
 inherit packagegroup
 
 require conf/license/license-gplv2.inc

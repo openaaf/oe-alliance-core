@@ -1,6 +1,6 @@
-SUMMARY = "Player Plugins for Titan"
+SUMMARY = "Keymaps Plugins for Titan"
 MAINTAINER = "TitanNit Team"
-SECTION = "player"
+SECTION = "keymaps"
 #PRIORITY = "optional"
 LICENSE = "GPLv2"
 PACKAGE_ARCH = "${MACHINE_ARCH}"

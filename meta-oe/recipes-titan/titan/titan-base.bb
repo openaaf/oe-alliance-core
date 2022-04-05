@@ -23,4 +23,5 @@ DEPENDS = "\
     titan-lcdsamsungskins \
     titan-lcdpearlskins \
     titan-player \
+    titan-keymaps \
     "
