@@ -22,4 +22,5 @@ DEPENDS = "\
     titan-fonts \
     titan-lcdsamsungskins \
     titan-lcdpearlskins \
+    titan-player \
     "
