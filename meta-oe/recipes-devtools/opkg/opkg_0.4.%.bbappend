@@ -9,7 +9,7 @@ SRC_URI += "file://sanity-check-provides.patch \
     file://0002-symlinks-can-be-valid-directories-too.patch \
     "
 
-SRC_URI += "${@bb.utils.contains("DISTRO", "openaaf", "file://preinst_dest.patch", "", d)}"
+SRC_URI_append_openaaf += " file://preinst_dest.patch"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
