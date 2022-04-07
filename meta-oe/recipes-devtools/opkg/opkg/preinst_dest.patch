@@ -1,0 +1,11 @@
+--- a/libopkg/opkg_configure.c	2019-02-13 20:59:55.000000000 +0100
++++ a/libopkg/opkg_configure.c.patched	2022-04-07 22:12:04.402139645 +0200
+@@ -35,7 +35,7 @@
+     /* DPKG_INCOMPATIBILITY:
+      * dpkg actually includes a version number to this script call */
+ 
+-    err = pkg_run_script(pkg, "postinst", "configure");
++    err = pkg_run_script(pkg, "postinst", pkg->dest->root_dir);
+     if (err) {
+         if (!opkg_config->offline_root)
+             opkg_msg(ERROR, "%s.postinst returned %d.\n", pkg->name, err);

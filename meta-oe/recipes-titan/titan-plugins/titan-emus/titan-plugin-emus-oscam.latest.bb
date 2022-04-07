@@ -19,8 +19,11 @@ DEPENDS = "libusb openssl"
 
 S = "${WORKDIR}/trunk"
 
+EXTRA_OECMAKE_append_arm += " -DOSCAM_SYSTEM_NAME=FriendlyARM"
+EXTRA_OECMAKE_append_mipsel += " -DOSCAM_SYSTEM_NAME=FriendlyMIPSEL"
+EXTRA_OECMAKE_append_sh4 += " -DOSCAM_SYSTEM_NAME=FriendlySH4"
+
 EXTRA_OECMAKE += "\
-    -DOSCAM_SYSTEM_NAME=FriendlyARM \
     -DWEBIF=1 \
     -DWITH_STAPI=0 \
     -DHAVE_LIBUSB=1 \
@@ -30,12 +33,41 @@ EXTRA_OECMAKE += "\
     -DMODULE_CONSTCW=1 \
     -DHAVE_PCSC=0"
 
+#CFLAGS_append_arm = " -DOSCAM_SYSTEM_NAME=FriendlyARM"
+#CFLAGS_append_mipsel = " -DOSCAM_SYSTEM_NAME=FriendlyMIPSEL"
+#CFLAGS_append_sh4 = " -DOSCAM_SYSTEM_NAME=FriendlySH4"
+
 do_install() {
     install -d ${D}/bin
     install -m 0755 ${WORKDIR}/build/oscam ${D}/bin/oscam
     cd ${E}
     cp -a _path_/keys ${D}/
     cp -a _path_/etc ${D}/
+
+#echo ${WORKDIR}/trunk
+#ls -al ${WORKDIR}/trunk
+    SVNVERSION=$(svnversion ${WORKDIR}/trunk)
+    sed "s/Description:.*/Description: Latest Version $SVNVERSION of OScam/" -i ${E}/CONTROL/control
+#    sed "s!_path_!/mnt/swapextensions!g" -i ${D}/*/oscam.*
+#    sed "s!_type_!MNT!g" -i ${D}/*/oscam.*
+#    sed "s!_path_!/mnt/swapextensions!g" -i ${E}/CONTROL/postinst
+
+#    sed 's!$1!/mnt/swapextensions!g' -i ${E}/CONTROL/postinst
+
+#    POSTINST=$(cat ${E}/CONTROL/postinst)
+#echo POSTINST $POSTINST
+
+}
+
+do_configure2_prepend(){
+	find ${S}/ -type f -name "struct.h" | xargs -r -L1 sed -i "s|@VISIONVERSION@|${VISIONVERSION}|g"
+	find ${S}/ -type f -name "struct.h" | xargs -r -L1 sed -i "s|@VISIONREVISION@|${VISIONREVISION}|g"
+	find ${S}/ -type f -name "struct.mipsel.h" | xargs -r -L1 sed -i "s|@VISIONVERSION@|${VISIONVERSION}|g"
+	find ${S}/ -type f -name "struct.mipsel.h" | xargs -r -L1 sed -i "s|@VISIONREVISION@|${VISIONREVISION}|g"
+	find ${S}/ -type f -name "security.h" | xargs -r -L1 sed -i "s|@MACHINE@|${MACHINE}|g"
+	find ${S}/ -type f -name "security.h" | xargs -r -L1 sed -i "s|@BOX_BRAND@|${BOX_BRAND}|g"
+	find ${S}/ -type f -name "security.h" | xargs -r -L1 sed -i "s|@SOC_FAMILY@|${SOC_FAMILY}|g"
+	find ${S}/ -type f -name "security.h" | xargs -r -L1 sed -i "s|@STB_PLATFORM@|${STB_PLATFORM}|g"
 }
 
 FILES_${PN} = "/bin /etc /keys"
@@ -99,6 +131,12 @@ python populate_packages_prepend() {
             elif line.startswith('Maintainer: '):
                 d.setVar('MAINTAINER_' + full_package, line[12:])
 
+            postinstfile = mydir + "/CONTROL/postinst"
+            postinst = open(postinstfile).read()
+            print("postinst ", postinst)
+
+            d.setVar('pkg_postinst_' + full_package, postinst)
+
     mydir = bb.data.expand('${E}', d)
     print("mydir ", mydir)
 
@@ -111,4 +149,28 @@ do_package_qa() {
 
 do_package_write_ipk_append() {
     bb.process.run("cp -a ../deploy-png/* .")
+}
+
+pkg_preinst1_${PN}() {
+}
+
+pkg_preinst2_${PN}() {
+}
+
+pkg_postinst3_${PN}() {
+#!/bin/sh
+
+echo pwd `pwd`
+
+echo CURDIR $(CURDIR)
+
+echo 1 $1
+
+echo * $*
+
+exit 0
+
+}
+
+pkg_postrm1_${PN}() {
 }
