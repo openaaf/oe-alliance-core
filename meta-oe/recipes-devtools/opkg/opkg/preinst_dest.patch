@@ -5,7 +5,7 @@
       * dpkg actually includes a version number to this script call */
  
 -    err = pkg_run_script(pkg, "postinst", "configure");
-+    err = pkg_run_script(pkg, "postinst", pkg->dest);
++    err = pkg_run_script(pkg, "postinst", pkg->dest->name);
      if (err) {
          if (!opkg_config->offline_root)
              opkg_msg(ERROR, "%s.postinst returned %d.\n", pkg->name, err);
@@ -17,7 +17,7 @@
      }
  
 -    err = pkg_run_script(pkg, "preinst", preinst_args);
-+    err = pkg_run_script(pkg, "preinst", pkg->dest);
++    err = pkg_run_script(pkg, "preinst", pkg->dest->name);
      if (err) {
          opkg_msg(ERROR, "Aborting installation of %s.\n", pkg->name);
          free(preinst_args);
@@ -29,7 +29,7 @@
      opkg_state_changed++;
  
 -    r = pkg_run_script(pkg, "prerm", "remove");
-+    r = pkg_run_script(pkg, "prerm", pkg->dest);
++    r = pkg_run_script(pkg, "prerm", pkg->dest->name);
      if (r != 0) {
          if (!opkg_config->force_remove) {
              opkg_msg(ERROR,
@@ -38,7 +38,7 @@
      remove_data_files_and_list(pkg);
  
 -    err = pkg_run_script(pkg, "postrm", "remove");
-+    err = pkg_run_script(pkg, "postrm", pkg->dest);
++    err = pkg_run_script(pkg, "postrm", pkg->dest->name);
  
      remove_maintainer_scripts(pkg);
      pkg->state_status = SS_NOT_INSTALLED;
