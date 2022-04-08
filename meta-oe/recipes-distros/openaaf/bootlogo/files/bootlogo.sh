@@ -8,3 +8,16 @@ BOOTLOGO=/usr/share/bootlogo.mvi
 /usr/bin/showiframe ${BOOTLOGO}
 
 [ -f /etc/init.d/bootlogo.py ] && /usr/bin/python /etc/init.d/bootlogo.py
+
+startconfig=/mnt/config/start-config
+if [ ! -e "$startconfig" ]; then startconfig="/etc/titan.restore/mnt/config/start-config"; fi
+. $startconfig
+if [ "$bootlogo" == 'y' ]; then
+    if [ -e /mnt/swapextensions/etc/boot/bootlogo.jpg ]; then
+	    infobox 200 "nobox#/mnt/swapextensions/etc/boot/bootlogo.jpg" &
+    else
+	    if [ -e /var/etc/boot/bootlogo.jpg ]; then
+		    infobox 200 "nobox#/var/etc/boot/bootlogo.jpg" &
+	    fi
+    fi
+fi
