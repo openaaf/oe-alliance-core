@@ -53,29 +53,20 @@ python populate_packages_prepend() {
             full_package = package[0] + '-' + package[1] + '-' + package[2] + '-' + package[3]
             print("full_package ", full_package)
 
-            pic = package[0] + '-' + package[1] + '-' + package[2] + '-' + package[3] + '_' + rev + '-' + pr + '_' + box + '.png'
-            print("pic ", pic)
-
-            dest = package[0] + '-' + package[1] + '-' + package[2] + '-' + package[3] + '_' + rev + '-' + pr + '_' + box + '.dest'
-            print("dest ", dest)
-
-            usepath = package[0] + '-' + package[1] + '-' + package[2] + '-' + package[3] + '_' + rev + '-' + pr + '_' + box + '.usepath'
-            print("usepath ", usepath)
-
-            showname = package[0] + '-' + package[1] + '-' + package[2] + '-' + package[3] + '_' + rev + '-' + pr + '_' + box + '.showname'
-            print("showname ", showname)
+            filename = full_package + '_' + rev + '-' + pr + '_' + box
+            print("filename ", filename)
 
             cmd = 'ls -al ' + mydir + '/preview/prev.png'
             print("cmd1 ", cmd)
             print(" ")
             os.system(cmd)
 
-            cmd = 'mkdir -p ' + workdir + '/deploy-png/' + box + '/preview/'
+            cmd = 'mkdir -p ' + workdir + '/deploy-png/' + box
             print("cmd2 ", cmd)
             print(" ")
             os.system(cmd)
 
-            cmd = 'cp -a ' + mydir + '/preview/prev.png ' + workdir + '/deploy-png/' + box + '/' + pic
+            cmd = 'cp -a ' + mydir + '/preview/prev.png ' + workdir + '/deploy-png/' + box + '/' + filename + '.png'
             print("cmd3 ", cmd)
             print(" ")
             os.system(cmd)
@@ -86,14 +77,14 @@ python populate_packages_prepend() {
                 d.setVar('SUMMARY_' + full_package, line[13:])
             elif line.startswith('Showname: '):
                 print("found showname ", line[10:])
-                cmd = 'echo "' + line[10:] + '" > ' + workdir + '/deploy-png/' + box + '/' + showname
+                cmd = 'echo "' + line[10:] + '" > ' + workdir + '/deploy-png/' + box + '/' + filename + '.showname'
                 print("cmd4 ", cmd)
                 print(" ")
                 os.system(cmd)
                 d.setVar('MAINTAINER_' + full_package, line[10:])
             elif line.startswith('Usepath: '):
                 print("found Usepath ", line[9:])
-                cmd = 'echo "' + line[9:] + '" > ' + workdir + '/deploy-png/' + box + '/' + usepath
+                cmd = 'echo "' + line[9:] + '" > ' + workdir + '/deploy-png/' + box + '/' + filename + '.usepath'
                 print("cmd5 ", cmd)
                 print(" ")
                 os.system(cmd)
@@ -101,6 +92,26 @@ python populate_packages_prepend() {
                 d.setVar('HOMEPAGE_' + full_package, line[10:])
             elif line.startswith('Maintainer: '):
                 d.setVar('MAINTAINER_' + full_package, line[12:])
+
+            postinstfile = mydir + "/CONTROL/postinst"
+            postinst = open(postinstfile).read()
+            print("postinst ", postinst)
+            d.setVar('pkg_postinst_' + full_package, postinst)
+
+            postrmfile = mydir + "/CONTROL/postrm"
+            postrm = open(postrmfile).read()
+            print("postrm ", postrm)
+            d.setVar('pkg_postrm_' + full_package, postrm)
+
+            preinstfile = mydir + "/CONTROL/preinst"
+            preinst = open(preinstfile).read()
+            print("preinst ", preinst)
+            d.setVar('pkg_preinst_' + full_package, preinst)
+
+            prermfile = mydir + "/CONTROL/prerm"
+            prerm = open(prermfile).read()
+            print("prerm ", prerm)
+            d.setVar('pkg_prerm_' + full_package, prerm)
 
     mydir = bb.data.expand('${S}', d)
     print("mydir ", mydir)
