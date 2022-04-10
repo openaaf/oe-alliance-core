@@ -10,14 +10,9 @@ BOOTLOGO=/usr/share/bootlogo.mvi
 [ -f /etc/init.d/bootlogo.py ] && /usr/bin/python /etc/init.d/bootlogo.py
 
 startconfig=/mnt/config/start-config
-if [ ! -e "$startconfig" ]; then startconfig="/etc/titan.restore/mnt/config/start-config"; fi
+[ ! -e "$startconfig" ] && startconfig=/etc/titan.restore/mnt/config/start-config
 . $startconfig
-if [ "$bootlogo" == 'y' ]; then
-    if [ -e /mnt/swapextensions/etc/boot/bootlogo.jpg ]; then
-	    infobox 200 "nobox#/mnt/swapextensions/etc/boot/bootlogo.jpg" &
-    else
-	    if [ -e /var/etc/boot/bootlogo.jpg ]; then
-		    infobox 200 "nobox#/var/etc/boot/bootlogo.jpg" &
-	    fi
-    fi
-fi
+
+BOOTLOGO=/var/etc/boot/bootlogo.jpg
+[ -f /mnt/swapextensions/etc/boot/bootlogo.jpg ] && BOOTLOGO=/mnt/swapextensions/etc/boot/bootlogo.jpg
+[ "$bootlogo" == 'y' ] && infobox 200 "nobox#${BOOTLOGO}" &

@@ -1,11 +1,10 @@
---- edid-decode/Makefile	2022-02-03 10:40:30.711531318 +0100
-+++ edid-decode/Makefile.patched	2022-02-04 13:03:48.692664539 +0100
-@@ -17,7 +17,7 @@
- SOURCES = edid-decode.cpp parse-base-block.cpp parse-cta-block.cpp \
+--- edid-decode/Makefile	2022-04-10 12:36:23.308062810 +0200
++++ edid-decode/Makefile.patched	2022-04-10 12:38:23.354369319 +0200
+@@ -18,7 +18,7 @@
  	  parse-displayid-block.cpp parse-ls-ext-block.cpp \
- 	  parse-di-ext-block.cpp parse-vtb-ext-block.cpp calc-gtf-cvt.cpp
+ 	  parse-di-ext-block.cpp parse-vtb-ext-block.cpp \
+ 	  calc-gtf-cvt.cpp calc-ovt.cpp
 -WARN_FLAGS = -Wall -Wextra -Wno-missing-field-initializers -Wno-unused-parameter -Wimplicit-fallthrough
 +WARN_FLAGS = -Wall -Wextra -Wno-missing-field-initializers -Wno-unused-parameter
  
  all: edid-decode
- 
