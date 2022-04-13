@@ -164,7 +164,7 @@ python populate_packages_prepend() {
             print(" ")
             os.system(cmd)
 
-            cmd = 'cp -a ' + mydir + '/preview/prev.png ' + workdir + '/deploy-png/' + box + '/' + filename + '.png'
+            cmd = 'cp -a ' + mydir + section + '/' + packagename + '/preview/prev.png ' + workdir + '/deploy-png/' + box + '/' + filename + '.png'
             print("cmd3 ", cmd)
             print(" ")
             os.system(cmd)
@@ -191,22 +191,22 @@ python populate_packages_prepend() {
             elif line.startswith('Maintainer: '):
                 d.setVar('MAINTAINER_' + full_package, line[12:])
 
-            postinstfile = mydir + "/CONTROL/postinst"
+            postinstfile = mydir + section + '/' + packagename + "/CONTROL/postinst"
             postinst = open(postinstfile).read()
             print("postinst ", postinst)
             d.setVar('pkg_postinst_' + full_package, postinst)
 
-            postrmfile = mydir + "/CONTROL/postrm"
+            postrmfile = mydir + section + '/' + packagename + "/CONTROL/postrm"
             postrm = open(postrmfile).read()
             print("postrm ", postrm)
             d.setVar('pkg_postrm_' + full_package, postrm)
 
-            preinstfile = mydir + "/CONTROL/preinst"
+            preinstfile = mydir + section + '/' + packagename + "/CONTROL/preinst"
             preinst = open(preinstfile).read()
             print("preinst ", preinst)
             d.setVar('pkg_preinst_' + full_package, preinst)
 
-            prermfile = mydir + "/CONTROL/prerm"
+            prermfile = mydir + section + '/' + packagename + "/CONTROL/prerm"
             prerm = open(prermfile).read()
             print("prerm ", prerm)
             d.setVar('pkg_prerm_' + full_package, prerm)
