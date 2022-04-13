@@ -58,7 +58,7 @@ python populate_packages_prepend() {
             filename = full_package + '_' + rev + '-' + pr + '_' + box
             print("filename ", filename)
 
-            cmd = 'ls -al ' + mydir + '/preview/prev.png'
+            cmd = 'ls -al ' + mydir + '/' + packagename + '/preview/prev.png'
             print("cmd1 ", cmd)
             print(" ")
             os.system(cmd)

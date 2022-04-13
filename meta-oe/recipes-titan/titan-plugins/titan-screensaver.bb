@@ -60,7 +60,7 @@ python populate_packages_prepend() {
             filename = full_package + '_' + rev + '-' + pr + '_' + box
             print("filename ", filename)
 
-            cmd = 'ls -al ' + mydir + '/preview/prev.png'
+            cmd = 'ls -al ' + mydir + '/' + packagename + '/preview/prev.png'
             print("cmd1 ", cmd)
             print(" ")
             os.system(cmd)
@@ -70,7 +70,7 @@ python populate_packages_prepend() {
             print(" ")
             os.system(cmd)
 
-            cmd = 'cp -a ' + mydir + section + '/' + packagename + '/preview/prev.png ' + workdir + '/deploy-png/' + box + '/' + filename + '.png'
+            cmd = 'cp -a ' + mydir + '/' + packagename + '/preview/prev.png ' + workdir + '/deploy-png/' + box + '/' + filename + '.png'
             print("cmd3 ", cmd)
             print(" ")
             os.system(cmd)
@@ -97,22 +97,22 @@ python populate_packages_prepend() {
             elif line.startswith('Maintainer: '):
                 d.setVar('MAINTAINER_' + full_package, line[12:])
 
-            postinstfile = mydir + section + '/' + packagename + "/CONTROL/postinst"
+            postinstfile = mydir + '/' + packagename + "/CONTROL/postinst"
             postinst = open(postinstfile).read()
             print("postinst ", postinst)
             d.setVar('pkg_postinst_' + full_package, postinst)
 
-            postrmfile = mydir + section + '/' + packagename + "/CONTROL/postrm"
+            postrmfile = mydir + '/' + packagename + "/CONTROL/postrm"
             postrm = open(postrmfile).read()
             print("postrm ", postrm)
             d.setVar('pkg_postrm_' + full_package, postrm)
 
-            preinstfile = mydir + section + '/' + packagename + "/CONTROL/preinst"
+            preinstfile = mydir + '/' + packagename + "/CONTROL/preinst"
             preinst = open(preinstfile).read()
             print("preinst ", preinst)
             d.setVar('pkg_preinst_' + full_package, preinst)
 
-            prermfile = mydir + section + '/' + packagename + "/CONTROL/prerm"
+            prermfile = mydir + '/' + packagename + "/CONTROL/prerm"
             prerm = open(prermfile).read()
             print("prerm ", prerm)
             d.setVar('pkg_prerm_' + full_package, prerm)
