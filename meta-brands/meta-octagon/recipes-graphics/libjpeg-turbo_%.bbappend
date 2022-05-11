@@ -18,6 +18,10 @@ SRC_URI_append_sx988 = " \
     file://libjpeg.so.8.2.2 \
 "
 
+SRC_URI_append_sfx6008 = " \
+    file://libjpeg.so.8.2.2 \
+"
+
 do_install_append_sf8008() {
     install -d ${D}${libdir}
     install -m 0755 ${WORKDIR}/libjpeg.so.62.2.0 ${D}${libdir}/
@@ -29,6 +33,12 @@ do_install_append_sf8008m() {
 }
 
 do_install_append_sf8008opt() {
+    install -d ${D}${libdir}
+    install -m 0755 ${WORKDIR}/libjpeg.so.8.2.2 ${D}${libdir}/
+    ln -s libjpeg.so.8.2.2 ${D}${libdir}/libjpeg.so.8
+}
+
+do_install_append_sfx6008() {
     install -d ${D}${libdir}
     install -m 0755 ${WORKDIR}/libjpeg.so.8.2.2 ${D}${libdir}/
     ln -s libjpeg.so.8.2.2 ${D}${libdir}/libjpeg.so.8

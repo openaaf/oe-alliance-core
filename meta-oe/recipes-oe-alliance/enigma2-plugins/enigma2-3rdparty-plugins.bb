@@ -11,7 +11,7 @@ DEPENDS = "tslib mpfr gmp"
 SRCREV = "${AUTOREV}"
 PV = "${IMAGE_VERSION}+gitr${SRCPV}"
 PKGV = "${IMAGE_VERSION}+gitr${GITPKGV}"
-PR = "r301"
+PR = "r304"
 
 SRC_URI="git://github.com/oe-alliance/3rdparty-plugins.git;protocol=https"
 
@@ -66,9 +66,9 @@ THIRDPARTY_PLUGINS = " \
     enigma2-plugin-extensions-pzyemail_0.8-20150614_all.ipk \
     enigma2-plugin-extensions-screengrabber_2.6_all.ipk \
     enigma2-plugin-extensions-screensaver_5.7.1_all.ipk \
-    enigma2-plugin-extensions-serienrecorder_4.4.2_all.ipk \
+    enigma2-plugin-extensions-serienrecorder_4.4.7_all.ipk \
     enigma2-plugin-extensions-sherlock_5.01r1_mipsel.ipk \
-    enigma2-plugin-extensions-skyrecorder_2.0.3c-py2_all.ipk \
+    enigma2-plugin-extensions-skyrecorder_2.1.1d-py2_all.ipk \
     enigma2-plugin-extensions-songs-to_0.1_mips32el.ipk \
     enigma2-plugin-extensions-spinnerselector_2.3_all.ipk \
     enigma2-plugin-extensions-sport1ticker_1.3_all.ipk \
@@ -79,7 +79,6 @@ THIRDPARTY_PLUGINS = " \
     enigma2-plugin-extensions-tmbd_8.6_all.ipk \
     enigma2-plugin-extensions-transmission_2.92-r2_all.ipk \
     enigma2-plugin-extensions-tsmedia_15.0_all.ipk \
-    enigma2-plugin-extensions-tvspielfilm_6.6rc4_all.ipk \
     enigma2-plugin-extensions-verkehrsinfo_1.2rc3_all.ipk \
     enigma2-plugin-extensions-vcs_2.9_all.ipk \
     enigma2-plugin-extensions-vhannibalautosettings_1.1_mips32el.ipk \
