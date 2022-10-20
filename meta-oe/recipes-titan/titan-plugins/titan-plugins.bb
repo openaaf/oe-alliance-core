@@ -87,6 +87,14 @@ do_compile() {
 FILES_${PN} = "/usr/local/share/titan/plugins"
 
 do_install() {
+	if [ ${HOST_SYS} = "sh4-oe-linux" ];then
+		HOST=sh4
+	elif [ ${HOST_SYS} = "arm-oe-linux-gnueabi" ];then
+		HOST=arm
+	else
+		HOST=mipsel
+	fi
+	
 	install -d ${D}/usr/local/share/titan/plugins
 	
 	SECTIONLIST="`cat ../plugins/Makefile.am | sed 's/\\t\+/ /g' | sed 's/ \\+//g' | sed 's/\\\//g' | grep -v =`"
@@ -103,6 +111,9 @@ do_install() {
 echo SECTION $SECTION
 echo PLUGIN $PLUGIN
 echo NAME $NAME
+echo HOST_SYS ${HOST_SYS}
+echo HOST $HOST
+	
 		    if test -e ../plugins/$SECTION/$PLUGIN/$NAME.sh;then
 			    install -m 0655 ../plugins/$SECTION/$PLUGIN/*.sh ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN
 		    fi
@@ -117,6 +128,12 @@ echo NAME $NAME
 		    fi
 		    if test -e ../plugins/$SECTION/$PLUGIN/files;then
 			    cp -a ../plugins/$SECTION/$PLUGIN/files ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
+		    fi
+		    if test -e ../plugins/$SECTION/$PLUGIN/$HOST;then
+			    cp -a ../plugins/$SECTION/$PLUGIN/${HOST}/* ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
+		    fi
+		    if test -e ../plugins/$SECTION/$PLUGIN/${HOST_SYS};then
+			    cp -a ../plugins/$SECTION/$PLUGIN/f${HOST_SYS}/* ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
 		    fi
 		    if test -e ../plugins/$SECTION/$PLUGIN/picons;then
 			    cp -a ../plugins/$SECTION/$PLUGIN/picons ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
