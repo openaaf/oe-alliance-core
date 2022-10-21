@@ -1,8 +1,8 @@
-SRCDATE = "20211208"
+SRCDATE = "20221009"
 
 require gfutures-recovery.inc
 
-SRC_URI[md5sum] = "cb1e39d88c40e51e8fb8008597c98ebf"
-SRC_URI[sha256sum] = "617c68ee81aea86ffd5afde9274559e3fb83d356842e741c8975cd408ea1dbad"
+SRC_URI[md5sum] = "694ab091cafd4d9cb20c1fe0d683562f"
+SRC_URI[sha256sum] = "f127cb211b0af4a8ecd73e815a14331fac44ff2cd7f2220d08a0bf0bb935a549"
 
 COMPATIBLE_MACHINE = "hd60"
