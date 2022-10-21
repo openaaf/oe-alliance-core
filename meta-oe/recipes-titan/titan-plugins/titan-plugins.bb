@@ -110,24 +110,17 @@ do_install() {
 
 echo SECTION $SECTION
 echo PLUGIN $PLUGIN
-echo NAME $NAME
 echo HOST_SYS ${HOST_SYS}
 echo HOST $HOST
 	
-		    if test -e ../plugins/$SECTION/$PLUGIN/$NAME.sh;then
-			    install -m 0655 ../plugins/$SECTION/$PLUGIN/*.sh ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN
-		    fi
 		    if test -e ../plugins/$SECTION/$PLUGIN/$PLUGIN.sh;then
 			    install -m 0655 ../plugins/$SECTION/$PLUGIN/*.sh ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN
-		    fi
-		    if test -e ../plugins/$SECTION/$PLUGIN/$NAME.conf;then
-			    install -m 0655 ../plugins/$SECTION/$PLUGIN/*.conf ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN
 		    fi
 		    if test -e ../plugins/$SECTION/$PLUGIN/$PLUGIN.conf;then
 			    install -m 0655 ../plugins/$SECTION/$PLUGIN/*.conf ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN
 		    fi
 		    if test -e ../plugins/$SECTION/$PLUGIN/files;then
-			    cp -a ../plugins/$SECTION/$PLUGIN/files ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
+			    cp -a ../plugins/$SECTION/$PLUGIN/files/* ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
 		    fi
 		    if test -e ../plugins/$SECTION/$PLUGIN/$HOST;then
 			    cp -a ../plugins/$SECTION/$PLUGIN/${HOST}/* ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
