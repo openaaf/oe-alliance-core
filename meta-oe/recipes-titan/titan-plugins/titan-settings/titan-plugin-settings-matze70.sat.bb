@@ -3,7 +3,7 @@ MAINTAINER = "TitanNit Team"
 SECTION = "settings"
 #PRIORITY = "optional"
 LICENSE = "GPLv2"
-PACKAGE_ARCH = "${MACHINE_ARCH}"
+#PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 require conf/license/license-gplv2.inc
 
