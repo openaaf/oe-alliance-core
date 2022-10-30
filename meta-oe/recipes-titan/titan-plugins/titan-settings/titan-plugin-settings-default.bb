@@ -127,12 +127,7 @@ do_package_write_ipk_append() {
     bb.process.run("cp -a ../deploy-png/* .")
 }
 
-#do_package[nostamp] = "1"
 #fetch allways
 #do_fetch[nostamp] = "1"
 #build allways
 #do_configure[nostamp] = "1"
-#do_install[vardepsexclude] += "DATE}
-
-do_package[nostamp] = "1"
-do_install[vardepsexclude] += "DATE"

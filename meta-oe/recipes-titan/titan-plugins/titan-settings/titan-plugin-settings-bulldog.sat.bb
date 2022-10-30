@@ -126,6 +126,3 @@ do_package_qa() {
 do_package_write_ipk_append() {
     bb.process.run("cp -a ../deploy-png/* .")
 }
-
-do_package[nostamp] = "1"
-do_install[vardepsexclude] += "DATE"
