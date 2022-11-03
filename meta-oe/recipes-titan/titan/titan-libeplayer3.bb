@@ -35,7 +35,7 @@ CFLAGS_append = " \
 	
 CFLAGS_append_arm = " -DARM -DMIPSEL"
 CFLAGS_append_mipsel = " -DMIPSEL"
-CFLAGS_append_mipsel = " -DSH4"
+CFLAGS_append_sh4 = " -DSH4"
 
 LDFLAGS_prepend = " -lswscale -ldl -lpthread -lavformat -lavcodec -lavutil -lswresample "
 
