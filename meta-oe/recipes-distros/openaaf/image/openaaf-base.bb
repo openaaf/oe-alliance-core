@@ -107,7 +107,7 @@ RDEPENDS_${PN} = "\
 	", d)} \
 	${@bb.utils.contains("TARGET_ARCH", "sh4", "alsa-utils-amixer-conf" , "", d)} \
 	oe-alliance-feeds-configs \
-	openaaf-version-info \
+	openatv-version-info \
 	\
 	titan-autorestore \
  	titan-infobox \
