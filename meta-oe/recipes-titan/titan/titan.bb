@@ -396,6 +396,5 @@ do_install() {
 }
 #do_install[vardepsexclude] += "DATETIME"
 
-#do_configure[nostamp] = "1"
-# build allways is disable
+do_configure[nostamp] = "1"
 do_install[vardepsexclude] += "DATE"
