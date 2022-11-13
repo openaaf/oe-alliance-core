@@ -50,6 +50,31 @@ CFLAGS = "\
 	-I${WORKDIR}/svn/titan/titan/include \
 	-I${WORKDIR}/svn/titan/libeplayer3/include"
 
+CFLAGS_append_arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
+	-I${STAGING_DIR_TARGET}/usr/include \
+	-I${STAGING_DIR_TARGET}/usr/lib/gstreamer-1.0/include \
+	-I${STAGING_DIR_TARGET}/usr/include/gstreamer-1.0 \
+	-I${STAGING_DIR_TARGET}/usr/include/glib-2.0 \
+	-I${STAGING_DIR_TARGET}/usr/include/libxml2 \
+	-I${STAGING_DIR_TARGET}/usr/lib/glib-2.0/include \
+	-I${STAGING_DIR_TARGET}/usr/include/freetype2 \
+	-I${STAGING_DIR_TARGET}/usr/include/dreamdvd \
+	-I${STAGING_DIR_TARGET}/usr/include/libdreamdvd \	
+	-I${WORKDIR}/titan/libdreamdvd \
+	-I${WORKDIR}/titan/titan \
+    ', ' \
+	-I${STAGING_DIR_TARGET}/usr/include \
+	-I${STAGING_DIR_TARGET}/usr/include/gstreamer-0.10 \
+	-I${STAGING_DIR_TARGET}/usr/include/glib-2.0 \
+	-I${STAGING_DIR_TARGET}/usr/include/libxml2 \
+	-I${STAGING_DIR_TARGET}/usr/lib/glib-2.0/include \
+	-I${STAGING_DIR_TARGET}/usr/include/freetype2 \
+	-I${STAGING_DIR_TARGET}/usr/include/dreamdvd \
+	-I${STAGING_DIR_TARGET}/usr/include/libdreamdvd \	
+	-I${WORKDIR}/titan/libdreamdvd \
+	-I${WORKDIR}/titan/titan \
+', d)}"
+
 CFLAGS_append_sh4 = " \
 	-I${STAGING_DIR_TARGET}/usr/include/libmmeimage \
 	-I${STAGING_KERNEL_DIR}/extra/bpamem \
