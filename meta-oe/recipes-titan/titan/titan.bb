@@ -25,6 +25,7 @@ DEPENDS = " \
 	${@bb.utils.contains("MACHINE_FEATURES", "uianimation", "vuplus-libgles-${MACHINE} libvugles2" , "", d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "hiaccel", "dinobot-libs-${MACHINE}" , "", d)} \
 	titan-libipkg \
+	gstreamer1.0-plugins-base gstreamer1.0 \
 	"
 
 DEPENDS_append_sh4 = " \
@@ -44,6 +45,79 @@ RRECOMMENDS_append_sh4_${PN} = " \
 	libmme-host \
 	"
 
+RRECOMMENDS_${PN} = " \
+    glib-networking \
+    glibc-gconv-utf-16 \
+    gstreamer1.0-plugin-subsink \
+    ${GST_BASE_RDEPS} \
+    ${GST_GOOD_RDEPS} \
+    ${GST_BAD_RDEPS} \
+    ${GST_UGLY_RDEPS} \
+    ${GST_BAD_OPUS} \
+    "
+
+GST_BASE_RDEPS = "\
+    gstreamer1.0-plugins-base-alsa \
+    gstreamer1.0-plugins-base-app \
+    gstreamer1.0-plugins-base-audioconvert \
+    gstreamer1.0-plugins-base-audioresample \
+    gstreamer1.0-plugins-base-audiorate \
+    gstreamer1.0-plugins-base-videoconvert \
+    gstreamer1.0-plugins-base-ivorbisdec \
+    gstreamer1.0-plugins-base-ogg \
+    gstreamer1.0-plugins-base-playback \
+    gstreamer1.0-plugins-base-subparse \
+    gstreamer1.0-plugins-base-typefindfunctions \
+    gstreamer1.0-plugins-base-vorbis \
+    gstreamer1.0-plugins-base-rawparse \
+"
+
+GST_GOOD_RDEPS = "\
+    gstreamer1.0-plugins-good-apetag \
+    gstreamer1.0-plugins-good-audioparsers \
+    gstreamer1.0-plugins-good-autodetect \
+    gstreamer1.0-plugins-good-avi \
+    gstreamer1.0-plugins-good-flac \
+    gstreamer1.0-plugins-good-flv \
+    gstreamer1.0-plugins-good-icydemux \
+    gstreamer1.0-plugins-good-id3demux \
+    gstreamer1.0-plugins-good-isomp4 \
+    gstreamer1.0-plugins-good-matroska \
+    gstreamer1.0-plugins-good-rtp \
+    gstreamer1.0-plugins-good-rtpmanager \
+    gstreamer1.0-plugins-good-rtsp \
+    gstreamer1.0-plugins-good-soup \
+    gstreamer1.0-plugins-good-udp \
+    gstreamer1.0-plugins-good-wavparse \
+    gstreamer1.0-plugins-good-wavpack \
+"
+
+GST_BAD_RDEPS = "\
+    gstreamer1.0-plugins-bad-dash \
+    gstreamer1.0-plugins-bad-mms \
+    gstreamer1.0-plugins-bad-mpegpsdemux \
+    gstreamer1.0-plugins-bad-mpegtsdemux \
+    gstreamer1.0-plugins-bad-rtmp \
+    gstreamer1.0-plugins-bad-smoothstreaming \
+    gstreamer1.0-plugins-bad-faad \
+    gstreamer1.0-plugins-bad-hls \
+    gstreamer1.0-plugins-bad-videoparsersbad \
+    gstreamer1.0-plugins-bad-autoconvert \
+"
+
+GST_BAD_OPUS = " \
+    ${@bb.utils.contains("TARGET_ARCH", "arm", " gstreamer1.0-plugins-base-opus gstreamer1.0-plugins-bad-opusparse", "", d)} \
+    ${@bb.utils.contains("TARGET_ARCH", "aarch64", " gstreamer1.0-plugins-base-opus gstreamer1.0-plugins-bad-opusparse", "", d)} \
+    "
+
+GST_UGLY_RDEPS = "\
+    gstreamer1.0-plugins-ugly-amrnb \
+    gstreamer1.0-plugins-ugly-amrwbdec \
+    gstreamer1.0-plugins-ugly-asf \
+    gstreamer1.0-plugins-ugly-cdio \
+    gstreamer1.0-plugins-ugly-dvdsub \
+"
+
 S = "${WORKDIR}/svn/titan"
 
 CFLAGS_append = " \
@@ -58,6 +132,32 @@ CFLAGS_append = " \
 	-I${WORKDIR}/svn/titan/titan/include \
 	-I${WORKDIR}/svn/titan/libeplayer3/include \
 	"
+
+
+CFLAGS_append_arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
+	-I${STAGING_DIR_TARGET}/usr/include \
+	-I${STAGING_DIR_TARGET}/usr/lib/gstreamer-1.0/include \
+	-I${STAGING_DIR_TARGET}/usr/include/gstreamer-1.0 \
+	-I${STAGING_DIR_TARGET}/usr/include/glib-2.0 \
+	-I${STAGING_DIR_TARGET}/usr/include/libxml2 \
+	-I${STAGING_DIR_TARGET}/usr/lib/glib-2.0/include \
+	-I${STAGING_DIR_TARGET}/usr/include/freetype2 \
+	-I${STAGING_DIR_TARGET}/usr/include/dreamdvd \
+	-I${STAGING_DIR_TARGET}/usr/include/libdreamdvd \	
+	-I${WORKDIR}/titan/libdreamdvd \
+	-I${WORKDIR}/titan/titan \
+    ', ' \
+	-I${STAGING_DIR_TARGET}/usr/include \
+	-I${STAGING_DIR_TARGET}/usr/include/gstreamer-0.10 \
+	-I${STAGING_DIR_TARGET}/usr/include/glib-2.0 \
+	-I${STAGING_DIR_TARGET}/usr/include/libxml2 \
+	-I${STAGING_DIR_TARGET}/usr/lib/glib-2.0/include \
+	-I${STAGING_DIR_TARGET}/usr/include/freetype2 \
+	-I${STAGING_DIR_TARGET}/usr/include/dreamdvd \
+	-I${STAGING_DIR_TARGET}/usr/include/libdreamdvd \	
+	-I${WORKDIR}/titan/libdreamdvd \
+	-I${WORKDIR}/titan/titan \
+', d)}"
 
 CFLAGS_append_sh4 = " \
 	-I${STAGING_DIR_TARGET}/usr/include/libmmeimage \
@@ -80,9 +180,9 @@ CFLAGS_append_mipsel_dm525 = " -DDREAMBOX -DCONFIG_ION"
 
 CFLAGS_append_sh4 = " -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DSH4 -DSH4NEW -DCAMSUPP -Os -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration"
 CFLAGS_append_mipsel = " -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
-CFLAGS_append_arm = " -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
+CFLAGS_append_arm = " -DOEBUILD -DEXTGST -DEPLAYER4 -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
 
-#LDFLAGS_prepend = "${@bb.utils.contains('GST_VERSION', '1.0', ' -lglib-2.0 -lgobject-2.0 -lxml2 -lgstreamer-1.0 ', '', d)}"
+LDFLAGS_prepend_arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' -lglib-2.0 -lgobject-2.0 -lxml2 -lgstreamer-1.0 ', '', d)}"
 
 LDFLAGS_prepend = " -leplayer3 -lpthread -ldl -lm -lz -lpng -lfreetype -ldreamdvd -ljpeg -lssl -lcrypto -lcurl -lipkg "
 LDFLAGS_prepend_sh4 = " -lmmeimage "
