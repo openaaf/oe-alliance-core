@@ -22,9 +22,8 @@ SRC_URI += "https://raw.githubusercontent.com/oscam-emu/oscam-emu/${PATCHREV}/os
 SRC_URI[emu.md5sum] = "33125f03229e094cd35c3d8f13322143"
 SRC_URI[emu.sha256sum] = "98c60e46754d6b8416e8497c52385d3051187f3e900234fb5bdee1477f716b12"
 #SRC_URI += "file://oscam_emu_icam_dvbapi_radegast_v6.patch"
-
-SRC_URI += "file://oscam_emu_icam_dvbapi_radegast_v5.patch"
-
+#SRC_URI += "file://oscam_emu_icam_dvbapi_radegast_v5.patch"
+SRC_URI += "file://oscam_emu_icam_dvbapi_radegast_v8.patch"
 
 E = "${WORKDIR}/emus_oscam"
 
