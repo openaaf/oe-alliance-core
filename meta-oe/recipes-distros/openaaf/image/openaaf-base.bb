@@ -18,9 +18,32 @@ DEPENDS = " \
 	openatv-spinner \
 	oe-alliance-base \
 	packagegroup-base-smbfs-client \
-	${PYTHON_PN}-imaging \
-	${PYTHON_PN}-service-identity \
-	rtmpdump \
+    ${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
+    ${PYTHON_PN}-service-identity \
+    ${PYTHON_PN}-requests \
+    ${PYTHON_PN}-future \
+    ${PYTHON_PN}-pexpect \
+    ${PYTHON_PN}-six \
+    openssh-sftp-server \
+    ${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
+    ${PYTHON_PN}-service-identity \
+    ${PYTHON_PN}-requests \
+    ${PYTHON_PN}-future \
+    ${PYTHON_PN}-pexpect \
+    ${PYTHON_PN}-six \
+    rtmpdump \
+    zip \
+    ${@bb.utils.contains("TUNE_FEATURES", "armv", "glibc-compat", "", d)} \
+    ofgwrite \
+    ${@bb.utils.contains("MACHINE_FEATURES", "smallflash", "", " \
+        iproute2 \
+        tar \
+    ", d)} \
+    ${@bb.utils.contains_any("FLASHSIZE", "64 96", "", " \
+        ntfs-3g \
+        unrar \
+        wireless-tools \
+    ", d)} \
     titan-base \
 	"
 
