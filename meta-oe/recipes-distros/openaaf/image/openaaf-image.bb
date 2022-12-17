@@ -41,7 +41,7 @@ IMAGE_INSTALL = "\
     titan-plugin-settings-default.all \
     "
 
-IMAGE_INSTALL_append_mipsel_aus = "\
+IMAGE_INSTALL:append:mipsel:aus = "\
 	firmware-rtl8192cu \
 	firmware-rt2870 \
 	firmware-rt3070 \
@@ -59,7 +59,7 @@ IMAGE_INSTALL_append_mipsel_aus = "\
 	rt8723a \
     "
 
-IMAGE_INSTALL_append_arm_aus = "\
+IMAGE_INSTALL:append:arm:aus = "\
 	firmware-rtl8192cu \
 	firmware-rt2870 \
 	firmware-rt3070 \
@@ -76,7 +76,7 @@ IMAGE_INSTALL_append_arm_aus = "\
 	rt8723a \
     "
 
-IMAGE_INSTALL_append_sh4_aus = "\
+IMAGE_INSTALL:append:sh4:aus = "\
 	firmware-rtl8192cu \
 	firmware-rt2870 \
 	firmware-rt3070 \
@@ -111,7 +111,7 @@ INHIBIT_DEFAULT_DEPS = "1"
 
 inherit image
 
-do_rootfs_append() {
+do_rootfs:append() {
     mydir = d.getVar('IMAGE_ROOTFS')
     print("mydir ", mydir)
     # fix settings restore
