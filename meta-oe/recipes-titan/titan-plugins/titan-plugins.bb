@@ -14,15 +14,15 @@ PV = "${SRCPV}"
 SRC_URI = "svn://buildbin:buildbin@sbnc.dyndns.tv;module=svn;protocol=http"
 
 DEPENDS = "titan \
-	python-pyopenssl \
-	python-gdata \
+	${PYTHON_PN}-pyopenssl \
+	${PYTHON_PN}-gdata \
 	streamripper \
-	python-mutagen \
-	python-twisted \
-	python-daap \
-	python-google-api-client \
-	python-httplib2 \
-	python-youtube-dl \
+	${PYTHON_PN}-mutagen \
+	${PYTHON_PN}-twisted \
+	${PYTHON_PN}-daap \
+	${PYTHON_PN}-google-api-client \
+	${PYTHON_PN}-httplib2 \
+	${PYTHON_PN}-youtube-dl \
 	libtirpc \
 	"
 

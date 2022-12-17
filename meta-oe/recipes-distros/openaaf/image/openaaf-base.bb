@@ -17,14 +17,6 @@ DEPENDS = " \
 	openatv-enigma2 \
 	openatv-spinner \
 	oe-alliance-base \
-	packagegroup-base-smbfs-client \
-    ${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
-    ${PYTHON_PN}-service-identity \
-    ${PYTHON_PN}-requests \
-    ${PYTHON_PN}-future \
-    ${PYTHON_PN}-pexpect \
-    ${PYTHON_PN}-six \
-    openssh-sftp-server \
     ${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
     ${PYTHON_PN}-service-identity \
     ${PYTHON_PN}-requests \
