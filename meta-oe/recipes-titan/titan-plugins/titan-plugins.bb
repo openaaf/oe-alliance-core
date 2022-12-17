@@ -14,19 +14,25 @@ PV = "${SRCPV}"
 SRC_URI = "svn://buildbin:buildbin@sbnc.dyndns.tv;module=svn;protocol=http"
 
 DEPENDS = "titan \
-	${PYTHON_PN}-pyopenssl \
-	${PYTHON_PN}-gdata \
-	streamripper \
-	${PYTHON_PN}-mutagen \
-	${PYTHON_PN}-twisted \
-	${PYTHON_PN}-daap \
-	${PYTHON_PN}-google-api-client \
-	${PYTHON_PN}-httplib2 \
-	${PYTHON_PN}-youtube-dl \
-	libtirpc \
-	"
+    ${PYTHON_PN}-pyopenssl \
+    ${PYTHON_PN}-gdata-python3 \
+    streamripper \
+    ${PYTHON_PN}-mutagen \
+    ${PYTHON_PN}-twisted \
+    ${PYTHON_PN}-daap \
+    ${PYTHON_PN}-google-api-python-client \
+    ${PYTHON_PN}-httplib2 \
+    ${PYTHON_PN}-youtube-dl \
+    ${PYTHON_PN}-yt-dlp \
+    ${PYTHON_PN}-six-native \
+    libav \
+    libshowiframe \
+    libcddb \
+    libtirpc \
+    nmap \
+    "
 
-RDEPENDS_${PN} = "python-ctypes"
+RDEPENDS:${PN} = "${PYTHON_PN}-ctypes"
 
 S = "${WORKDIR}/svn/titan/plugins"
 
