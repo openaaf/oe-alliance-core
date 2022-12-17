@@ -18,8 +18,8 @@ DEPENDS = " \
 	openatv-spinner \
 	oe-alliance-base \
 	packagegroup-base-smbfs-client \
-	python-imaging \
-	python-service-identity \
+	${PYTHON_PN}-imaging \
+	${PYTHON_PN}-service-identity \
 	rtmpdump \
     titan-base \
 	"
