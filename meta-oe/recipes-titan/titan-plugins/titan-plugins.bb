@@ -32,7 +32,7 @@ S = "${WORKDIR}/svn/titan/plugins"
 
 #inherit autotools-brokensep pkgconfig
 #inherit autotools-brokensep
-inherit autotools-brokensep gitpkgv pythonnative pkgconfig gettext
+inherit autotools-brokensep gitpkgv python3native pkgconfig gettext
 
 CFLAGS = "\
 	-I${STAGING_DIR_TARGET}/usr/include \

@@ -21,7 +21,7 @@ RDEPENDS_${PN} = "ffmpeg libbluray"
 inherit gitpkgv upx-compress
 
 
-SSTATE_DUPWHITELIST += "${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0.0.0"
+SSTATE_ALLOW_OVERLAP_FILES += "${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0.0.0"
 
 S = "${WORKDIR}/libeplayer3"
 
