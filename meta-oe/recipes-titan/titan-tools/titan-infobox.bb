@@ -21,12 +21,12 @@ DEPENDS = " \
 
 S = "${WORKDIR}/"
 
-CFLAGS_append_sh4 = " -DSH4"
-CFLAGS_append_mipsel = " -DMIPSEL"
-CFLAGS_append_arm = " -DMIPSEL"
+CFLAGS:append:sh4 = " -DSH4"
+CFLAGS:append_mipsel = " -DMIPSEL"
+CFLAGS:append:arm = " -DMIPSEL"
 
-CFLAGS_append_arm_sf8008 = " -DEVENT0 -DDOUBLE"
-CFLAGS_append_mipsel_vusolo2 = " -DEVENT0 -DDOUBLE"
+CFLAGS:append:arm_sf8008 = " -DEVENT0 -DDOUBLE"
+CFLAGS:append_mipsel_vusolo2 = " -DEVENT0 -DDOUBLE"
 
 do_compile() {
 	cd ${WORKDIR}/infobox

@@ -23,7 +23,7 @@ do_install() {
 
 }
 
-python populate_packages_prepend() {
+python populate_packages:prepend() {
     def getControlLines(mydir, d, package):
         packagename = package[-1]
 
@@ -91,6 +91,6 @@ python populate_packages_prepend() {
 do_package_qa() {
 }
 
-do_package_write_ipk_append() {
+do_package_write_ipk:append() {
     bb.process.run("cp -a ../deploy-png/* .")
 }

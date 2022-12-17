@@ -28,7 +28,7 @@ DEPENDS = " \
 	gstreamer1.0-plugins-base gstreamer1.0 \
 	"
 
-DEPENDS_append_sh4 = " \
+DEPENDS:append:sh4 = " \
 	libmme-image \
 	"
 
@@ -41,7 +41,7 @@ RDEPENDS_${PN} = " \
 	${@bb.utils.contains("MACHINE_FEATURES", "hiaccel", "dinobot-libs-${MACHINE}" , "", d)} \
 	"
 
-RRECOMMENDS_append_sh4_${PN} = " \
+RRECOMMENDS:append:sh4_${PN} = " \
 	libmme-host \
 	"
 
@@ -120,7 +120,7 @@ GST_UGLY_RDEPS = "\
 
 S = "${WORKDIR}/svn/titan"
 
-CFLAGS_append = " \
+CFLAGS:append = " \
 	-I${STAGING_DIR_TARGET}/usr/include \
 	-I${STAGING_DIR_TARGET}/usr/include/freetype2 \
 	-I${STAGING_DIR_TARGET}/usr/include/openssl \
@@ -134,7 +134,7 @@ CFLAGS_append = " \
 	"
 
 
-CFLAGS_append_arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
+CFLAGS:append:arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
 	-I${STAGING_DIR_TARGET}/usr/include \
 	-I${STAGING_DIR_TARGET}/usr/lib/gstreamer-1.0/include \
 	-I${STAGING_DIR_TARGET}/usr/include/gstreamer-1.0 \
@@ -159,33 +159,33 @@ CFLAGS_append_arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
 	-I${WORKDIR}/titan/titan \
 ', d)}"
 
-CFLAGS_append_sh4 = " \
+CFLAGS:append:sh4 = " \
 	-I${STAGING_DIR_TARGET}/usr/include/libmmeimage \
 	-I${STAGING_KERNEL_DIR}/extra/bpamem \
 	"
 
-#CFLAGS_append = " -DDVDPLAYER"
+#CFLAGS:append = " -DDVDPLAYER"
 
-CFLAGS_append_arm = " -DARM -DMIPSEL"
-CFLAGS_append_arm_dm900 = " -DDREAMBOX -DCONFIG_ION"
-CFLAGS_append_arm_dm920 = " -DDREAMBOX -DCONFIG_ION"
-CFLAGS_append_arm_sf8008 = " -DCONFIG_HISILICON_FB"
-#CFLAGS_append_arm_mutant51 = " -DDREAMBOX -DCONFIG_ION"
-#CFLAGS_append_arm_mutant60 = " -DDREAMBOX -DCONFIG_ION"
+CFLAGS:append:arm = " -DARM -DMIPSEL"
+CFLAGS:append:arm_dm900 = " -DDREAMBOX -DCONFIG_ION"
+CFLAGS:append:arm_dm920 = " -DDREAMBOX -DCONFIG_ION"
+CFLAGS:append:arm_sf8008 = " -DCONFIG_HISILICON_FB"
+#CFLAGS:append:arm_mutant51 = " -DDREAMBOX -DCONFIG_ION"
+#CFLAGS:append:arm_mutant60 = " -DDREAMBOX -DCONFIG_ION"
 
-CFLAGS_append_mipsel = " -DMIPSEL"
-CFLAGS_append_mipsel_dm7020hd = " -DDREAMBOX"
-CFLAGS_append_mipsel_dm520 = " -DDREAMBOX -DCONFIG_ION"
-CFLAGS_append_mipsel_dm525 = " -DDREAMBOX -DCONFIG_ION"
+CFLAGS:append_mipsel = " -DMIPSEL"
+CFLAGS:append_mipsel_dm7020hd = " -DDREAMBOX"
+CFLAGS:append_mipsel_dm520 = " -DDREAMBOX -DCONFIG_ION"
+CFLAGS:append_mipsel_dm525 = " -DDREAMBOX -DCONFIG_ION"
 
-CFLAGS_append_sh4 = " -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DSH4 -DSH4NEW -DCAMSUPP -Os -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration"
-CFLAGS_append_mipsel = " -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
-CFLAGS_append_arm = " -DOEBUILD -DEXTGST -DEPLAYER4 -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
+CFLAGS:append:sh4 = " -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DSH4 -DSH4NEW -DCAMSUPP -Os -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration"
+CFLAGS:append_mipsel = " -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
+CFLAGS:append:arm = " -DOEBUILD -DEXTGST -DEPLAYER4 -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
 
-LDFLAGS_prepend_arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' -lglib-2.0 -lgobject-2.0 -lxml2 -lgstreamer-1.0 ', '', d)}"
+LDFLAGS:prepend:arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' -lglib-2.0 -lgobject-2.0 -lxml2 -lgstreamer-1.0 ', '', d)}"
 
-LDFLAGS_prepend = " -leplayer3 -lpthread -ldl -lm -lz -lpng -lfreetype -ldreamdvd -ljpeg -lssl -lcrypto -lcurl -lipkg "
-LDFLAGS_prepend_sh4 = " -lmmeimage "
+LDFLAGS:prepend = " -leplayer3 -lpthread -ldl -lm -lz -lpng -lfreetype -ldreamdvd -ljpeg -lssl -lcrypto -lcurl -lipkg "
+LDFLAGS:prepend:sh4 = " -lmmeimage "
 
 SOURCE_FILES = "titan.c"
 

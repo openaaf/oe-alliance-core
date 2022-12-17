@@ -31,9 +31,9 @@ DEPENDS = "libusb openssl"
 
 S = "${WORKDIR}/trunk"
 
-EXTRA_OECMAKE_append_arm += " -DOSCAM_SYSTEM_NAME=FriendlyARM"
-EXTRA_OECMAKE_append_mipsel += " -DOSCAM_SYSTEM_NAME=FriendlyMIPSEL"
-EXTRA_OECMAKE_append_sh4 += " -DOSCAM_SYSTEM_NAME=FriendlySH4"
+EXTRA_OECMAKE:append:arm += " -DOSCAM_SYSTEM_NAME=FriendlyARM"
+EXTRA_OECMAKE:append:mipsel += " -DOSCAM_SYSTEM_NAME=FriendlyMIPSEL"
+EXTRA_OECMAKE:append:sh4 += " -DOSCAM_SYSTEM_NAME=FriendlySH4"
 
 EXTRA_OECMAKE += "\
     -DWEBIF=1 \
@@ -45,9 +45,9 @@ EXTRA_OECMAKE += "\
     -DMODULE_CONSTCW=1 \
     -DHAVE_PCSC=0"
 
-#CFLAGS_append_arm = " -DOSCAM_SYSTEM_NAME=FriendlyARM"
-#CFLAGS_append_mipsel = " -DOSCAM_SYSTEM_NAME=FriendlyMIPSEL"
-#CFLAGS_append_sh4 = " -DOSCAM_SYSTEM_NAME=FriendlySH4"
+#CFLAGS:append:arm = " -DOSCAM_SYSTEM_NAME=FriendlyARM"
+#CFLAGS:append:mipsel = " -DOSCAM_SYSTEM_NAME=FriendlyMIPSEL"
+#CFLAGS:append:sh4 = " -DOSCAM_SYSTEM_NAME=FriendlySH4"
 
 do_install() {
     install -d ${D}/bin
@@ -63,7 +63,7 @@ do_install() {
 FILES_${PN} = "/bin /etc /keys"
 INSANE_SKIP_${PN} = "already-stripped"
 
-python populate_packages_prepend() {
+python populate_packages:prepend() {
     def getControlLines(mydir, d, package):
         packagename = package[-1]
 
@@ -163,32 +163,32 @@ python populate_packages_prepend() {
 do_package_qa() {
 }
 
-do_package_write_ipk_append() {
+do_package_write_ipk:append() {
     bb.process.run("cp -a ../deploy-png/* .")
 }
 
-pkg_preinst_${PN}_prepend() {
+pkg_preinst_${PN}:prepend() {
 echo preinst
 echo pwd `pwd`
 echo 1 $1
 echo * $*
 }
 
-pkg_postinst_${PN}_prepend() {
+pkg_postinst_${PN}:prepend() {
 echo postinst
 echo pwd `pwd`
 echo 1 $1
 echo * $*
 }
 
-pkg_postrm_${PN}_prepend() {
+pkg_postrm_${PN}:prepend() {
 echo postrm
 echo pwd `pwd`
 echo 1 $1
 echo * $*
 }
 
-pkg_prerm_${PN}_prepend() {
+pkg_prerm_${PN}:prepend() {
 echo prerm
 echo pwd `pwd`
 echo 1 $1

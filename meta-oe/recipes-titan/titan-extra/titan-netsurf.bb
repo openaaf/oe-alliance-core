@@ -32,7 +32,7 @@ DEPENDS = "libpng curl duktape expat freetype jpeg libpcap openssl virtual/libic
 
 S = "${WORKDIR}/netsurf-all-${PV}"
 
-CFLAGS_append = " \
+CFLAGS:append = " \
 	-I${STAGING_DIR_TARGET}/usr \
 	-I${STAGING_DIR_TARGET}/usr/include \
 	-I${STAGING_DIR_TARGET}/usr/include/freetype2 \
@@ -58,25 +58,25 @@ CFLAGS_append = " \
 	-I${WORKDIR}/netsurf-all-${PV}/nsgenbind/include/ \
 	"
 
-#LDFLAGS_prepend = " -L${WORKDIR}/netsurf-all-${PV}/libnsfb/build-x86_64-linux-gnu-arm-oe-linux-gnueabi-release-lib-static "
-LDFLAGS_prepend = " -L${WORKDIR}/netsurf-all-${PV}/libcss/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
-LDFLAGS_prepend = " -L${WORKDIR}/netsurf-all-${PV}/libdom/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
-LDFLAGS_prepend = " -L${WORKDIR}/netsurf-all-${PV}/libhubbub/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
-LDFLAGS_prepend = " -L${WORKDIR}/netsurf-all-${PV}/libnsbmp/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
-LDFLAGS_prepend = " -L${WORKDIR}/netsurf-all-${PV}/libnsfb/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
-LDFLAGS_prepend = " -L${WORKDIR}/netsurf-all-${PV}/libnsgif/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
-LDFLAGS_prepend = " -L${WORKDIR}/netsurf-all-${PV}/libnslog/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
-LDFLAGS_prepend = " -L${WORKDIR}/netsurf-all-${PV}/libnspsl/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
-LDFLAGS_prepend = " -L${WORKDIR}/netsurf-all-${PV}/libnsutils/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
-LDFLAGS_prepend = " -L${WORKDIR}/netsurf-all-${PV}/libparserutils/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
-LDFLAGS_prepend = " -L${WORKDIR}/netsurf-all-${PV}/libpencil/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
-LDFLAGS_prepend = " -L${WORKDIR}/netsurf-all-${PV}/librosprite/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
-LDFLAGS_prepend = " -L${WORKDIR}/netsurf-all-${PV}/librufl/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
-LDFLAGS_prepend = " -L${WORKDIR}/netsurf-all-${PV}/libsvgtiny/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
-LDFLAGS_prepend = " -L${WORKDIR}/netsurf-all-${PV}/libutf8proc/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
-LDFLAGS_prepend = " -L${WORKDIR}/netsurf-all-${PV}/libwapcaplet/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
-LDFLAGS_prepend = " -L${WORKDIR}/netsurf-all-${PV}/netsurf/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
-LDFLAGS_prepend = " -L${WORKDIR}/netsurf-all-${PV}/nsgenbind/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
+#LDFLAGS:prepend = " -L${WORKDIR}/netsurf-all-${PV}/libnsfb/build-x86_64-linux-gnu-arm-oe-linux-gnueabi-release-lib-static "
+LDFLAGS:prepend = " -L${WORKDIR}/netsurf-all-${PV}/libcss/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
+LDFLAGS:prepend = " -L${WORKDIR}/netsurf-all-${PV}/libdom/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
+LDFLAGS:prepend = " -L${WORKDIR}/netsurf-all-${PV}/libhubbub/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
+LDFLAGS:prepend = " -L${WORKDIR}/netsurf-all-${PV}/libnsbmp/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
+LDFLAGS:prepend = " -L${WORKDIR}/netsurf-all-${PV}/libnsfb/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
+LDFLAGS:prepend = " -L${WORKDIR}/netsurf-all-${PV}/libnsgif/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
+LDFLAGS:prepend = " -L${WORKDIR}/netsurf-all-${PV}/libnslog/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
+LDFLAGS:prepend = " -L${WORKDIR}/netsurf-all-${PV}/libnspsl/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
+LDFLAGS:prepend = " -L${WORKDIR}/netsurf-all-${PV}/libnsutils/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
+LDFLAGS:prepend = " -L${WORKDIR}/netsurf-all-${PV}/libparserutils/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
+LDFLAGS:prepend = " -L${WORKDIR}/netsurf-all-${PV}/libpencil/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
+LDFLAGS:prepend = " -L${WORKDIR}/netsurf-all-${PV}/librosprite/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
+LDFLAGS:prepend = " -L${WORKDIR}/netsurf-all-${PV}/librufl/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
+LDFLAGS:prepend = " -L${WORKDIR}/netsurf-all-${PV}/libsvgtiny/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
+LDFLAGS:prepend = " -L${WORKDIR}/netsurf-all-${PV}/libutf8proc/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
+LDFLAGS:prepend = " -L${WORKDIR}/netsurf-all-${PV}/libwapcaplet/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
+LDFLAGS:prepend = " -L${WORKDIR}/netsurf-all-${PV}/netsurf/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
+LDFLAGS:prepend = " -L${WORKDIR}/netsurf-all-${PV}/nsgenbind/build-${BUILD_SYS}-gnu-${TARGET_SYS}-release-lib-static "
 
 
 do_compile() {

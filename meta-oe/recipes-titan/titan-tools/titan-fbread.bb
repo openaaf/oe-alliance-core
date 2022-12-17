@@ -21,9 +21,9 @@ DEPENDS = " \
 
 S = "${WORKDIR}/"
 
-CFLAGS_append_sh4 = " -DSH4"
-CFLAGS_append_mipsel = " -DMIPSEL"
-CFLAGS_append_arm = " -DARM"
+CFLAGS:append:sh4 = " -DSH4"
+CFLAGS:append_mipsel = " -DMIPSEL"
+CFLAGS:append:arm = " -DARM"
 
 do_compile() {
 	cd ${WORKDIR}/fbread

@@ -50,7 +50,7 @@ CFLAGS = "\
 	-I${WORKDIR}/svn/titan/titan/include \
 	-I${WORKDIR}/svn/titan/libeplayer3/include"
 
-CFLAGS_append_arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
+CFLAGS:append:arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
 	-I${STAGING_DIR_TARGET}/usr/include \
 	-I${STAGING_DIR_TARGET}/usr/lib/gstreamer-1.0/include \
 	-I${STAGING_DIR_TARGET}/usr/include/gstreamer-1.0 \
@@ -75,16 +75,16 @@ CFLAGS_append_arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
 	-I${WORKDIR}/titan/titan \
 ', d)}"
 
-CFLAGS_append_sh4 = " \
+CFLAGS:append:sh4 = " \
 	-I${STAGING_DIR_TARGET}/usr/include/libmmeimage \
 	-I${STAGING_KERNEL_DIR}/extra/bpamem \
 	"
 
-CFLAGS_append_sh4 = " -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DSH4 -DSH4NEW -DCAMSUPP -Os -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration"
-CFLAGS_append_mipsel = " -DMIPSEL -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
-CFLAGS_append_arm = " -DMIPSEL -DOEBUILD -DEXTGST -DEPLAYER4 -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
+CFLAGS:append:sh4 = " -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DSH4 -DSH4NEW -DCAMSUPP -Os -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration"
+CFLAGS:append_mipsel = " -DMIPSEL -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
+CFLAGS:append:arm = " -DMIPSEL -DOEBUILD -DEXTGST -DEPLAYER4 -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
 
-LDFLAGS_prepend = " -lcurl "
+LDFLAGS:prepend = " -lcurl "
 
 do_configure() {
     cd ${S}
@@ -172,7 +172,7 @@ echo HOST $HOST
 	done
 }
 
-python populate_packages_prepend() {
+python populate_packages:prepend() {
     titan_plugindir = bb.data.expand('/usr/local/share/titan/plugins', d)
     do_split_packages(d, titan_plugindir, '(.*?/.*?)/.*', 'titan-plugin-%s', '%s', recursive=True, match_path=True, prepend=True, extra_depends="titan")
 
@@ -267,7 +267,7 @@ python populate_packages_prepend() {
 do_package_qa() {
 }
 
-do_package_write_ipk_append() {
+do_package_write_ipk:append() {
     bb.process.run("cp -a ../deploy-png/* .")
 #    bb.process.run("cp -a ../preview .")
 }

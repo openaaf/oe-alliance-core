@@ -25,19 +25,19 @@ SSTATE_DUPWHITELIST += "${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0.0.0"
 
 S = "${WORKDIR}/libeplayer3"
 
-CFLAGS_append = " -Wall -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE -DHAVE_FLV2MPEG4_CONVERTER"
+CFLAGS:append = " -Wall -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE -DHAVE_FLV2MPEG4_CONVERTER"
 
-CFLAGS_append = " \
+CFLAGS:append = " \
 	-I${S}/include \
 	-I${S}/external \
     -I${S}/external/flv2mpeg4 \
 	"
 	
-CFLAGS_append_arm = " -DARM -DMIPSEL"
-CFLAGS_append_mipsel = " -DMIPSEL"
-CFLAGS_append_sh4 = " -DSH4"
+CFLAGS:append:arm = " -DARM -DMIPSEL"
+CFLAGS:append_mipsel = " -DMIPSEL"
+CFLAGS:append:sh4 = " -DSH4"
 
-LDFLAGS_prepend = " -lswscale -ldl -lpthread -lavformat -lavcodec -lavutil -lswresample "
+LDFLAGS:prepend = " -lswscale -ldl -lpthread -lavformat -lavcodec -lavutil -lswresample "
 
 SOURCE_FILES_BIN = "main/exteplayer.c"
 
@@ -123,7 +123,7 @@ do_compile() {
 FILES_${PN} = "/usr/bin"
 FILES_${PN} += "/usr/lib"
 
-do_install_append() {
+do_install:append() {
     install -d ${D}${bindir}
     install -d ${D}${libdir}
     install -m 0755 eplayer3 ${D}${bindir}

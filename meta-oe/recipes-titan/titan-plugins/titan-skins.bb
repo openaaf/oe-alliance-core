@@ -30,7 +30,7 @@ do_install() {
 	done
 }
 
-python populate_packages_prepend() {
+python populate_packages:prepend() {
     titan_skindir = bb.data.expand('/usr/local/share/titan/skin', d)
     do_split_packages(d, titan_skindir, '(.*?)/.*', 'titan-plugin-skins-%s', 'Titan Skin: %s', recursive=True, match_path=True, prepend=True, extra_depends="")
     def getControlLines(mydir, d, package):
@@ -124,7 +124,7 @@ python populate_packages_prepend() {
 do_package_qa() {
 }
 
-do_package_write_ipk_append() {
+do_package_write_ipk:append() {
     bb.process.run("cp -a ../deploy-png/* .")
 }
 
