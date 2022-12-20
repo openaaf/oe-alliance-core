@@ -31,9 +31,9 @@ DEPENDS = "libusb openssl"
 
 S = "${WORKDIR}/trunk"
 
-EXTRA_OECMAKE:append:arm += " -DOSCAM_SYSTEM_NAME=FriendlyARM"
-EXTRA_OECMAKE:append:mipsel += " -DOSCAM_SYSTEM_NAME=FriendlyMIPSEL"
-EXTRA_OECMAKE:append:sh4 += " -DOSCAM_SYSTEM_NAME=FriendlySH4"
+EXTRA_OECMAKE:arm += " -DOSCAM_SYSTEM_NAME=FriendlyARM"
+EXTRA_OECMAKE:mipsel += " -DOSCAM_SYSTEM_NAME=FriendlyMIPSEL"
+EXTRA_OECMAKE:sh4 += " -DOSCAM_SYSTEM_NAME=FriendlySH4"
 
 EXTRA_OECMAKE += "\
     -DWEBIF=1 \

@@ -17,3 +17,32 @@ RDEPENDS_${PN} = "libarchive"
 
 S = "${WORKDIR}/libipkg"
 
+do_configure() {
+    cd ${S}
+
+	libtoolize --force
+	aclocal -I ${STAGING_DIR_TARGET}/usr/share/aclocal
+	autoconf
+	automake --foreign --add-missing
+	./configure --host=${HOST_SYS} --build=${BUILD_SYS}
+}
+
+do_compile() {
+	cd ${S}
+	make clean
+	make -f Makefile
+	${STRIP} ${S}/.libs/*.so
+}
+
+FILES_${PN} = "/usr/bin"
+FILES_${PN} += "/usr/lib"
+
+do_install() {
+    install -d ${D}${bindir}
+    install -d ${D}${libdir}
+    install -m 0755 ${S}/.libs/ipkg-cl ${D}${bindir}
+    install -m 0755 ${S}/.libs/libipkg.so.0.0.0 ${D}${libdir}/
+    ln -s libipkg.so.0.0.0 ${D}${libdir}/libipkg.so
+    ln -s libipkg.so.0.0.0 ${D}${libdir}/libeipkg.so.0
+}
+
