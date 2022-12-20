@@ -31,7 +31,7 @@ do_compile() {
 	cd ${S}
 	make clean
 	make -f Makefile
-	${STRIP} ${S}/.libs/*.so
+#	${STRIP} ${S}/.libs/*.so
 }
 
 FILES_${PN} = "/usr/bin"

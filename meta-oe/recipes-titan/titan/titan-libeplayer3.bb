@@ -108,7 +108,7 @@ do_compile() {
 	if [ -e ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0.0.0 ]; then rm ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so; fi
 
 	${CC} ${SOURCE_FILES_LIB} ${CFLAGS} -fPIC -shared -Wl,-soname,libeplayer3.so.0 -o libeplayer3.so.0.0.0 ${LDFLAGS}
-	${STRIP} libeplayer3.so.0.0.0
+#	${STRIP} libeplayer3.so.0.0.0
 	if [ ! -e ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so ]; then cp -a libeplayer3.so.0.0.0 ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so; fi
 	if [ ! -e ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0 ]; then cp -a libeplayer3.so.0.0.0 ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0; fi
 	if [ ! -e ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0.0.0 ]; then cp -a libeplayer3.so.0.0.0 ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0.0.0; fi
