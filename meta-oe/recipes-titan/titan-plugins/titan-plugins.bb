@@ -45,6 +45,7 @@ CFLAGS = "\
 	-I${STAGING_DIR_TARGET}/usr/include/curl \
 	-I${STAGING_DIR_TARGET}/usr/include/python2.7 \
 	-include Python.h \
+    -I${STAGING_INCDIR}/${PYTHON_DIR} \
 	-I${STAGING_DIR_TARGET}/usr/include/tirpc \
 	-I${STAGING_DIR_TARGET}/usr/include \
 	-I${STAGING_DIR_TARGET}/usr/include/freetype2 \
@@ -92,7 +93,7 @@ CFLAGS:append:arm = " -DMIPSEL -DOEBUILD -DEXTGST -DEPLAYER4 -DEXTEPLAYER3 -DEPL
 
 LDFLAGS:prepend = " -lcurl "
 
-do_configure() {
+do_configure:prepend() {
     cd ${S}
 
     SVNVERSION=${SRCPV}
@@ -101,19 +102,14 @@ do_configure() {
 	sed "s/^#define PLUGINVERSION .*/#define PLUGINVERSION $SVNVERSION/" -i  ../titan/struct.h
 	cat ../titan/struct.h | grep "define PLUGINVERSION"
 
-	libtoolize --force
-	aclocal -I ${STAGING_DIR_TARGET}/usr/share/aclocal
-	autoconf
-	automake --foreign --add-missing
-	./configure --host=${HOST_SYS} --build=${BUILD_SYS}
 }
 
-do_compile() {
-	cd ${S}
-	make clean
-	make -f Makefile
-	${STRIP} ${S}/*/*/.libs/*.so
-}
+EXTRA_OECONF = " \
+    BUILD_SYS=${BUILD_SYS} \
+    HOST_SYS=${HOST_SYS} \
+    STAGING_INCDIR=${STAGING_INCDIR} \
+    STAGING_LIBDIR=${STAGING_LIBDIR} \
+"
 
 FILES_${PN} = "/usr/local/share/titan/plugins"
 
