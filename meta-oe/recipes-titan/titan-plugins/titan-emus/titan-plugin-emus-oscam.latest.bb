@@ -60,7 +60,7 @@ do_install() {
     sed "s/Description:.*/Description: Latest Version $SVNVERSION of OScam/" -i ${E}/CONTROL/control
 }
 
-FILES_${PN} = "/bin /etc /keys"
+FILES:${PN} = "/bin /etc /keys"
 INSANE_SKIP_${PN} = "already-stripped"
 
 python populate_packages:prepend() {
