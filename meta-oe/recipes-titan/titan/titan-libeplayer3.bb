@@ -16,7 +16,7 @@ PV = "${SRCPV}"
 SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/titan;module=libeplayer3;protocol=http"
 
 DEPENDS = "ffmpeg libbluray"
-RDEPENDS_${PN} = "ffmpeg libbluray"
+RDEPENDS:${PN} = "ffmpeg libbluray"
 
 inherit gitpkgv upx-compress
 

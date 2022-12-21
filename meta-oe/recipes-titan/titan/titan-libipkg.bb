@@ -13,7 +13,7 @@ PV = "${SRCPV}"
 SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/titan;module=libipkg;protocol=http"
 
 DEPENDS = "libarchive"
-RDEPENDS_${PN} = "libarchive"
+RDEPENDS:${PN} = "libarchive"
 
 S = "${WORKDIR}/libipkg"
 

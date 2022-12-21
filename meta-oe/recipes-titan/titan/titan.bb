@@ -26,13 +26,14 @@ DEPENDS = " \
 	${@bb.utils.contains("MACHINE_FEATURES", "hiaccel", "dinobot-libs-${MACHINE}" , "", d)} \
 	titan-libipkg \
 	gstreamer1.0-plugins-base gstreamer1.0 \
+	awk \
 	"
 
 DEPENDS:append:sh4 = " \
 	libmme-image \
 	"
 
-RDEPENDS_${PN} = " \
+RDEPENDS:${PN} = " \
 	glibc-gconv-iso8859-15 \
 	hotplug-e2-helper \
 	gawk \
@@ -45,7 +46,7 @@ RRECOMMENDS:append:sh4_${PN} = " \
 	libmme-host \
 	"
 
-RRECOMMENDS_${PN} = " \
+RRECOMMENDS:${PN} = " \
     glib-networking \
     glibc-gconv-utf-16 \
     gstreamer1.0-plugin-subsink \

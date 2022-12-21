@@ -14,7 +14,7 @@ PKGV = "git${GITPKGV}"
 SRC_URI = "git://github.com/openaaf/autorestore.git;protocol=https"
 S = "${WORKDIR}/git/src"
 
-RDEPENDS_${PN} += "bash"
+RDEPENDS:${PN} += "bash"
 
 do_install() {
 	install -d ${D}/etc/init.d

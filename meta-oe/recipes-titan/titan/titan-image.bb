@@ -13,7 +13,7 @@ DEPENDS = " \
     titan-base \
 	"
 
-RDEPENDS_${PN} = "\
+RDEPENDS:${PN} = "\
 	titan-autorestore \
  	titan-infobox \
 	titan-rarfs \
