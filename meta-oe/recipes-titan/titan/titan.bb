@@ -26,7 +26,7 @@ DEPENDS = " \
 	${@bb.utils.contains("MACHINE_FEATURES", "hiaccel", "dinobot-libs-${MACHINE}" , "", d)} \
 	titan-libipkg \
 	gstreamer1.0-plugins-base gstreamer1.0 \
-	awk \
+	gawk \
 	"
 
 DEPENDS:append:sh4 = " \
