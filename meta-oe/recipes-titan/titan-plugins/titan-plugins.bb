@@ -112,6 +112,7 @@ EXTRA_OECONF = " \
 "
 
 FILES:${PN} = "/usr/local/share/titan/plugins"
+INSANE_SKIP:${PN} = "already-stripped"
 
 do_install() {
 	if [ ${HOST_SYS} = "sh4-oe-linux" ];then

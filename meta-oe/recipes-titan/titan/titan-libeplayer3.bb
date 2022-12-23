@@ -132,5 +132,5 @@ do_install:append() {
     ln -s libeplayer3.so.0.0.0 ${D}${libdir}/libeplayer3.so.0
 }
 
-INSANE_SKIP_${PN} += "ldflags"
+INSANE_SKIP:${PN} += "ldflags"
 

@@ -482,6 +482,7 @@ FILES:${PN} = " \
 	/var/usr/local/share/titan/po/it \
 	/var/usr/share/fonts"
 
+INSANE_SKIP:${PN} = "already-stripped"
 
 do_install() {
 	install -d ${D}/usr/local/bin

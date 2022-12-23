@@ -61,7 +61,7 @@ do_install() {
 }
 
 FILES:${PN} = "/bin /etc /keys"
-INSANE_SKIP_${PN} = "already-stripped"
+INSANE_SKIP:${PN} = "already-stripped"
 
 python populate_packages:prepend() {
     def getControlLines(mydir, d, package):
