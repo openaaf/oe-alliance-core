@@ -22,7 +22,7 @@ DEPENDS = " \
 S = "${WORKDIR}"
 
 CFLAGS:append:sh4 = " -DSH4"
-CFLAGS:append_mipsel = " -DMIPSEL"
+CFLAGS:append:mipsel = " -DMIPSEL"
 CFLAGS:append:arm = " -DMIPSEL"
 
 CFLAGS:append:arm_sf8008 = " -DEVENT0 -DDOUBLE"
