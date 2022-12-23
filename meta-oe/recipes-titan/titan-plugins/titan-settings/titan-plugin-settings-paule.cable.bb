@@ -14,7 +14,7 @@ SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source;module=settings_pau
 
 S = "${WORKDIR}/settings_paule_cable_1_0"
 
-FILES_${PN} = "/mnt/settings"
+FILES:${PN} = "/mnt/settings"
 
 do_install() {
     cd ${S}

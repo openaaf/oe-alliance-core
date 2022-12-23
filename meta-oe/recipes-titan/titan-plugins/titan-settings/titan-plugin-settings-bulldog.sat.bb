@@ -14,7 +14,7 @@ SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source;module=settings_bul
 
 S = "${WORKDIR}/settings_bulldog_3xSat_1_0"
 
-FILES_${PN} = "/mnt/settings"
+FILES:${PN} = "/mnt/settings"
 
 do_install() {
     cd ${S}

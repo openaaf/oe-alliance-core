@@ -14,7 +14,7 @@ SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source;module=fonts_plover
 
 S = "${WORKDIR}/fonts_ploverbold_1_0"
 
-FILES_${PN} = "/usr/share/fonts"
+FILES:${PN} = "/usr/share/fonts"
 
 do_install() {
     cd ${S}

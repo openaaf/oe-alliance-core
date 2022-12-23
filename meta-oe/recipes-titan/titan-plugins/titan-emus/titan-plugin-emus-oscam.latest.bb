@@ -5,7 +5,7 @@ inherit cmake
 
 SUMMARY = "OScam ${PV} Open Source Softcam"
 LICENSE = "GPLv3"
-LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
+LIC_FILES:CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
 SRCREV = "${AUTOREV}"
 SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source.arm;module=emus_oscam;protocol=http"

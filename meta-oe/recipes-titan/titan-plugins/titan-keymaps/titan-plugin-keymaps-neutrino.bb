@@ -14,7 +14,7 @@ SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source.arm;module=keymaps_
 
 S = "${WORKDIR}/keymaps_neutrino"
 
-FILES_${PN} = "/mnt/config"
+FILES:${PN} = "/mnt/config"
 
 do_install() {
     cd ${S}

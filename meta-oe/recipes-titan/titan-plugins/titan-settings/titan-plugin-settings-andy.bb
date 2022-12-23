@@ -14,7 +14,7 @@ SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source;module=settings_and
 
 S = "${WORKDIR}/settings_andy_2xSat_KabelD_1_0"
 
-FILES_${PN} = "/mnt/settings"
+FILES:${PN} = "/mnt/settings"
 
 do_install() {
     cd ${S}

@@ -20,5 +20,5 @@ S = "${WORKDIR}/git"
 
 inherit autotools pkgconfig
 
-#FILES_${PN} = "/usr/bin"
-#FILES_${PN} += "/usr/share/gmediarender"
+#FILES:${PN} = "/usr/bin"
+#FILES:${PN} += "/usr/share/gmediarender"

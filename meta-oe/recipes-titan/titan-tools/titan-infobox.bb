@@ -40,7 +40,7 @@ do_compile() {
 	${CC} -Os readpng.o infobox.o -L${STAGING_DIR_TARGET}/usr/lib -ljpeg -lpng -lfreetype -lz -o infobox
 }
 
-FILES_${PN} = "/sbin"
+FILES:${PN} = "/sbin"
 
 do_install() {
 	install -d ${D}/sbin

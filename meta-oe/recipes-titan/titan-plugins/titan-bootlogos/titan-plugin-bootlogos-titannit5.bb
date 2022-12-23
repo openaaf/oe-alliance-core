@@ -14,7 +14,7 @@ SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source;module=bootlogos_Ti
 
 S = "${WORKDIR}/bootlogos_TitanNit_0_5"
 
-FILES_${PN} = "/etc/boot"
+FILES:${PN} = "/etc/boot"
 
 do_install() {
     cd ${S}

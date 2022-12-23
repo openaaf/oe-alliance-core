@@ -14,7 +14,7 @@ SRC_URI = "svn://public:public@svn.dyndns.tv/svn/ipk;module=source;protocol=http
 
 S = "${WORKDIR}/source"
 
-FILES_${PN} = "/usr/local/share/titan/saver"
+FILES:${PN} = "/usr/local/share/titan/saver"
 
 do_install() {
     cd ${S}

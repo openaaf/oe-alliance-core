@@ -111,7 +111,7 @@ EXTRA_OECONF = " \
     STAGING_LIBDIR=${STAGING_LIBDIR} \
 "
 
-FILES_${PN} = "/usr/local/share/titan/plugins"
+FILES:${PN} = "/usr/local/share/titan/plugins"
 
 do_install() {
 	if [ ${HOST_SYS} = "sh4-oe-linux" ];then

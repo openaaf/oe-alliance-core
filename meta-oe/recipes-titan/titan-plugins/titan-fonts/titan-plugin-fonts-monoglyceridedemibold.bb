@@ -14,7 +14,7 @@ SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source;module=fonts_monogl
 
 S = "${WORKDIR}/fonts_monoglyceridedemibold_1_0"
 
-FILES_${PN} = "/usr/share/fonts"
+FILES:${PN} = "/usr/share/fonts"
 
 do_install() {
     cd ${S}

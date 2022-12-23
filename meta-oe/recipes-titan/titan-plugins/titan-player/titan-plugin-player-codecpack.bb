@@ -14,7 +14,7 @@ SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source.arm;module=playersn
 
 S = "${WORKDIR}/playersnp_codecpack"
 
-FILES_${PN} = "/etc"
+FILES:${PN} = "/etc"
 
 do_install() {
     cd ${S}

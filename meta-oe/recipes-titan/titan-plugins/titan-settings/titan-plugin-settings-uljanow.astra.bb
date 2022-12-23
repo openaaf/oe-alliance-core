@@ -14,7 +14,7 @@ SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source;module=settings_ulj
 
 S = "${WORKDIR}/settings_uljanow_1sat_1_0"
 
-FILES_${PN} = "/mnt/settings"
+FILES:${PN} = "/mnt/settings"
 
 do_install() {
     cd ${S}

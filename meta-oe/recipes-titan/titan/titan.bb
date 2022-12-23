@@ -370,7 +370,7 @@ do_compile() {
     ${CC} ${SOURCE_FILES} ${CFLAGS} -o titan ${LDFLAGS}
 }
 
-FILES_${PN} = " \
+FILES:${PN} = " \
 	/bin \
 	/etc \
 	/etc/titan.restore \

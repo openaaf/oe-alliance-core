@@ -33,7 +33,7 @@ do_compile() {
 	${CC} -Os tuxtxt.o -L${STAGING_DIR_TARGET}/usr/lib -lpthread -ltuxtxt32bpp -ltuxtxt -lz -o tuxtxt
 }
 
-FILES_${PN} = "/sbin"
+FILES:${PN} = "/sbin"
 
 do_install() {
 	install -d ${D}/sbin

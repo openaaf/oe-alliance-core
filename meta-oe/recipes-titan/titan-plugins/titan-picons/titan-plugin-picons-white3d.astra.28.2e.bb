@@ -14,7 +14,7 @@ SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source;module=picons_white
 
 S = "${WORKDIR}/picons_white3d_SAT28_2"
 
-FILES_${PN} = "/usr/local/share/titan/picons"
+FILES:${PN} = "/usr/local/share/titan/picons"
 
 do_install() {
     cd ${S}

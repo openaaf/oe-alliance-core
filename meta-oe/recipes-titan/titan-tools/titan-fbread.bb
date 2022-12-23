@@ -35,7 +35,7 @@ do_compile() {
 	${CC} -Os fbread.o -L${STAGING_DIR_TARGET}/usr/lib -ljpeg -lpng -lusb-1.0 -lz -o fbread
 }
 
-FILES_${PN} = "/sbin"
+FILES:${PN} = "/sbin"
 
 do_install() {
 	install -d ${D}/sbin

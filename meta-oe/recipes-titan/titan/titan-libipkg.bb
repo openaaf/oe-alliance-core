@@ -34,8 +34,8 @@ do_compile() {
 #	${STRIP} ${S}/.libs/*.so
 }
 
-FILES_${PN} = "/usr/bin"
-FILES_${PN} += "/usr/lib"
+FILES:${PN} = "/usr/bin"
+FILES:${PN} += "/usr/lib"
 
 do_install() {
     install -d ${D}${bindir}

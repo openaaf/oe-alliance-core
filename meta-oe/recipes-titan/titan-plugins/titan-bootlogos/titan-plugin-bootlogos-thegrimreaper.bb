@@ -14,7 +14,7 @@ SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source;module=bootlogos_th
 
 S = "${WORKDIR}/bootlogos_thegrimreaper_0_1"
 
-FILES_${PN} = "/etc/boot"
+FILES:${PN} = "/etc/boot"
 
 do_install() {
     cd ${S}

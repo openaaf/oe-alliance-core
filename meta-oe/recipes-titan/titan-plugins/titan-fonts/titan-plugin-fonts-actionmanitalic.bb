@@ -14,7 +14,7 @@ SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source;module=fonts_action
 
 S = "${WORKDIR}/fonts_actionmanitalic_1_0"
 
-FILES_${PN} = "/usr/share/fonts"
+FILES:${PN} = "/usr/share/fonts"
 
 do_install() {
     cd ${S}

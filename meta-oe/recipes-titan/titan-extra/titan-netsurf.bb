@@ -108,7 +108,7 @@ do_compile() {
 	make ${NETSURF_ENV}
 }
 
-FILES_${PN} = " \
+FILES:${PN} = " \
 	/usr/bin \
         /usr/share/netsurf \
 "

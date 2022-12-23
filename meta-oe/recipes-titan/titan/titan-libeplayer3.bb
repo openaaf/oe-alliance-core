@@ -39,33 +39,33 @@ CFLAGS:append:sh4 = " -DSH4"
 
 LDFLAGS:prepend = " -lswscale -ldl -lpthread -lavformat -lavcodec -lavutil -lswresample "
 
-SOURCE_FILES_BIN = "main/exteplayer.c"
+SOURCE_FILES:BIN = "main/exteplayer.c"
 
-SOURCE_FILES_LIB = "container/container.c"
-SOURCE_FILES_LIB =+ "container/container_ffmpeg.c"
-SOURCE_FILES_LIB =+ "manager/manager.c"
-SOURCE_FILES_LIB =+ "manager/audio.c"
-SOURCE_FILES_LIB =+ "manager/video.c"
-SOURCE_FILES_LIB =+ "manager/subtitle.c"
-SOURCE_FILES_LIB =+ "output/output_subtitle.c"
-SOURCE_FILES_LIB =+ "output/output.c"
-SOURCE_FILES_LIB =+ "output/writer/common/pes.c"
-SOURCE_FILES_LIB =+ "output/writer/common/misc.c"
-SOURCE_FILES_LIB =+ "output/writer/common/writer.c"
-SOURCE_FILES_LIB =+ "output/linuxdvb_buffering.c"
-SOURCE_FILES_LIB =+ "output/graphic_subtitle.c"
-SOURCE_FILES_LIB =+ "playback/playback.c"
-SOURCE_FILES_LIB =+ "external/ffmpeg/src/bitstream.c"
-SOURCE_FILES_LIB =+ "external/ffmpeg/src/latmenc.c"
-SOURCE_FILES_LIB =+ "external/ffmpeg/src/mpeg4audio.c"
-SOURCE_FILES_LIB =+ "external/ffmpeg/src/xiph.c"
-SOURCE_FILES_LIB =+ "external/flv2mpeg4/src/m4vencode.c"
-SOURCE_FILES_LIB =+ "external/flv2mpeg4/src/flvdecoder.c"
-SOURCE_FILES_LIB =+ "external/flv2mpeg4/src/dcprediction.c"
-SOURCE_FILES_LIB =+ "external/flv2mpeg4/src/flv2mpeg4.c"
-SOURCE_FILES_LIB =+ "external/plugins/src/png.c"
+SOURCE_FILES:LIB = "container/container.c"
+SOURCE_FILES:LIB =+ "container/container_ffmpeg.c"
+SOURCE_FILES:LIB =+ "manager/manager.c"
+SOURCE_FILES:LIB =+ "manager/audio.c"
+SOURCE_FILES:LIB =+ "manager/video.c"
+SOURCE_FILES:LIB =+ "manager/subtitle.c"
+SOURCE_FILES:LIB =+ "output/output_subtitle.c"
+SOURCE_FILES:LIB =+ "output/output.c"
+SOURCE_FILES:LIB =+ "output/writer/common/pes.c"
+SOURCE_FILES:LIB =+ "output/writer/common/misc.c"
+SOURCE_FILES:LIB =+ "output/writer/common/writer.c"
+SOURCE_FILES:LIB =+ "output/linuxdvb_buffering.c"
+SOURCE_FILES:LIB =+ "output/graphic_subtitle.c"
+SOURCE_FILES:LIB =+ "playback/playback.c"
+SOURCE_FILES:LIB =+ "external/ffmpeg/src/bitstream.c"
+SOURCE_FILES:LIB =+ "external/ffmpeg/src/latmenc.c"
+SOURCE_FILES:LIB =+ "external/ffmpeg/src/mpeg4audio.c"
+SOURCE_FILES:LIB =+ "external/ffmpeg/src/xiph.c"
+SOURCE_FILES:LIB =+ "external/flv2mpeg4/src/m4vencode.c"
+SOURCE_FILES:LIB =+ "external/flv2mpeg4/src/flvdecoder.c"
+SOURCE_FILES:LIB =+ "external/flv2mpeg4/src/dcprediction.c"
+SOURCE_FILES:LIB =+ "external/flv2mpeg4/src/flv2mpeg4.c"
+SOURCE_FILES:LIB =+ "external/plugins/src/png.c"
 
-SOURCE_FILES_LIB =+ "${@bb.utils.contains("TARGET_ARCH", "sh4", "\
+SOURCE_FILES:LIB =+ "${@bb.utils.contains("TARGET_ARCH", "sh4", "\
 output/linuxdvb_sh4.c \
 output/writer/sh4/writer.c \
 output/writer/sh4/aac.c \
@@ -107,21 +107,21 @@ do_compile() {
 	if [ -e ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0.0.0 ]; then rm ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0; fi
 	if [ -e ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0.0.0 ]; then rm ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so; fi
 
-	${CC} ${SOURCE_FILES_LIB} ${CFLAGS} -fPIC -shared -Wl,-soname,libeplayer3.so.0 -o libeplayer3.so.0.0.0 ${LDFLAGS}
+	${CC} ${SOURCE_FILES:LIB} ${CFLAGS} -fPIC -shared -Wl,-soname,libeplayer3.so.0 -o libeplayer3.so.0.0.0 ${LDFLAGS}
 #	${STRIP} libeplayer3.so.0.0.0
 	if [ ! -e ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so ]; then cp -a libeplayer3.so.0.0.0 ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so; fi
 	if [ ! -e ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0 ]; then cp -a libeplayer3.so.0.0.0 ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0; fi
 	if [ ! -e ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0.0.0 ]; then cp -a libeplayer3.so.0.0.0 ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0.0.0; fi
 
 #	smal binary with linked lib
-    ${CC} ${SOURCE_FILES_BIN} ${CFLAGS} -o eplayer3 -leplayer3 -lpthread
+    ${CC} ${SOURCE_FILES:BIN} ${CFLAGS} -o eplayer3 -leplayer3 -lpthread
 
 #	full binary
-#	${CC} ${SOURCE_FILES_BIN} ${SOURCE_FILES_LIB} ${CFLAGS} -o eplayer3 ${LDFLAGS}
+#	${CC} ${SOURCE_FILES:BIN} ${SOURCE_FILES:LIB} ${CFLAGS} -o eplayer3 ${LDFLAGS}
 }
 
-FILES_${PN} = "/usr/bin"
-FILES_${PN} += "/usr/lib"
+FILES:${PN} = "/usr/bin"
+FILES:${PN} += "/usr/lib"
 
 do_install:append() {
     install -d ${D}${bindir}

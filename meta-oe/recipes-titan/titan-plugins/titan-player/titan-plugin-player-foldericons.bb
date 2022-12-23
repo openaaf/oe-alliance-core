@@ -14,7 +14,7 @@ SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source;module=players_fold
 
 S = "${WORKDIR}/players_foldericons_1_0"
 
-FILES_${PN} = "/usr/local/share/titan/imdbfolder"
+FILES:${PN} = "/usr/local/share/titan/imdbfolder"
 
 do_install() {
     cd ${S}

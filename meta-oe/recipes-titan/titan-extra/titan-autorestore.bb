@@ -5,7 +5,7 @@ inherit allarch gitpkgv
 
 require conf/license/license-gplv2.inc
 
-FILES_${PN} = "/etc"
+FILES:${PN} = "/etc"
 
 SRCREV = "${AUTOREV}"
 PV = "git${SRCPV}"

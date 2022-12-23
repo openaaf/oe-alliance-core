@@ -14,7 +14,7 @@ SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source;module=lcdsamsungsk
 
 S = "${WORKDIR}/lcdsamsungskins_channel_Digitaluhr_gelb"
 
-FILES_${PN} = "/usr/local/share/titan"
+FILES:${PN} = "/usr/local/share/titan"
 
 do_install() {
     cd ${S}

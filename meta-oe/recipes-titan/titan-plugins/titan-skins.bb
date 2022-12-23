@@ -14,7 +14,7 @@ SRC_URI = "svn://buildbin:buildbin@sbnc.dyndns.tv/svn/titan;module=skins;protoco
 
 S = "${WORKDIR}/skins"
 
-FILES_${PN} = "/usr/local/share/titan/skin"
+FILES:${PN} = "/usr/local/share/titan/skin"
 
 do_install() {
     cd ${S}
