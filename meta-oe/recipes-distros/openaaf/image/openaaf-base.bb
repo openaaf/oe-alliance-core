@@ -60,7 +60,7 @@ TITANPACKAGES += "\
 	titan-tuxtxt \
 	"
     
-RDEPENDS_${PN} = "\
+RDEPENDS:${PN} = "\
 	aio-grab \
 	alsa-conf \
 	alsa-utils \
