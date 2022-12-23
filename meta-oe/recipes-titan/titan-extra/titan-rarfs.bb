@@ -14,7 +14,7 @@ PV = "2.0+gitr${SRCPV}"
 PR = "r1"
 PR = "r2"
 
-SRC_URI="git://github.com/vadmium/rarfs.git;protocol=https"
+SRC_URI="git://github.com/vadmium/rarfs.git;protocol=https;branch=master"
 
 S = "${WORKDIR}/git"
 

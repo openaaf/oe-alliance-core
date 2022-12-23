@@ -19,10 +19,10 @@ DEPENDS = " \
 	libusb \
 	"
 
-S = "${WORKDIR}/"
+S = "${WORKDIR}"
 
 CFLAGS:append:sh4 = " -DSH4"
-CFLAGS:append_mipsel = " -DMIPSEL"
+CFLAGS:append:mipsel = " -DMIPSEL"
 CFLAGS:append:arm = " -DARM"
 
 do_compile() {

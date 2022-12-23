@@ -19,14 +19,14 @@ DEPENDS = " \
 	jpeg \
 	"
 
-S = "${WORKDIR}/"
+S = "${WORKDIR}"
 
 CFLAGS:append:sh4 = " -DSH4"
 CFLAGS:append_mipsel = " -DMIPSEL"
 CFLAGS:append:arm = " -DMIPSEL"
 
 CFLAGS:append:arm_sf8008 = " -DEVENT0 -DDOUBLE"
-CFLAGS:append_mipsel_vusolo2 = " -DEVENT0 -DDOUBLE"
+CFLAGS:append:mipsel:vusolo2 = " -DEVENT0 -DDOUBLE"
 
 do_compile() {
 	cd ${WORKDIR}/infobox
