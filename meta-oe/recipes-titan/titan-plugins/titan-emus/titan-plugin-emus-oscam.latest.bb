@@ -196,7 +196,7 @@ echo * $*
 }
 
 #fetch allways
-do_fetch[nostamp] = "1"
+#do_fetch[nostamp] = "1"
 #build allways
 #do_configure[nostamp] = "1"
 do_install[vardepsexclude] += "DATE"
