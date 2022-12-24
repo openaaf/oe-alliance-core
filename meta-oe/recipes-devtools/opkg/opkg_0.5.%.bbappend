@@ -10,7 +10,7 @@ SRC_URI += "file://0001-sanity-check-provides.patch \
     file://modprobe \
     "
 
-SRC_URI_append_openaaf += " file://preinst_dest.patch"
+SRC_URI:append:openaaf += " file://preinst_dest.patch"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
