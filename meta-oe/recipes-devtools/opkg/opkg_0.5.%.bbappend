@@ -10,6 +10,8 @@ SRC_URI += "file://0001-sanity-check-provides.patch \
     file://modprobe \
     "
 
+SRC_URI_append_openaaf += " file://preinst_dest.patch"
+
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 do_install:prepend() {
