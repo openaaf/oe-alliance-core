@@ -73,13 +73,13 @@ python populate_packages:prepend() {
 
             if line.startswith('Description: '):
                 print("found decription ", line[13:])
-                d.setVar('DESCRIPTION_' + full_package, line[13:])
-                d.setVar('SUMMARY_' + full_package, line[13:])
+                d.setVar('DESCRIPTION:' + full_package, line[13:])
+                d.setVar('SUMMARY:' + full_package, line[13:])
             elif line.startswith('Showname: '):
                 print("found showname ", line[10:])
                 d.setVar('SHOWNAME_' + full_package, line[10:])
             elif line.startswith('Maintainer: '):
-                d.setVar('MAINTAINER_' + full_package, line[12:])
+                d.setVar('MAINTAINER:' + full_package, line[12:])
 
     mydir = bb.data.expand('${S}', d)
     print("mydir ", mydir)

@@ -113,15 +113,15 @@ python populate_packages:prepend() {
 
             if line.startswith('Description: '):
                 print("found decription ", line[13:])
-                d.setVar('DESCRIPTION_' + full_package, line[13:])
-                d.setVar('SUMMARY_' + full_package, line[13:])
+                d.setVar('DESCRIPTION:' + full_package, line[13:])
+                d.setVar('SUMMARY:' + full_package, line[13:])
             elif line.startswith('Showname: '):
                 print("found showname ", line[10:])
                 cmd = 'echo "' + line[10:] + '" > ' + workdir + '/deploy-png/' + box + '/' + filename + '.showname'
                 print("cmd4 ", cmd)
                 print(" ")
                 os.system(cmd)
-                d.setVar('MAINTAINER_' + full_package, line[10:])
+                d.setVar('MAINTAINER:' + full_package, line[10:])
             elif line.startswith('Usepath: '):
                 print("found Usepath ", line[9:])
                 cmd = 'echo "' + line[9:] + '" > ' + workdir + '/deploy-png/' + box + '/' + filename + '.usepath'
@@ -129,29 +129,29 @@ python populate_packages:prepend() {
                 print(" ")
                 os.system(cmd)
             elif line.startswith('Homepage: '):
-                d.setVar('HOMEPAGE_' + full_package, line[10:])
+                d.setVar('HOMEPAGE:' + full_package, line[10:])
             elif line.startswith('Maintainer: '):
-                d.setVar('MAINTAINER_' + full_package, line[12:])
+                d.setVar('MAINTAINER:' + full_package, line[12:])
 
             postinstfile = mydir + "/CONTROL/postinst"
             postinst = open(postinstfile).read()
             print("postinst ", postinst)
-            d.setVar('pkg_postinst_' + full_package, postinst)
+            d.setVar('pkg_postinst:' + full_package, postinst)
 
             postrmfile = mydir + "/CONTROL/postrm"
             postrm = open(postrmfile).read()
             print("postrm ", postrm)
-            d.setVar('pkg_postrm_' + full_package, postrm)
+            d.setVar('pkg_postrm:' + full_package, postrm)
 
             preinstfile = mydir + "/CONTROL/preinst"
             preinst = open(preinstfile).read()
             print("preinst ", preinst)
-            d.setVar('pkg_preinst_' + full_package, preinst)
+            d.setVar('pkg_preinst:' + full_package, preinst)
 
             prermfile = mydir + "/CONTROL/prerm"
             prerm = open(prermfile).read()
             print("prerm ", prerm)
-            d.setVar('pkg_prerm_' + full_package, prerm)
+            d.setVar('pkg_prerm:' + full_package, prerm)
 
     mydir = bb.data.expand('${E}', d)
     print("mydir ", mydir)
@@ -167,28 +167,28 @@ do_package_write_ipk:append() {
     bb.process.run("cp -a ../deploy-png/* .")
 }
 
-pkg_preinst_${PN}:prepend() {
+pkg_preinst:${PN}:prepend() {
 echo preinst
 echo pwd `pwd`
 echo 1 $1
 echo * $*
 }
 
-pkg_postinst_${PN}:prepend() {
+pkg_postinst:${PN}:prepend() {
 echo postinst
 echo pwd `pwd`
 echo 1 $1
 echo * $*
 }
 
-pkg_postrm_${PN}:prepend() {
+pkg_postrm:${PN}:prepend() {
 echo postrm
 echo pwd `pwd`
 echo 1 $1
 echo * $*
 }
 
-pkg_prerm_${PN}:prepend() {
+pkg_prerm:${PN}:prepend() {
 echo prerm
 echo pwd `pwd`
 echo 1 $1
