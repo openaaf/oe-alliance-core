@@ -42,7 +42,7 @@ RDEPENDS:${PN} = " \
 	${@bb.utils.contains("MACHINE_FEATURES", "hiaccel", "dinobot-libs-${MACHINE}" , "", d)} \
 	"
 
-RRECOMMENDS:append:sh4_${PN} = " \
+RRECOMMENDS:append:sh4:${PN} = " \
 	libmme-host \
 	"
 
@@ -168,16 +168,16 @@ CFLAGS:append:sh4 = " \
 #CFLAGS:append = " -DDVDPLAYER"
 
 CFLAGS:append:arm = " -DARM -DMIPSEL"
-CFLAGS:append:arm_dm900 = " -DDREAMBOX -DCONFIG_ION"
-CFLAGS:append:arm_dm920 = " -DDREAMBOX -DCONFIG_ION"
-CFLAGS:append:arm_sf8008 = " -DCONFIG_HISILICON_FB"
-#CFLAGS:append:arm_mutant51 = " -DDREAMBOX -DCONFIG_ION"
-#CFLAGS:append:arm_mutant60 = " -DDREAMBOX -DCONFIG_ION"
+CFLAGS:append:arm:dm900 = " -DDREAMBOX -DCONFIG_ION"
+CFLAGS:append:arm:dm920 = " -DDREAMBOX -DCONFIG_ION"
+CFLAGS:append:arm:sf8008 = " -DCONFIG_HISILICON_FB"
+#CFLAGS:append:arm:mutant51 = " -DDREAMBOX -DCONFIG_ION"
+#CFLAGS:append:arm:mutant60 = " -DDREAMBOX -DCONFIG_ION"
 
 CFLAGS:append:mipsel = " -DMIPSEL"
-CFLAGS:append:mipsel_dm7020hd = " -DDREAMBOX"
-CFLAGS:append:mipsel_dm520 = " -DDREAMBOX -DCONFIG_ION"
-CFLAGS:append:mipsel_dm525 = " -DDREAMBOX -DCONFIG_ION"
+CFLAGS:append:mipsel:dm7020hd = " -DDREAMBOX"
+CFLAGS:append:mipsel:dm520 = " -DDREAMBOX -DCONFIG_ION"
+CFLAGS:append:mipsel:dm525 = " -DDREAMBOX -DCONFIG_ION"
 
 CFLAGS:append:sh4 = " -DSSLNEW -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DSH4 -DSH4NEW -DCAMSUPP -Os -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration"
 CFLAGS:append:mipsel = " -DSSLNEW -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
