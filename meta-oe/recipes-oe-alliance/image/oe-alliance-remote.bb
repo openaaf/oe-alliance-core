@@ -63,15 +63,17 @@ do_install() {
         done
         install -m 0644 ${S}/hardware/v2.xml ${D}${datadir}/enigma2/hardware/hardware.xml
     else
-        printf '<hardware>\n\t<remotes>\n\t\t<remote rcName="%s" rcCode="%s" name="Default" />\n\t</remotes>\n</hardware>' '${RCNAME}' '${RCTYPE}' > ${D}${datadir}/enigma2/hardware/hardware.xml
+        printf '<hardware>\n\t<remotes>\n\t\t<remote rcName="%s" rcType="%s" name="Default" />\n\t</remotes>\n</hardware>' '${RCNAME}' '${RCTYPE}' > ${D}${datadir}/enigma2/hardware/hardware.xml
     fi
     if [ ${MACHINEBUILD} = "ventonhdx" ]; then
         install -m 0644 ${S}/boxes/uniboxhd1.png ${D}${datadir}/enigma2/hardware/uniboxhd1_front.png
         install -m 0644 ${S}/boxes/uniboxhd2.png ${D}${datadir}/enigma2/hardware/uniboxhd2_front.png
         install -m 0644 ${S}/boxes/uniboxhd3.png ${D}${datadir}/enigma2/hardware/uniboxhd3_front.png
+        install -m 0644 ${S}/png/ini1.png ${D}${datadir}/enigma2/hardware/ini1.png
     elif [ ${MACHINE} = "et6x00" ]; then
         install -m 0644 ${S}/boxes/et6x00.png ${D}${datadir}/enigma2/hardware/et6x00_front.png
         install -m 0644 ${S}/boxes/et6500.png ${D}${datadir}/enigma2/hardware/et6500_front.png
+        install -m 0644 ${S}/png/et6500.png ${D}${datadir}/enigma2/hardware/et6500.png
     elif [ ${MACHINEBUILD} = "azboxhd" ]; then
         install -m 0644 ${S}/boxes/elite.png ${D}${datadir}/enigma2/hardware/elite_front.png
         install -m 0644 ${S}/boxes/premium.png ${D}${datadir}/enigma2/hardware/premium_front.png
@@ -84,6 +86,8 @@ do_install() {
         install -m 0644 ${S}/boxes/et7000.png ${D}${datadir}/enigma2/hardware/et7000_front.png
         install -m 0644 ${S}/boxes/et7100.png ${D}${datadir}/enigma2/hardware/et7100_front.png
         install -m 0644 ${S}/boxes/et7500.png ${D}${datadir}/enigma2/hardware/et7500_front.png
+    elif [ ${MACHINEBUILD} = "et9x00" ]; then
+        install -m 0644 ${S}/png/et9500.png ${D}${datadir}/enigma2/hardware/et9500.png
     elif [ ${MACHINEBUILD} = "twinboxlcd" ]; then
         install -m 0644 ${S}/boxes/twinboxlcdci.png ${D}${datadir}/enigma2/hardware/twinboxlcdci_front.png
         install -m 0644 ${S}/boxes/twinboxlcd.png ${D}${datadir}/enigma2/hardware/twinboxlcd_front.png
