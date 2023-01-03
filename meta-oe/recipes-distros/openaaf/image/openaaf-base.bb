@@ -58,6 +58,7 @@ TITANPACKAGES += "\
     titan-plugin-settings-default.all \
 	titan-rarfs \
 	titan-tuxtxt \
+	titan-portscan \
 	"
     
 RDEPENDS:${PN} = "\
