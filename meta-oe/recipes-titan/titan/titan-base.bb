@@ -10,6 +10,7 @@ ALLOW_EMPTY_${PN} = "1"
 inherit packagegroup
 
 #	titan-netsurf
+
 DEPENDS = "\
 	titan-gmediarender \
 	${@bb.utils.contains('MACHINE', 'dm900', 'webkit-hbbtv-plugin' , '', d)} \
