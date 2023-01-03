@@ -19,6 +19,7 @@ RDEPENDS:${PN} = "\
 	titan-rarfs \
 	titan-fbread \
 	titan-tuxtxt \
+	titan-portscan \
    	titan \
 	titan-plugin-tools-filemanager \
 	titan-plugin-infos-imdbapi \
