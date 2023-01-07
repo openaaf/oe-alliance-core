@@ -10,23 +10,25 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit autotools pkgconfig
 
-PV = "3.8"
+PV = "3.10"
 
 SRC_URI = " http://download.netsurf-browser.org/netsurf/releases/source-full/netsurf-all-${PV}.tar.gz"
 
 SRC_URI += " \
-    file://netsurf-32bpp-xbgr8888.patch \
-    file://netsurf-event.patch \
-    file://netsurf-framebuffer.patch \
-    file://netsurf-freetype.patch \
-    file://netsurf-gui.patch \
-    file://netsurf-linux.patch \
-    file://netsurf-osk.patch \
-    file://netsurf-text.patch \
+    file://0001-netsurf-32bpp-xbgr8888.patch \
+    file://0002-netsurf-event.patch \
+    file://0003-netsurf-framebuffer.patch \
+    file://0004-netsurf-gui.patch \
+    file://0005-netsurf-linux.patch \
+    file://0006-netsurf-osk.patch \
+    file://0007-netsurf-text.patch \
+    file://0008-avoid-system-perl-dependencies.patch \
+    file://0009-fix-compilation-without-curl.patch \
+    file://0010-framebuffer-Fix-internal-font-generated-source-for-GCC-10.patch \
 "
 
-SRC_URI[md5sum] = "cf3e00b98b630d552ae694be52e23c8a"
-SRC_URI[sha256sum] = "eb4864d4459d6f9958dd10a3301c272ea7f5df72667a7db0aad5bc5ae06c0e10"
+SRC_URI[md5sum] = "f5b2ea34c85775941ab3c2144783d396"
+SRC_URI[sha256sum] = "495adf6b6614ce36fca6c605f7c321f9cb4a3df838043158122678ce2b3325b7"
 
 DEPENDS = "libpng curl duktape expat freetype jpeg libpcap openssl virtual/libiconv bison-native gperf-native"
 
@@ -110,7 +112,7 @@ do_compile() {
 
 FILES:${PN} = " \
 	/usr/bin \
-        /usr/share/netsurf \
+    /usr/share/netsurf \
 "
 
 do_install() {

@@ -15,7 +15,7 @@
  
  fbtk_widget_t *fbtk;
  
-@@ -979,6 +987,32 @@
+@@ -1027,6 +1035,32 @@
  
  		case NSFB_KEY_LCTRL:
  			modifier &= ~FBTK_MOD_LCTRL;
