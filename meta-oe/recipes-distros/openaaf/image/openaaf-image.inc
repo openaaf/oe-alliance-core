@@ -51,8 +51,27 @@ INHIBIT_DEFAULT_DEPS = "1"
 
 inherit image
 
+do_rootfs_append() {
+    mydir = d.getVar('IMAGE_ROOTFS')
+    print("mydir ", mydir)
+    # fix settings restore
+    bb.process.run("cp %s/mnt/settings/* %s/etc/titan.restore/mnt/settings; rm %s/mnt/settings; rm -rf %s/media/settings" % (mydir, mydir, mydir, mydir))
+    # fix skin restore
+    bb.process.run("ln -s /var/usr/local/share/titan/skin %s/lib/titan" % (mydir))
+}
+
 do_package_index[nostamp] = "1"
 do_package_index[depends] += "${PACKAGEINDEXDEPS}"
+
+python do_package_index_preview() {
+    box = bb.data.expand('${MACHINEBUILD}', d)
+    mydir = d.getVar('DEPLOY_DIR_IPK')
+    print("mydir ", mydir)
+    bb.process.run("cd %s/%s; tar czvf Packages.preview.tar.gz ./preview" % (mydir, box))
+
+    from oe.rootfs import generate_index_files
+    generate_index_files(d)
+}
 
 python do_package_index() {
     from oe.rootfs import generate_index_files
