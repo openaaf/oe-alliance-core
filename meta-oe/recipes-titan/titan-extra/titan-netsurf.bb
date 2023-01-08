@@ -25,6 +25,7 @@ SRC_URI += " \
     file://0008-avoid-system-perl-dependencies.patch \
     file://0009-fix-compilation-without-curl.patch \
     file://0010-framebuffer-Fix-internal-font-generated-source-for-GCC-10.patch \
+    file://netsurf.makefile.gcc11.patch \
 "
 
 SRC_URI[md5sum] = "f5b2ea34c85775941ab3c2144783d396"
