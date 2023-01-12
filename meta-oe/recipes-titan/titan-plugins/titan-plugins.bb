@@ -33,6 +33,7 @@ DEPENDS = "titan \
     "
 
 RDEPENDS:${PN} = "${PYTHON_PN}-ctypes"
+RDEPENDS:titan-plugin-player-gmediarender = "titan-gmediarender"
 
 S = "${WORKDIR}/svn/titan/plugins"
 
