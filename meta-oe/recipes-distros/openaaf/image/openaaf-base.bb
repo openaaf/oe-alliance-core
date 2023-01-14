@@ -44,18 +44,19 @@ TITANPACKAGES += "\
 	titan-autorestore \
 	titan-fbread \
  	titan-infobox \
-	titan-plugin-tools-filemanager \
 	titan-plugin-infos-imdbapi \
 	titan-plugin-infos-imdb \
-	titan-plugin-player-mc \
-	titan-plugin-network-networkbrowser \
-	titan-plugin-tools-readerconfig \
 	titan-plugin-infos-streaminfo \
-	titan-plugin-player-tithek \
 	titan-plugin-infos-tmdb \
 	titan-plugin-infos-weather \
-	titan-plugin-skins-default \
+	titan-plugin-network-networkbrowser \
+	titan-plugin-player-gmediarender \
+	titan-plugin-player-mc \
+	titan-plugin-player-tithek \
     titan-plugin-settings-default.all \
+	titan-plugin-skins-default \
+	titan-plugin-tools-readerconfig \
+	titan-plugin-tools-filemanager \
 	titan-rarfs \
 	titan-tuxtxt \
 	titan-portscan \
