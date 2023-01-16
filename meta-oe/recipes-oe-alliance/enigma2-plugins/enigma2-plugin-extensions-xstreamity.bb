@@ -9,9 +9,9 @@ RDEPENDS:${PN} = "${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imag
 
 SRCREV = "${AUTOREV}"
 
-PV = "git${SRCPV}"
-PKGV = "git${GITPKGV}"
-PR = "r0"
+PV = "1.xx+git${SRCPV}"
+PKGV = "1.xx+git${GITPKGV}"
+PR = "r1"
 
 inherit gitpkgv allarch
 
@@ -36,22 +36,4 @@ install -d ${D}${libdir}/enigma2/python/Plugins/Extensions/XStreamity
 cp -rf ${S}/XStreamity/usr/lib/enigma2/python/Components/Converter/*.py ${D}${libdir}/enigma2/python/Components/Converter/
 cp -rf ${S}/XStreamity/usr/lib/enigma2/python/Components/Renderer/*.py ${D}${libdir}/enigma2/python/Components/Renderer/
 cp -rf ${S}/XStreamity/usr/lib/enigma2/python/Plugins/Extensions/XStreamity/* ${D}${libdir}/enigma2/python/Plugins/Extensions/XStreamity/
-}
-
-pkg_preinst:${PN}() {
-#!/bin/sh
-if [ -f "/etc/enigma2/X-Streamity/playlists.json" ]
-	then
-	rm -f /etc/enigma2/X-Streamity/playlists.json > /dev/null 2>&1
-fi
-
-if [ -f "/etc/enigma2/xstreamity/playlists.json" ]
-	then
-	rm -f /etc/enigma2/xstreamity/playlists.json > /dev/null 2>&1
-fi
-
-if [ -f "/etc/enigma2/xstreamity/x-playlists.json" ]
-	then
-	rm -f /etc/enigma2/xstreamity/x-playlists.json > /dev/null 2>&1
-fi
 }
