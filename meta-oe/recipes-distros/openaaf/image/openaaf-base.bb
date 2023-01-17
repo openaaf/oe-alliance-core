@@ -39,29 +39,6 @@ DEPENDS = " \
     titan-base \
 	"
 
-TITANPACKAGES += "\
-   	titan \
-	titan-autorestore \
-	titan-fbread \
- 	titan-infobox \
-	titan-plugin-infos-imdbapi \
-	titan-plugin-infos-imdb \
-	titan-plugin-infos-streaminfo \
-	titan-plugin-infos-tmdb \
-	titan-plugin-infos-weather \
-	titan-plugin-network-networkbrowser \
-	titan-plugin-player-gmediarender \
-	titan-plugin-player-mc \
-	titan-plugin-player-tithek \
-    titan-plugin-settings-default.all \
-	titan-plugin-skins-default \
-	titan-plugin-tools-readerconfig \
-	titan-plugin-tools-filemanager \
-	titan-rarfs \
-	titan-tuxtxt \
-	titan-portscan \
-	"
-    
 RDEPENDS:${PN} = "\
 	aio-grab \
 	alsa-conf \
@@ -121,7 +98,6 @@ RDEPENDS:${PN} = "\
 	smbclient \
 	smbnetfs \
 	openaaf-bootlogo \
-	titan-rarfs \
 	tuxtxt-enigma2 \
 	tzdata tzdata-europe tzdata-australia tzdata-asia tzdata-pacific tzdata-africa tzdata-americas \
 	util-linux-blkid \
@@ -146,9 +122,6 @@ RDEPENDS:${PN} = "\
 	${@bb.utils.contains("TARGET_ARCH", "sh4", "alsa-utils-amixer-conf" , "", d)} \
 	oe-alliance-feeds-configs \
 	openatv-version-info \
-	\
-	${TITANPACKAGES} \
-    \
 	${@bb.utils.contains("MACHINE_FEATURES", "dreamboxv1", "", "oe-alliance-wifi", d)} \
  	"
 

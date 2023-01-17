@@ -18,7 +18,32 @@ do_rootfs[deptask] = "do_rm_work"
 
 SSTATE_ALLOW_OVERLAP_FILES += "${DEPLOY_DIR_IMAGE}"
 
+TITANPACKAGES += "\
+   	titan \
+	titan-autorestore \
+	titan-fbread \
+ 	titan-infobox \
+	titan-plugin-infos-imdbapi \
+	titan-plugin-infos-imdb \
+	titan-plugin-infos-streaminfo \
+	titan-plugin-infos-tmdb \
+	titan-plugin-infos-weather \
+	titan-plugin-network-networkbrowser \
+	titan-plugin-player-mc \
+	titan-plugin-player-tithek \
+    titan-plugin-settings-default.all \
+	titan-plugin-skins-default \
+	titan-plugin-tools-readerconfig \
+	titan-plugin-tools-filemanager \
+	titan-rarfs \
+	titan-tuxtxt \
+	titan-portscan \
+	"
+
 IMAGE_INSTALL = "openaaf-base \
+	\
+	${TITANPACKAGES} \
+    \
     ${@bb.utils.contains("MACHINE_FEATURES", "dvbc-only", "", "enigma2-plugin-settings-defaultsat", d)} \
     ${@bb.utils.contains("MACHINE_FEATURES", "no-cl-svr", "", \
     " \
