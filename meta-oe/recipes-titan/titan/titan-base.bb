@@ -13,7 +13,7 @@ inherit packagegroup
 DEPENDS = "\
 	titan-gmediarender \
 	titan-netsurf \
-	${@bb.utils.contains('MACHINE', 'dm900', 'webkit-hbbtv-plugin' , '', d)} \
+	${@bb.utils.contains('MACHINE', 'sf8008', 'webkit-hbbtv-plugin' , '', d)} \
    	titan-plugins \
    	titan-skins \
     titan-screensaver \
