@@ -123,5 +123,6 @@ RDEPENDS:${PN} = "\
 	oe-alliance-feeds-configs \
 	openatv-version-info \
 	${@bb.utils.contains("MACHINE_FEATURES", "dreamboxv1", "", "oe-alliance-wifi", d)} \
+	${@bb.utils.contains("TARGET_ARCH", "arm", "webkit-hbbtv-plugin" , "", d)} \
  	"
 
