@@ -16,6 +16,6 @@ SRC_URI = "git://github.com/LudovicRousseau/pcsc-tools.git;protocol=https;branch
 
 S = "${WORKDIR}/git"
 
-inherit autotools pkgconfig
+inherit autotools gettext pkgconfig
 
 FILES:${PN} += "${datadir}"
