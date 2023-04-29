@@ -4,7 +4,7 @@ MAINTAINER = "OE-Alliance"
 require conf/license/license-gplv2.inc
 require conf/python/python3-compileall.inc
 
-inherit autotools-brokensep gitpkgv gettext ${PYTHON_PN}native
+inherit autotools-brokensep gitpkgv gettext ${PYTHON_PN}targetconfig ${PYTHON_PN}native
 
 SRCREV = "${AUTOREV}"
 PV = "2.2.0+git${SRCPV}"
@@ -14,8 +14,7 @@ PR = "r1"
 DEPENDS = "enigma2 ${PYTHON_PN}"
 RDEPENDS:${PN} = "gstreamer1.0-plugins-bad-hls curl mjpegtools ${PYTHON_PN}-ctypes libshowiframe0 ${PYTHON_PN}-pyopenssl ${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} ${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-textutils", "", d)}"
 
-SRC_URI = "git://github.com/oe-alliance/DreamPlex.git;protocol=https;branch=master \
-        file://ax-python-devel-dont-check-for-distutils.patch"
+SRC_URI = "git://github.com/oe-alliance/DreamPlex.git;protocol=https;branch=master"
 
 EXTRA_OECONF = " \
     BUILD_SYS=${BUILD_SYS} \

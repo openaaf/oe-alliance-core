@@ -7,17 +7,21 @@ require conf/python/python3-compileall.inc
 inherit gitpkgv allarch gettext
 
 SRCREV = "${AUTOREV}"
-PV = "7.8.x+git${SRCPV}"
-PKGV = "7.8.x+git${GITPKGV}"
-VER = "7.8.x"
+PV = "7.9.12+git${SRCPV}"
+PKGV = "7.9.12+git${GITPKGV}"
+VER = "7.9.12"
 
 DEPENDS += "gettext-native"
-RDEPENDS:${PN} = "${PYTHON_PN}-requests ${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-subprocess", "", d)} ${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} enigma2-plugin-systemplugins-mphelp ${PYTHON_PN}-lxml"
+RDEPENDS:${PN} = "enigma2-plugin-extensions-oaweather ${PYTHON_PN}-requests ${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-subprocess", "", d)} ${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} enigma2-plugin-systemplugins-mphelp ${PYTHON_PN}-lxml"
+RDEPENDS:${PN}:remove:openhdf = "enigma2-plugin-extensions-oaweather"
+RDEPENDS:${PN}:remove:teamblue = "enigma2-plugin-extensions-oaweather"
 RCONFLICTS:${PN} += "enigma2-plugin-skins-kravenfhd enigma2-plugin-skins-kravenvb"
 RREPLACES:${PN} += "enigma2-plugin-skins-kravenfhd enigma2-plugin-skins-kravenvb"
 RPROVIDES:${PN} += "enigma2-plugin-skins-kravenfhd enigma2-plugin-skins-kravenvb"
 
 SRC_URI = "git://github.com/oerlgrey/KravenHD.git;protocol=https;branch=python3"
+SRC_URI:openhdf = "git://github.com/oerlgrey/KravenHD_openHDF.git;protocol=https;branch=python3"
+SRC_URI:teamblue = "git://github.com/oerlgrey/KravenHD_teamBlue.git;protocol=https;branch=python3"
 
 FILES:${PN} = "/usr/*"
 

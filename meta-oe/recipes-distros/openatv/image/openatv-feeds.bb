@@ -7,7 +7,7 @@ ALLOW_EMPTY:${PN} = "1"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 PV = "1.0"
-PR = "r52"
+PR = "r54"
 
 inherit packagegroup
 
@@ -18,6 +18,7 @@ inherit packagegroup
 DEPENDS += "oe-alliance-feeds enigma2-3rdparty-plugins"
 
 RRECOMMENDS:${PN} = "\
+    chrony \
     enigma2-pliplugins \
     enigma2-display-skins \
     openatv-skinparts \
@@ -38,6 +39,7 @@ RRECOMMENDS:${PN} = "\
     enigma2-plugin-extensions-sdgradio \
     enigma2-plugin-extensions-epgimport \
     enigma2-plugin-systemplugins-autobouquetsmaker \
+    enigma2-plugin-extensions-openatvreader \
     enigma2-plugin-skincomponents-advancedmovieselection-steampunk-skin \
     enigma2-plugin-skincomponents-advancedmovieselection-ultimate-skin \
     enigma2-plugin-skincomponents-bmediacenter-ax-blue-skin \
@@ -57,6 +59,7 @@ RRECOMMENDS:${PN} = "\
     enigma2-plugin-skins-overlayhd \
     enigma2-plugin-skincomponents-mediaportal-atv-metrix-style \
     enigma2-plugin-extensions-chocholousek-picons \
+    enigma2-plugin-extensions-oaweather \
     mediainfo \
     "
 

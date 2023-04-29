@@ -9,9 +9,9 @@ require conf/python/python3-compileall.inc
 
 SRCREV="${AUTOREV}"
 
-PV = "git${SRCPV}"
-PKGV = "git${GITPKGV}"
-PR = "r0"
+PV = "1.xx+git${SRCPV}"
+PKGV = "1.xx+git${GITPKGV}"
+PR = "r1"
 inherit gitpkgv allarch
 
 SRC_URI = "git://github.com/kiddac/Jedi_Maker_Xtream.git;protocol=https;branch=master"
@@ -26,15 +26,6 @@ do_install () {
     install -d ${D}/${libdir}/enigma2/python/Plugins/Extensions/JediMakerXtream
     cp -rf ${S}/JediMakerXtream//etc/enigma2/jediplaylists/* ${D}/${sysconfdir}/enigma2/jediplaylists/
     cp -rf ${S}/JediMakerXtream/usr/lib/enigma2/python/Plugins/Extensions/JediMakerXtream/* ${D}/${libdir}/enigma2/python/Plugins/Extensions/JediMakerXtream/
-}
-
-pkg_preinst:${PN} () {
-#!/bin/sh
-        rm -rf /etc/enigma2/jediplaylists/playlist_all.json > /dev/null 2>&1
-        rm -rf /usr/lib/enigma2/python/Plugins/Extensions/JediMakerXtream > /dev/null 2>&1
-        rm -rf /etc/enigma2/*jmx*.* > /dev/null 2>&1
-        rm -rf /etc/epgimport/*jmx*.* > /dev/null 2>&1
-        sed -i '/jmx/d' /etc/enigma2/bouquets.tv
 }
 
 pkg_postrm:${PN} () {

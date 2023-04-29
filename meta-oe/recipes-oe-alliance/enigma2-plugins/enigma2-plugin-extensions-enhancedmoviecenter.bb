@@ -6,7 +6,7 @@ require conf/license/license-gplv2.inc
 require conf/python/python3-compileall.inc
 
 DEPENDS = "${PYTHON_PN}-six-native"
-RDEPENDS:${PN} = "gstreamer1.0-plugins-good-flv gstreamer1.0-plugins-bad-rtmp ${PYTHON_PN}-json ${PYTHON_PN}-html ${PYTHON_PN}-requests ${PYTHON_PN}-mutagen rtmpdump ${PYTHON_PN}-chardet"
+RDEPENDS:${PN} = "gstreamer1.0-plugins-good-flv gstreamer1.0-plugins-bad-rtmp ${PYTHON_PN}-json ${PYTHON_PN}-html ${PYTHON_PN}-requests ${PYTHON_PN}-mutagen rtmpdump ${PYTHON_PN}-chardet ${PYTHON_PN}-tmdbsimple"
 
 inherit gitpkgv ${PYTHON_PN}native autotools-brokensep gettext
 
@@ -15,6 +15,7 @@ PV = "4.0.+git${SRCPV}"
 PKGV = "4.0.+git${GITPKGV}"
 
 SRC_URI="git://github.com/oe-mirrors/e2openplugin-EnhancedMovieCenter.git;branch=master;protocol=https"
+SRC_URI:openatv = "git://github.com/oe-mirrors/EnhancedMovieCenter.git;protocol=https;branch=master"
 
 S = "${WORKDIR}/git"
 

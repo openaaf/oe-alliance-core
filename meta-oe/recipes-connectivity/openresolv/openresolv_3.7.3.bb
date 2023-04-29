@@ -1,20 +1,20 @@
 SUMMARY = "management framework for resolv.conf"
 AUTHOR = "Roy Marples <roy@marples.name>"
-HOMEPAGE = "http://roy.marples.name/projects/openresolv"
+HOMEPAGE = "https://github.com/NetworkConfiguration/openresolv/tags"
 LICENSE = "BSD-2-Clause"
 LIC_FILES_CHKSUM = "file://resolvconf.in;beginline=4;endline=26;md5=e962049f535f7385f0f2a0ac9638cd43"
 inherit allarch
 
-SRC_URI = "http://roy.marples.name/downloads/${BPN}/${BP}.tar.xz \
+SRC_URI = "https://github.com/NetworkConfiguration/${BPN}/archive/refs/tags/v${PV}.tar.gz \
            file://000resolvconf.if-up \
            file://000resolvconf.ppp.ip-down \
            file://000resolvconf.ppp.ip-up \
            file://resolvconf.conf \
            file://resolvconf.if-down \
            file://volatiles.99_openresolv"
-SRC_URI[md5sum] = "dab07cd1601df9aac22ad946fe410b71"
-SRC_URI[sha256sum] = "b3ee7960f8808c83ab4923ced3c4b114f1c0141367ab1c3d08765327c0782a02"
 
+SRC_URI[md5sum] = "355c2fb0c3fef1afdfdbbc7487612627"
+SRC_URI[sha256sum] = "8b5417ca8cab228efd6ed319e450eec2e54edc147e060a4c6881de9d101d26d9"
 do_configure() {
         echo "SYSCONFDIR=${sysconfdir}" > config.mk
         echo "SBINDIR=${base_sbindir}" >> config.mk
@@ -40,6 +40,8 @@ do_install() {
         install -m 0755 ${WORKDIR}/000resolvconf.ppp.ip-up ${D}${sysconfdir}/ppp/ip-up.d/000resolvconf
 }
 
+S = "${WORKDIR}/${BPN}-${PV}"
+
 RPROVIDES:${PN} = "resolvconf"
 
 RCONFLICTS:${PN} = "resolvconf"
@@ -56,3 +58,5 @@ if [ -z "$D" -a -x ${sysconfdir}/init.d/populate-volatile.sh ]; then
     ${sysconfdir}/init.d/populate-volatile.sh update
 fi
 }
+
+INSANE_SKIP:${PN} += "src-uri-bad"
