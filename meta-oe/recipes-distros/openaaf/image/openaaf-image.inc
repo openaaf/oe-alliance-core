@@ -51,7 +51,7 @@ INHIBIT_DEFAULT_DEPS = "1"
 
 inherit image
 
-do_rootfs_append() {
+do_rootfs:append() {
     mydir = d.getVar('IMAGE_ROOTFS')
     print("mydir ", mydir)
     # fix settings restore
