@@ -17,7 +17,7 @@ S = "${WORKDIR}"
 
 do_compile() {
 	cd ${WORKDIR}/bouquet2m3u
-    if [ ${TARGET_ARCH} = "sh4" ];then
+    if [ ${TARGET_ARCH} != "sh4" ];then
     	${CC} GO_bouquet2m3u.c -O2 -mhard-float -o bouquet2m3u
     else
     	${CC} GO_bouquet2m3u.c -O2 -o bouquet2m3u
