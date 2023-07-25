@@ -38,6 +38,7 @@ TITANPACKAGES += "\
 	titan-rarfs \
 	titan-tuxtxt \
 	titan-portscan \
+	titan-bouquet2m3u \
 	"
 
 IMAGE_INSTALL = "openaaf-base \
