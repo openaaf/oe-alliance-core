@@ -34,7 +34,9 @@ DEPENDS = "titan \
 
 RDEPENDS:${PN} = "${PYTHON_PN}-ctypes"
 RDEPENDS:titan-plugin-player-gmediarender = "titan-gmediarender"
-RDEPENDS:titan-plugin-player-tithek = "enigma2-plugin-extensions-e2iplayer-deps"
+RDEPENDS:titan-plugin-player-tithek = "enigma2-plugin-extensions-e2iplayer-deps curl"
+RDEPENDS:titan-plugin-network-xupnpd = "titan-xupnpd titan-bouquet2m3u"
+RDEPENDS:titan-plugin-browser-netsurf = "titan-netsurf"
 
 S = "${WORKDIR}/svn/titan/plugins"
 
