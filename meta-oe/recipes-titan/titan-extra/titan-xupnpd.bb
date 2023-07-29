@@ -7,6 +7,8 @@ require conf/license/license-gplv2.inc
 
 DEPENDS = " \
 	libupnp \
+    readline \
+    openssl \
 	"
 
 inherit gitpkgv
@@ -45,6 +47,7 @@ do_compile() {
 }
 
 FILES:${PN} = " \
+    /etc/init.d \
 	/usr/bin \
     /usr/share/xupnpd \
 "
