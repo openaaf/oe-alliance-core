@@ -44,6 +44,7 @@ TITANPACKAGES += "\
 IMAGE_INSTALL = "openaaf-base \
 	\
 	${TITANPACKAGES} \
+	${@bb.utils.contains("TARGET_ARCH", "arm", "webkit-hbbtv-plugin" , "", d)} \
     \
     ${@bb.utils.contains("MACHINE_FEATURES", "dvbc-only", "", "enigma2-plugin-settings-defaultsat", d)} \
     ${@bb.utils.contains("MACHINE_FEATURES", "no-cl-svr", "", \
