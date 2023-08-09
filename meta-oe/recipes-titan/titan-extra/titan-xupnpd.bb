@@ -63,6 +63,6 @@ do_install() {
   cp -r ${S}/ui ${D}/usr/share/xupnpd/
   cp -r ${S}/www ${D}/usr/share/xupnpd/
   cp ${S}/*.lua ${D}/usr/share/xupnpd/
-  cp ${S}/contrib/OpenEmbedded/files/xupnpd.lua ${D}/usr/share/xupnpd/
+#  cp ${S}/contrib/OpenEmbedded/files/xupnpd.lua ${D}/usr/share/xupnpd/
 }
 
