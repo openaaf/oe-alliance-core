@@ -1,5 +1,5 @@
---- a/src/plugins/xupnpd_coolstream.lua
-+++ b/src/plugins/xupnpd_coolstream.lua
+--- a/plugins/xupnpd_coolstream.lua
++++ b/plugins/xupnpd_coolstream.lua
 @@ -0,0 +1,177 @@
 +-- Plugin for converting channels lists from coolstream receivers
 +-- Author focus.cst@gmail.com
@@ -178,8 +178,8 @@
 +plugins.coolstream.updatefeed=cst_updatefeed
 +plugins.coolstream.sendurl=cst_sendurl
 +end
---- a/src/xupnpd.lua
-+++ b/src/xupnpd.lua
+--- a/xupnpd.lua
++++ b/xupnpd.lua
 @@ -5,13 +5,13 @@
  cfg.ui_session_file='/tmp/xupnpd.session'
  
@@ -292,8 +292,8 @@
  cfg.ui_path='./ui/'
  cfg.drive=''                    -- reload playlists only if drive state=active/idle, example: cfg.drive='/dev/sda'
  cfg.profiles='./profiles/'      -- device profiles feature
---- a/src/ui/xupnpd_ui.lua
-+++ b/src/ui/xupnpd_ui.lua
+--- a/ui/xupnpd_ui.lua
++++ b/ui/xupnpd_ui.lua
 @@ -24,7 +24,7 @@
          end
      end
@@ -339,8 +339,8 @@
  
      http.send('<br/><form method=get action="/ui"><input class="btn btn-primary" type=submit value=OK></form>')
  
---- a/src/xupnpd_m3u.lua
-+++ b/src/xupnpd_m3u.lua
+--- a/xupnpd_m3u.lua
++++ b/xupnpd_m3u.lua
 @@ -83,6 +83,8 @@
      playlist_data.objid='0'
      playlist_data.size=0
@@ -350,8 +350,8 @@
  
      local plist=clone_table(playlist)
  
---- a/src/xupnpd_main.lua
-+++ b/src/xupnpd_main.lua
+--- a/xupnpd_main.lua
++++ b/xupnpd_main.lua
 @@ -2,6 +2,9 @@
  -- clark15b@gmail.com
  -- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
