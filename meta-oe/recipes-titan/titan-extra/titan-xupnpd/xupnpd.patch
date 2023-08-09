@@ -178,8 +178,8 @@
 +plugins.coolstream.updatefeed=cst_updatefeed
 +plugins.coolstream.sendurl=cst_sendurl
 +end
---- a/xupnpd.lua
-+++ b/xupnpd.lua
+--- a/xupnpd.lua	2023-08-09 15:07:05.000000000 +0200
++++ b/xupnpd.lua	2023-08-09 15:14:18.619567582 +0200
 @@ -5,13 +5,13 @@
  cfg.ui_session_file='/tmp/xupnpd.session'
  
@@ -218,7 +218,7 @@
  
  -- 'cfg.proxy' enables proxy for injection DLNA headers to stream
  -- 0-off, 1-radio, 2-radio/TV
-@@ -52,19 +52,20 @@
+@@ -52,7 +52,7 @@
  cfg.dlna_notify=true
  
  -- UPnP/DLNA subscribe ttl
@@ -226,10 +226,8 @@
 +--cfg.dlna_subscribe_ttl=1800
  
  -- group by 'group-title'
--cfg.group=true
-+cfg.group=false
- 
- -- sort files
+ cfg.group=true
+@@ -61,10 +61,11 @@
  cfg.sort_files=false
  
  -- Device name
@@ -243,7 +241,7 @@
  
  -- max url cache size
  cfg.cache_size=8
-@@ -76,12 +77,14 @@
+@@ -76,7 +77,7 @@
  cfg.default_mime_type='mpeg'
  
  -- feeds update interval (seconds, 0 - disabled)
@@ -251,30 +249,17 @@
 +cfg.feeds_update_interval=3600
  cfg.playlists_update_interval=0
  
+ -- host for UI playlist download
+@@ -85,6 +86,8 @@
  -- playlist (m3u file path or path with alias
  playlist=
  {
 +   { '/hdd/movie', 'Local Record Files' },
-+--    { '/hdd/pictures', 'Local Picture Files' },
++   { '/hdd/pictures', 'Local Picture Files' },
  --    { './playlists/mozhay.m3u', 'Mozhay.tv' },
  --    { './localmedia', 'Local Media Files' }
  --    { './private', 'Private Media Files', '127.0.0.1;192.168.1.1' }  -- only for 127.0.0.1 and 192.168.1.1
-@@ -90,10 +93,10 @@
- -- feeds list (plugin, feed name, feed type)
- feeds=
- {
--    { 'vimeo',          'channel/hd',           'Vimeo HD Channel' },
--    { 'vimeo',          'channel/hdxs',         'Vimeo Xtreme sports' },
--    { 'vimeo',          'channel/mtb',          'Vimeo MTB Channel' },
--    { 'youtube',        'channel/top_rated',    'YouTube Top Rated' },
-+--    { 'vimeo',          'channel/hd',           'Vimeo HD Channel' },
-+--    { 'vimeo',          'channel/hdxs',         'Vimeo Xtreme sports' },
-+--    { 'vimeo',          'channel/mtb',          'Vimeo MTB Channel' },
-+--    { 'youtube',        'channel/top_rated',    'YouTube Top Rated' },
- --    { 'youtube',        'Drift0r',              'Drift0r' },
- --    { 'youtube',        'XboxAhoy',             'XboxAhoy' },
- --    { 'ag',             'videos',               'AG - New' },
-@@ -101,6 +104,8 @@
+@@ -104,6 +107,8 @@
  --    { 'gametrailers',   'ps3',                   'GT - PS3' },
  --    { 'giantbomb',      'all',                  'GiantBomb - All' },
  --    { 'dreambox',       'http://192.168.0.1:8001/','Dreambox1' },
@@ -283,7 +268,7 @@
  }
  
  -- log ident, pid file end www root
-@@ -112,7 +117,7 @@
+@@ -115,7 +120,7 @@
  cfg.plugin_path='./plugins/'
  cfg.config_path='./config/'
  cfg.playlists_path='./playlists/'
@@ -291,8 +276,7 @@
 +cfg.feeds_path='/tmp/xupnpd-feeds/'
  cfg.ui_path='./ui/'
  cfg.drive=''                    -- reload playlists only if drive state=active/idle, example: cfg.drive='/dev/sda'
- cfg.profiles='./profiles/'      -- device profiles feature
---- a/ui/xupnpd_ui.lua
+ cfg.profiles='./profiles/'      -- device profiles feature--- a/ui/xupnpd_ui.lua
 +++ b/ui/xupnpd_ui.lua
 @@ -24,7 +24,7 @@
          end
