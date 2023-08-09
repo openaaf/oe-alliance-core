@@ -276,7 +276,7 @@
 +cfg.feeds_path='/tmp/xupnpd-feeds/'
  cfg.ui_path='./ui/'
  cfg.drive=''                    -- reload playlists only if drive state=active/idle, example: cfg.drive='/dev/sda'
- cfg.profiles='./profiles/'      -- device profiles feature--- a/ui/xupnpd_ui.lua
+ cfg.profiles='./profiles/'      -- device profiles feature
 +++ b/ui/xupnpd_ui.lua
 @@ -24,7 +24,7 @@
          end
