@@ -7,7 +7,7 @@ require conf/python/python3-compileall.inc
 
 inherit gitpkgv ${@bb.utils.contains("PYTHON_PN", "python", "distutils-openplugins", "setuptools3-openplugins", d)} gettext
 
-SRCREV = "${AUTOREV}"
+SRCREV = "68dff50766ed1cdf552d92a1c1727ef35005b241"
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 PR = "r1"
