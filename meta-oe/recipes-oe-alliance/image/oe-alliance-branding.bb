@@ -18,11 +18,7 @@ do_configure[nostamp] = "1"
 BRANCH="master"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
-SRC_URI="git://github.com/oe-mirrors/branding-module.git;protocol=https;branch=${BRANCH} \
-        file://ax-python-devel-dont-check-for-distutils.patch"
-#SRC_URI_append_openatv=" \
-#	file://openatv_mappings.patch \
-#"
+SRC_URI="git://github.com/oe-mirrors/branding-module.git;protocol=https;branch=${BRANCH}"
 
 S = "${WORKDIR}/git"
 
