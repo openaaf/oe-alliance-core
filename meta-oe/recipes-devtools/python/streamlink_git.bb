@@ -5,8 +5,7 @@ SECTION = "devel/python"
 LICENSE = "BSD-2-Clause"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=15519b204ac11ccc2e4c72b87d310191"
 
-DEPENDS += "${PYTHON_PN}-versioningit-native"
-
+DEPENDS += "${PYTHON_PN} ${PYTHON_PN}-versioningit-native"
 inherit python3-dir setuptools3 gittag
 
 RDEPENDS:${PN} = "${PYTHON_PN}-core \
@@ -28,7 +27,7 @@ RDEPENDS:${PN} = "${PYTHON_PN}-core \
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
-SRCREV_streamlink = "${AUTOREV}"
+SRCREV_streamlink = "578467b131feddf41bf19d5987fa50799ab7cffa"
 SRCREV_plugins = "${AUTOREV}"
 
 SRCREV_FORMAT = "streamlink_plugins"
