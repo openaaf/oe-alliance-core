@@ -85,7 +85,7 @@ python populate_packages:prepend() {
             return
 
         for line in src.split("\n"):
-            rev = bb.data.expand('${SRCPV}', d)
+            rev = bb.data.expand('${PV}', d)
             box = bb.data.expand('${MACHINEBUILD}', d)
             pr = bb.data.expand('${PR}', d)
             workdir = bb.data.expand('${WORKDIR}', d)

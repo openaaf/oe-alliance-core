@@ -9,7 +9,7 @@ require conf/license/license-gplv2.inc
 inherit gitpkgv gettext
 
 SRCREV = "${AUTOREV}"
-PV = "${SRCPV}"
+PV = "${@bb.fetch2.get_srcrev(d)}"
 
 SRC_URI = "svn://buildbin:buildbin@sbnc.dyndns.tv;module=svn;protocol=http"
 
@@ -336,7 +336,7 @@ do_compile() {
 	echo "IMAGE_NAME: ${IMAGE_NAME}"
 
 #	SVNVERSION=$(echo ${WORKDIR} | sed -nr 's/.*svnr([^.*]+)-.*/\1/p')
-    SVNVERSION=${SRCPV}
+    SVNVERSION=${PV}
 	echo "SVNVERSION: ${SVNVERSION}"
 
 	SVNVERSIONHTTP=$(svn info http://sbnc.dyndns.tv/svn/titan | grep Revision | sed s/'Revision: '//g)

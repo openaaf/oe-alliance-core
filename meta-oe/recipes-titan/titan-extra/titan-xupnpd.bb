@@ -16,7 +16,6 @@ inherit gitpkgv
 SRCREV = "${AUTOREV}"
 PV = "2.0+gitr${SRCPV}"
 PR = "r1"
-PR = "r2"
 
 SRC_URI="git://github.com/clark15b/xupnpd.git;protocol=https;branch=master \
         file://liblua.makefile.patch \
