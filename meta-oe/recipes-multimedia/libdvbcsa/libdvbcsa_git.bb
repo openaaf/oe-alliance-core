@@ -9,9 +9,10 @@ SRCREV = "${AUTOREV}"
 PV = "1.1.0+git${SRCPV}"
 PKGV = "1.1.0+git${GITPKGV}"
 
-SRC_URI = "git://github.com/glenvt18/libdvbcsa.git;protocol=https;branch=master"
-SRC_URI += "file://libdvbcsa.pc"
-SRC_URI += "file://emm.patch"
+SRC_URI = "git://github.com/glenvt18/libdvbcsa.git;protocol=https;branch=master \
+           file://libdvbcsa.pc \
+           file://emm.patch \
+"
 
 SRC_URI[sha256sum] = "c78b61f83a8b7542b5a91164398aa2809d2ea9926488002653e3776a26f4c17b"
 
