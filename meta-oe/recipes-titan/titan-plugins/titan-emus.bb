@@ -3,7 +3,7 @@ inherit packagegroup
 
 require conf/license/license-gplv2.inc
 
-DEPENDS1 = "\
+DEPENDS = "\
   titan-plugin-emus-oscam.latest \
 "
 
