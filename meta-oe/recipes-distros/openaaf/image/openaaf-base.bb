@@ -6,9 +6,11 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 ALLOW_EMPTY_${PN} = "1"
 
 PV = "1.0"
-PR = "r16"
+PR = "r37"
 
 inherit packagegroup
+
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 DEPENDS = " \
 	ca-certificates \
@@ -37,8 +39,6 @@ DEPENDS = " \
         wireless-tools \
     ", d)} \
     titan-base \
-    enigma2-dhcp-wait \
-    enigma-info \
 	"
 
 TITANPACKAGES += "\
@@ -146,6 +146,8 @@ RDEPENDS:${PN} = "\
 	${@bb.utils.contains("TARGET_ARCH", "sh4", "alsa-utils-amixer-conf" , "", d)} \
 	oe-alliance-feeds-configs \
 	openaaf-version-info \
+    enigma2-dhcp-wait \
+    enigma-info \
 	\
 	${TITANPACKAGES} \
     \
