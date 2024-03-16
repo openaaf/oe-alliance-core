@@ -37,6 +37,8 @@ DEPENDS = " \
         wireless-tools \
     ", d)} \
     titan-base \
+    enigma2-dhcp-wait \
+    enigma-info \
 	"
 
 TITANPACKAGES += "\
