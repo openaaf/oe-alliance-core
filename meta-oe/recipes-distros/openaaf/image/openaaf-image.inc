@@ -4,11 +4,13 @@ PRIORITY = "required"
 LICENSE = "proprietary"
 MAINTAINER = "openAAF team"
 
-require conf/license/license-gplv2.inc
+#disable if requrire by titan.bb
+#require conf/license/license-gplv2.inc
+require recipes-titan/titan/titan.bb
 
 REPRODUCIBLE_TIMESTAMP_ROOTFS = "${@int(time.time()-10000)}"
-
-PV = "${IMAGE_VERSION}"
+#muss aus sein das SVN_VERSION gesetz wird aus titan.bb
+#PV = "${IMAGE_VERSION}"
 PR = "${BUILD_VERSION}"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
@@ -37,7 +39,30 @@ IMAGE_INSTALL += "${@bb.utils.contains_any("FLASHSIZE", "64 96", "", "nano", d)}
 # ... plus mc and helpers on 256 MB or more:
 IMAGE_INSTALL += "${@bb.utils.contains_any("FLASHSIZE", "64 96 128", "", "mc mc-fish mc-helpers", d)}"
 
-export IMAGE_BASENAME = "openatv-image"
+export IMAGE_BASENAME = "openaaf-image"
+
+#ok1
+CREATE_CACHEDIR:="${@os.system('mkdir -p ${TMPDIR}/svncache/${MACHINEBUILD} > /dev/null 2>&1')}"
+GIT_VERSION:="${@os.popen('git --git-dir=${OE-ALLIANCE_BASE}/.git log  --pretty=format:"%s" | wc -l').read().rstrip()}"
+STABLE:="${@os.popen('svn export --force --username buildbin --password buildbin --force -r ${SVN_VERSION} http://sbnc.dyndns.tv/svn/image/make-flash ${TMPDIR}/svncache/${MACHINEBUILD}/make-flash | cat ${TMPDIR}/svncache/${MACHINEBUILD}/make-flash | grep ^STABLE= | cut -d"=" -f2 | tr -d "\r" | tr -d "\n" | sed -e "s/\t//g" | sed -e "s/ //g"').read().rstrip()}"
+STABLE_BRANCH:="${@os.popen('svn export --force --username buildbin --password buildbin --force -r ${SVN_VERSION} http://sbnc.dyndns.tv/svn/titan/titan/tools/oealliance.sh ${TMPDIR}/svncache/${MACHINEBUILD}/oealliance.sh | cat ${TMPDIR}/svncache/${MACHINEBUILD}/oealliance.sh | grep STABLEBRANCH= | sed -nr "s,.*=([^=]+).*,\1,p"').read().rstrip()}"
+TITAN_VERSION:="${@os.popen('svn export --force --username buildbin --password buildbin --force -r ${SVN_VERSION} http://sbnc.dyndns.tv/svn/titan/titan/struct.h ${TMPDIR}/svncache/${MACHINEBUILD}/struct.h | cat ${TMPDIR}/svncache/${MACHINEBUILD}/struct.h | grep "#define OVERSION" | cut -d\'"\' -f2 | sed "s/\./-/"').read().rstrip()}"
+IMAGE_VERSION_STRIP:="${@os.popen('echo ${IMAGE_VERSION} | sed "s/\./-/"').read().rstrip()}"
+GROUPOUT = "${@bb.utils.contains("SVN_VERSION", "${STABLE}", "stable", "nigthly", d)}"
+export IMAGE_NAME = "${@bb.utils.contains("IMAGE_VERSION", "${STABLE_BRANCH}", "M${SVN_VERSION}_${MACHINEBUILD}_v${TITAN_VERSION}_${GROUPOUT}_UPDATEUSB_g${GIT_VERSION}", "M${SVN_VERSION}_${MACHINEBUILD}_v${TITAN_VERSION}_beta_UPDATEUSB_oe${IMAGE_VERSION_STRIP}_g${GIT_VERSION}", d)}"
+
+#ok2
+#COUNT:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.COUNT').read().rstrip()}"
+#SVNVERSION:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.COUNT').read().rstrip()}"
+#GITVERSION:="${@os.popen('git --git-dir=${OE-ALLIANCE_BASE}/.git log  --pretty=format:"%s" | wc -l').read().rstrip()}"
+#TITANVERSION:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/titanversion').read().rstrip()}"
+#STABLE:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.STABLE').read().rstrip()}"
+#STABLEBRANCH:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.STABLEBRANCH').read().rstrip()}"
+#GROUPOUT = "${@bb.utils.contains("SVNVERSION", "${STABLE}", "stable", "nigthly", d)}"
+#export IMAGE_NAME = "${@bb.utils.contains("IMAGE_VERSION", "${STABLEBRANCH}", "M${SVN_VERSION}_${MACHINEBUILD}_${TITANVERSION}_${GROUPOUT}_UPDATEUSB_g${GITVERSION}", "M${SVN_VERSION}_${MACHINEBUILD}_${TITANVERSION}_beta_UPDATEUSB_oe${IMAGE_VERSION}_g${GITVERSION}", d)}"
+
+#ok3
+####export IMAGE_NAME:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.imagename-svn').read().rstrip()}"
 
 # Prevent locales-archive creation to save some space
 IMAGE_LOCALES_ARCHIVE = ""
@@ -70,4 +95,4 @@ python do_package_index() {
     from oe.rootfs import generate_index_files
     generate_index_files(d)
 }
-addtask do_package_index after do_rootfs before do_image_complete
+addtask do_package_index after do_rootfs before do_image_complete 
