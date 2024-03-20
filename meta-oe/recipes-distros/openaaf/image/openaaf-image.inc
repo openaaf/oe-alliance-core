@@ -50,6 +50,7 @@ TITAN_VERSION:="${@os.popen('svn export --force --username buildbin --password b
 IMAGE_VERSION_STRIP:="${@os.popen('echo ${IMAGE_VERSION} | sed "s/\./-/"').read().rstrip()}"
 GROUPOUT = "${@bb.utils.contains("SVN_VERSION", "${STABLE}", "stable", "nigthly", d)}"
 export IMAGE_NAME = "${@bb.utils.contains("IMAGE_VERSION", "${STABLE_BRANCH}", "M${SVN_VERSION}_${MACHINEBUILD}_v${TITAN_VERSION}_${GROUPOUT}_UPDATEUSB_g${GIT_VERSION}", "M${SVN_VERSION}_${MACHINEBUILD}_v${TITAN_VERSION}_beta_UPDATEUSB_oe${IMAGE_VERSION_STRIP}_g${GIT_VERSION}", d)}"
+WRITE_IMAGE_NAME:="${@os.system('echo "${IMAGE_NAME}" > ${TMPDIR}/svncache/${MACHINEBUILD}/.imagename-oenew')}"
 
 #ok2
 #COUNT:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.COUNT').read().rstrip()}"
