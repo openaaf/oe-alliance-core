@@ -179,8 +179,8 @@ CFLAGS:append:mipsel:dm7020hd = " -DDREAMBOX"
 CFLAGS:append:mipsel:dm520 = " -DDREAMBOX -DCONFIG_ION"
 CFLAGS:append:mipsel:dm525 = " -DDREAMBOX -DCONFIG_ION"
 
-CFLAGS:append:sh4 = " -DSSLNEW -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DSH4 -DSH4NEW -DCAMSUPP -Os -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration"
-CFLAGS:append:mipsel = " -DSSLNEW -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
+CFLAGS:append:sh4 = " -DSSLNEW -DOEBUILD -DEXTGST -DEXTEPLAYER3 -DEPLAYER3 -DSH4 -DSH4NEW -DCAMSUPP -Os -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration"
+CFLAGS:append:mipsel = " -DSSLNEW -DOEBUILD -DEXTGST -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
 CFLAGS:append:arm = " -DSSLNEW -DOEBUILD -DEXTGST -DEPLAYER4 -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
 
 LDFLAGS:prepend:arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' -lglib-2.0 -lgobject-2.0 -lxml2 -lgstreamer-1.0 ', '', d)}"
