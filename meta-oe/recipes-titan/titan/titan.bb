@@ -134,30 +134,17 @@ CFLAGS:append = " \
 	-I${WORKDIR}/svn/titan/libeplayer3/include \
 	"
 
-
-CFLAGS:append:arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
-	-I${STAGING_DIR_TARGET}/usr/include \
+CFLAGS:append = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
 	-I${STAGING_DIR_TARGET}/usr/lib/gstreamer-1.0/include \
 	-I${STAGING_DIR_TARGET}/usr/include/gstreamer-1.0 \
 	-I${STAGING_DIR_TARGET}/usr/include/glib-2.0 \
 	-I${STAGING_DIR_TARGET}/usr/include/libxml2 \
 	-I${STAGING_DIR_TARGET}/usr/lib/glib-2.0/include \
-	-I${STAGING_DIR_TARGET}/usr/include/freetype2 \
-	-I${STAGING_DIR_TARGET}/usr/include/dreamdvd \
-	-I${STAGING_DIR_TARGET}/usr/include/libdreamdvd \	
-	-I${WORKDIR}/titan/libdreamdvd \
-	-I${WORKDIR}/titan/titan \
     ', ' \
-	-I${STAGING_DIR_TARGET}/usr/include \
 	-I${STAGING_DIR_TARGET}/usr/include/gstreamer-0.10 \
 	-I${STAGING_DIR_TARGET}/usr/include/glib-2.0 \
 	-I${STAGING_DIR_TARGET}/usr/include/libxml2 \
 	-I${STAGING_DIR_TARGET}/usr/lib/glib-2.0/include \
-	-I${STAGING_DIR_TARGET}/usr/include/freetype2 \
-	-I${STAGING_DIR_TARGET}/usr/include/dreamdvd \
-	-I${STAGING_DIR_TARGET}/usr/include/libdreamdvd \	
-	-I${WORKDIR}/titan/libdreamdvd \
-	-I${WORKDIR}/titan/titan \
 ', d)}"
 
 CFLAGS:append:sh4 = " \
@@ -165,7 +152,7 @@ CFLAGS:append:sh4 = " \
 	-I${STAGING_KERNEL_DIR}/extra/bpamem \
 	"
 
-#CFLAGS:append = " -DDVDPLAYER"
+CFLAGS:append:sh4 = " -DDVDPLAYER"
 
 CFLAGS:append:arm = " -DARM -DMIPSEL"
 CFLAGS:append:arm:dm900 = " -DDREAMBOX -DCONFIG_ION"
@@ -183,7 +170,7 @@ CFLAGS:append:sh4 = " -DSSLNEW -DOEBUILD -DEXTGST -DEPLAYER4 -DEXTEPLAYER3 -DEPL
 CFLAGS:append:mipsel = " -DSSLNEW -DOEBUILD -DEXTGST -DEPLAYER4 -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
 CFLAGS:append:arm = " -DSSLNEW -DOEBUILD -DEXTGST -DEPLAYER4 -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
 
-LDFLAGS:prepend:arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' -lglib-2.0 -lgobject-2.0 -lxml2 -lgstreamer-1.0 ', '', d)}"
+LDFLAGS:prepend = "${@bb.utils.contains('GST_VERSION', '1.0', ' -lglib-2.0 -lgobject-2.0 -lxml2 -lgstreamer-1.0 ', '', d)}"
 
 LDFLAGS:prepend = " -leplayer3 -lpthread -ldl -lm -lz -lpng -lfreetype -ldreamdvd -ljpeg -lssl -lcrypto -lcurl -lipkg "
 LDFLAGS:prepend:sh4 = " -lmmeimage "
