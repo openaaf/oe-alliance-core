@@ -12,6 +12,7 @@ SRC_URI += "svn://svn.streamboard.tv/oscam;protocol=https;module=trunk;scmdata=k
 SRC_URI += "file://config.patch"
 SRCREV_svn = "${AUTOREV}"
 SRCREV_trunk = "${AUTOREV}"
+SRCREV_trunk = "11748"
 SRCREV_FORMAT = "svn_trunk"
 
 E = "${WORKDIR}/emus_oscam"
