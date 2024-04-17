@@ -90,6 +90,7 @@ RDEPENDS:${PN} = "\
 	kernel-module-keyspan \
 	kernel-module-tun \
 	libdreamdvd \
+	libdvbcsa \
 	libdvdcss \
 	libusb1 \
 	mc \
