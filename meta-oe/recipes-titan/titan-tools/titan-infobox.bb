@@ -11,7 +11,7 @@ inherit gitpkgv
 SRCREV = "${AUTOREV}"
 PV = "${SRCPV}"
 
-SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/tools;module=infobox;protocol=http"
+SRC_URI = "svn://public:public@svn.dyndns.tv/svn/tools;module=infobox;protocol=http"
 
 DEPENDS = " \
 	freetype \
