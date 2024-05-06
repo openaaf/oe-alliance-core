@@ -11,7 +11,7 @@ require conf/license/license-gplv2.inc
 SRCREV = "${AUTOREV}"
 PV = "${SRCPV}"
 
-SRC_URI = "svn://buildbin:buildbin@svn.dyndns.tv;module=svn;protocol=http"
+SRC_URI = "svn://buildbin:buildbin@sbnc.dyndns.tv;module=svn;protocol=http"
 
 DEPENDS = "titan \
     ${PYTHON_PN}-pyopenssl \

@@ -10,7 +10,7 @@ require conf/license/license-gplv2.inc
 SRCREV = "${AUTOREV}"
 PV = "${SRCPV}"
 
-SRC_URI = "svn://public:public@svn.dyndns.tv/svn/ipk/source;module=lcdsamsungskins_channel_Analoguhr;protocol=http"
+SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source;module=lcdsamsungskins_channel_Analoguhr;protocol=http"
 
 S = "${WORKDIR}/lcdsamsungskins_channel_Analoguhr"
 
