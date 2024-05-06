@@ -10,7 +10,7 @@ require conf/license/license-gplv2.inc
 SRCREV = "${AUTOREV}"
 PV = "${SRCPV}"
 
-SRC_URI = "svn://public:public@svn-screensaver.dyndns.tv/svn/ipk;module=source;protocol=http"
+SRC_URI = "svn://public:public@svn.dyndns.tv/svn/ipk;module=source;protocol=http"
 
 S = "${WORKDIR}/source"
 
