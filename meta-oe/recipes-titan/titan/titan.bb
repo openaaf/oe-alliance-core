@@ -12,7 +12,7 @@ SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 SVN_VERSION = "${PV}"
 
-SRC_URI = "svn://buildbin:buildbin@svn.dyndns.tv;module=svn;protocol=http"
+SRC_URI = "svn://buildbin:buildbin@sbnc.dyndns.tv;module=svn;protocol=http"
 
 DEPENDS = " \
 	curl \
@@ -340,7 +340,7 @@ do_compile() {
     SVNVERSION=${PV}
 	echo "SVNVERSION: ${SVNVERSION}"
 
-	SVNVERSIONHTTP=$(svn info http://svn.dyndns.tv/svn/titan | grep Revision | sed s/'Revision: '//g)
+	SVNVERSIONHTTP=$(svn info http://sbnc.dyndns.tv/svn/titan | grep Revision | sed s/'Revision: '//g)
 	echo "SVNVERSIONHTTP: ${SVNVERSIONHTTP}"
 
 	GITVERSION=$(git --git-dir=${OE-ALLIANCE_BASE}/.git log  --pretty=format:"%s" | wc -l)
