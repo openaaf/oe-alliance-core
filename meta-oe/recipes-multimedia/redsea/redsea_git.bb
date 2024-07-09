@@ -4,18 +4,27 @@ MAINTAINER = "Oona Räisänen <windyoona@gmail.com>"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=884926124e31c67b8c1bdaa062802dec"
 
-DEPENDS = "liquid-dsp virtual/libiconv libsndfile1"
+DEPENDS = "nlohmann-json liquid-dsp virtual/libiconv libsndfile1"
 
-inherit gitpkgv
+inherit gittag
 
 SRCREV = "${AUTOREV}"
+<<<<<<< HEAD
 PV = "0.18+git${SRCPV}"
 PKGV = "0.18+git${GITPKGV}"
+=======
+PV = "git${SRCPV}"
+PKGV = "${GITPKGVTAG}"
+>>>>>>> 3b094b878f (readsea update 0.21 -> 1.0.0)
 
 SRC_URI = "git://github.com/windytan/redsea.git;protocol=http;branch=master;protocol=https"
 
 S = "${WORKDIR}/git"
 
+<<<<<<< HEAD
 inherit autotools-brokensep pkgconfig gettext
 
 EXTRA_OECONF += "--disable-tmc --without-macports"
+=======
+inherit pkgconfig meson gettext
+>>>>>>> 3b094b878f (readsea update 0.21 -> 1.0.0)
