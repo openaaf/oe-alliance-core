@@ -76,6 +76,8 @@ Zgemma H7C              MACHINE:  zgemmah7
 
 Zgemma H7 AC            MACHINE:  zgemmah7
 
+Zgemma H17 COMBO        MACHINE:  zgemmah17combo
+
 Zgemma H8.2H            MACHINE:  zgemmah82h
 
 Zgemma H9S              MACHINE:  zgemmah9s
@@ -398,6 +400,8 @@ GB X3                   MACHINE:  gbx3
 GB X3 H                 MACHINE:  gbx3h
 
 GB Quad 4K              MACHINE:  gbquad4k
+
+GB Quad 4K PRO          MACHINE:  gbquad4kpro
 
 GB UE 4K                MACHINE:  gbue4k
 

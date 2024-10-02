@@ -1,4 +1,4 @@
-PR = "r3"
+PR = "r5"
 
 require samba-source.inc
 
@@ -201,15 +201,20 @@ do_install() {
     install -m 644 ${WORKDIR}/pam.samba ${D}${sysconfdir}/pam.d/samba
 
     install -d ${D}${sysconfdir}/samba
-    install -d ${D}${sysconfdir}/samba/distro
     install -d ${D}${sysconfdir}/samba/private
     echo "127.0.0.1 localhost" > ${D}${sysconfdir}/samba/lmhosts
     install -m 644 ${WORKDIR}/smb.conf ${D}${sysconfdir}/samba
     install -m 644 ${WORKDIR}/smb-user.conf ${D}${sysconfdir}/samba
+
+    if ${@bb.utils.contains('DISTRO_NAME','openatv','true','false',d)}; then
+        install -m 644 ${WORKDIR}/smb-local.conf ${D}${sysconfdir}/samba
+    else
+    install -d ${D}${sysconfdir}/samba/distro
     install -m 644 ${WORKDIR}/smb-branding.conf ${D}${sysconfdir}/samba/distro
     install -m 644 ${WORKDIR}/smb-global.conf ${D}${sysconfdir}/samba/distro
     install -m 644 ${WORKDIR}/smb-shares.conf ${D}${sysconfdir}/samba/distro
     install -m 644 ${WORKDIR}/smb-vmc.samba ${D}${sysconfdir}/samba/distro
+    fi
     install -m 644 ${WORKDIR}/smbpasswd ${D}${sysconfdir}/samba/private
     install -m 644 ${WORKDIR}/users.map ${D}${sysconfdir}/samba/private
     install -d ${D}${sysconfdir}/init.d
@@ -225,7 +230,7 @@ do_install() {
             rm -f ${D}${systemd_system_unitdir}/nmb.service
             rm -f ${D}${systemd_system_unitdir}/samba.service
         fi
-    fi 
+    fi
     rm -f ${D}${sbindir}/samba-gpupdate || true
     rm -f ${D}${bindir}/findsmb || true
     rm -rf ${D}/var/lib/samba/bind-dns || true

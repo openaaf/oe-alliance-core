@@ -11,10 +11,6 @@ PR = "r56"
 
 inherit packagegroup
 
-#not py3 ready
-#    enigma2-plugin-skins-dmcconcinnityhd 
-
-
 DEPENDS += "oe-alliance-feeds enigma2-3rdparty-plugins"
 
 RRECOMMENDS:${PN} = "\
@@ -43,25 +39,17 @@ RRECOMMENDS:${PN} = "\
     enigma2-plugin-systemplugins-autobouquetsmaker \
     enigma2-plugin-extensions-openatvreader \
     enigma2-plugin-extensions-openatvstatus \
-    enigma2-plugin-skincomponents-advancedmovieselection-steampunk-skin \
-    enigma2-plugin-skincomponents-advancedmovieselection-ultimate-skin \
-    enigma2-plugin-skincomponents-bmediacenter-ax-blue-skin \
-    enigma2-plugin-skincomponents-mediaportal-ax-blue-skin \
-    enigma2-plugin-skincomponents-mediaportal-blue-line-skin \
-    enigma2-plugin-skincomponents-mediaportal-smoke-hd-skin \
-    enigma2-plugin-skincomponents-skyrecorder-fhd-skin \
+    enigma2-plugin-extensions-moviearchiver \
     enigma2-plugin-skins-ax-blue-fhd-4atv \
     enigma2-plugin-skins-blue-line-oe-4atv \
     enigma2-plugin-skins-blueaccents-fhd-4atv \
-    enigma2-plugin-skins-multibox-fhd-4atv \
     enigma2-plugin-skins-pli-hd-fullnight-4atv \
     enigma2-plugin-skins-steampunk \
-    enigma2-plugin-skins-ultimate-hd-4atv \
     enigma2-plugin-skins-iflatfhd \
     enigma2-plugin-skins-glamouraurafhd-atv \
     enigma2-plugin-skins-madmax-impossible \
     enigma2-plugin-skins-overlayhd \
-    enigma2-plugin-skincomponents-mediaportal-atv-metrix-style \
+    enigma2-plugin-skincomponents-skincomponents-poster-pli-hd-fullnight \
     enigma2-plugin-extensions-chocholousek-picons \
     enigma2-plugin-extensions-oaweather \
     mediainfo \

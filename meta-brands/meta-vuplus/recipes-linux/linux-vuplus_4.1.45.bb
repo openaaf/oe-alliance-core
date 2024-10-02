@@ -17,7 +17,7 @@ SRC_URI[sha256sum] = "18ecc79522f6b975c96cca7975eb31db93d2e8cfea6755451bba0a1a28
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
-SRC_URI += "http://code.vuplus.com/download/release/kernel/stblinux-${KSRC_VER}.tar.bz2 \
+SRC_URI += "https://source.mynonpublic.com/vuplus/release/kernel/stblinux-${KSRC_VER}.tar.bz2 \
     file://defconfig \
     file://linux_dvb_adapter.patch \
     file://linux_dvb-core.patch \
@@ -93,7 +93,41 @@ kernel_do_compile() {
 
 pkg_postinst:kernel-image () {
         if [ -d /proc/stb ] ; then
+            DEST="/dev/${MTD_KERNEL}"
+            if [ -f /proc/cmdline ]; then
+                args=`cat /proc/cmdline`
+                for x in ${args};
+                do
+                    case "$x" in
+                        root=*)
+                            ROOT_DEST="${x#root=}"
+                        ;;
+                        kernel=*)
+                            KERNEL_DEST="${x#kernel=}"
+                        ;;
+                    esac
+                done
+            fi
+
+            if echo ${ROOT_DEST} | grep -qi "UUID="; then
+                DEVICE=$(blkid | sed -n "/${ROOT_DEST#*=}/s/\([^:]\+\):.*/\\1/p")
+                if [ x${DEVICE} != x ]; then
+                    grep "^${DEVICE}" /proc/mounts | cut -d " " -f 2
+                    ROOT_DEST=`grep "^${DEVICE}" /proc/mounts | cut -d " " -f 2`
+                fi
+            elif echo ${ROOT_DEST} | grep -q "^/dev/mmcblk"; then
+                ROOT_DEST=/boot
+            else
+                ROOT_DEST=`grep "^${ROOT_DEST}" /proc/mounts | cut -d " " -f 2`
+            fi
+
+            if [ -f "${ROOT_DEST}/${KERNEL_DEST}" ]; then
+                echo "Kernel is located at ${ROOT_DEST}/${KERNEL_DEST}"
+                cp -f /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE} ${ROOT_DEST}/${KERNEL_DEST}
+            else
+                echo "Kernel should be on flash"
                 dd if=/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE} of=/dev/${MTD_KERNEL}
+            fi
         fi
         rm -f /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}
         true

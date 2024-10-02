@@ -19,7 +19,7 @@ DEPENDS = " \
     gstreamer1.0-plugins-base gstreamer1.0 \
     jpeg \
     libdreamdvd libdvbsi++ fribidi libmad libpng giflib libxml2 libxmlccwrap \
-    ${@bb.utils.contains_any("DISTRO_NAME", "openvix openbh", "libsigc++-3" , "libsigc++-2.0", d)} \
+    ${@bb.utils.contains_any("DISTRO_NAME", "openvix openbh teamblue", "libsigc++-3" , "libsigc++-2.0", d)} \
     openssl avahi libudfread \
     ${PYTHON_PN}-pillow ${PYTHON_PN}-twisted ${PYTHON_PN}-wifi ${PYTHON_PN}-six-native \
     swig-native \
@@ -198,6 +198,9 @@ RDEPENDS:enigma2-plugin-extensions-ytdlwrapper = "${PYTHON_PN}-youtube-dl"
 SUMMARY:enigma2-plugin-extensions-ytdlpwrapper = "Enables support for YT-DLP url scheme in bouquet list."
 RDEPENDS:enigma2-plugin-extensions-ytdlpwrapper = "${PYTHON_PN}-yt-dlp"
 RDEPENDS:enigma2-plugin-extensions-filecommander = "${PYTHON_PN}-puremagic"
+
+RREPLACES:enigma2-plugin-systemplugins-lcnscanner:openatv = "enigma2-plugin-systemplugins-terrestrialscan"
+RCONFLICTS:enigma2-plugin-systemplugins-lcnscanner:openatv = "enigma2-plugin-systemplugins-terrestrialscan"
 
 inherit autotools-brokensep gitpkgv pkgconfig ${PYTHON_PN}native python3targetconfig upx-compress
 

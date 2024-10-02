@@ -1,9 +1,6 @@
 PACKAGECONFIG_GL:pn-qtbase = " "
 PACKAGECONFIG:append:pn-qtbase = " gles2 linuxfb"
 
-#IMAGE_CLASSES += "airdigitalemmc_image_single"
-IMAGE_CLASSES += "airdigital-emmc_image_multiboot"
-
 MACHINE_FEATURES += "qthbbtv qtstalker linuxwifi"
 
 IMAGE_FSTYPES += "airdigitalemmc"
@@ -22,6 +19,10 @@ PREFERRED_PROVIDER_virtual/libgl ?= "mesa"
 PREFERRED_PROVIDER_virtual/mesa ?= "mesa"
 PREFERRED_PROVIDER_virtual/blindscan-dvbc ?= "airdigital-dvb-modules-${MACHINE}"
 PREFERRED_PROVIDER_virtual/blindscan-dvbs ?= "airdigital-dvb-modules-${MACHINE}"
+
+MACHINE_ESSENTIAL_EXTRA_RDEPENDS += "\
+    ${@bb.utils.contains('MACHINE_FEATURES', 'arm-recovery', 'airdigital-recovery-${MACHINE}' , '', d)} \
+    "
 
 IMAGE_CMD:airdigitalemmc:prepend = " \
     rm -f ${DEPLOY_DIR_IMAGE}/*.ext4; \

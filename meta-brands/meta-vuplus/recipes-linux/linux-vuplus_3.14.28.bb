@@ -23,7 +23,7 @@ SRC_URI[vuultimo4k.md5sum] = "2a3a0a7e5cd2a1392f1a26790d1cd8bf"
 SRC_URI[vuultimo4k.sha256sum] = "8284670c28a4dad9e94752b38d37a4368f27ce15e671653a3e2ac83915f37db1"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
-SRC_URI += "http://code.vuplus.com/download/release/kernel/${KERNELSRC};name=${MACHINE} \
+SRC_URI += "https://source.mynonpublic.com/vuplus/release/kernel/${KERNELSRC};name=${MACHINE} \
     file://defconfig \
     file://bcm_genet_disable_warn.patch \
     file://linux_dvb-core.patch \
@@ -94,7 +94,41 @@ kernel_do_compile() {
 
 pkg_postinst:kernel-image () {
         if [ -d /proc/stb ] ; then
-                dd if=/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE} of=/dev/mmcblk0p1
+            DEST="/dev/${MTD_KERNEL}"
+            if [ -f /proc/cmdline ]; then
+                args=`cat /proc/cmdline`
+                for x in ${args};
+                do
+                    case "$x" in
+                        root=*)
+                            ROOT_DEST="${x#root=}"
+                        ;;
+                        kernel=*)
+                            KERNEL_DEST="${x#kernel=}"
+                        ;;
+                    esac
+                done
+            fi
+
+            if echo ${ROOT_DEST} | grep -qi "UUID="; then
+                DEVICE=$(blkid | sed -n "/${ROOT_DEST#*=}/s/\([^:]\+\):.*/\\1/p")
+                if [ x${DEVICE} != x ]; then
+                    grep "^${DEVICE}" /proc/mounts | cut -d " " -f 2
+                    ROOT_DEST=`grep "^${DEVICE}" /proc/mounts | cut -d " " -f 2`
+                fi
+            elif echo ${ROOT_DEST} | grep -q "^/dev/mmcblk"; then
+                ROOT_DEST=/boot
+            else
+                ROOT_DEST=`grep "^${ROOT_DEST}" /proc/mounts | cut -d " " -f 2`
+            fi
+
+            if [ -f "${ROOT_DEST}/${KERNEL_DEST}" ]; then
+                echo "Kernel is located at ${ROOT_DEST}/${KERNEL_DEST}"
+                cp -f /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE} ${ROOT_DEST}/${KERNEL_DEST}
+            else
+                echo "Kernel should be on flash"
+                dd if=/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE} of=/dev/${MTD_KERNEL}
+            fi
         fi
         rm -f /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}
         true

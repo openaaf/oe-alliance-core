@@ -40,7 +40,6 @@ RDEPENDS:${PN} = " \
     enigma2-plugin-extensions-et-portal \
     enigma2-plugin-extensions-gerbera \
     enigma2-plugin-extensions-bouquetmakerxtream \
-    enigma2-plugin-extensions-jedimakerxtream \
     enigma2-plugin-extensions-jediepgxtream \
     enigma2-plugin-extensions-lamedbmerger \
     enigma2-plugin-extensions-mediaplayer2 \
@@ -50,9 +49,9 @@ RDEPENDS:${PN} = " \
     enigma2-plugin-extensions-picturecenterfs \
     enigma2-plugin-systemplugins-radiotimesemulator \
     enigma2-plugin-extensions-subssupport \
+    enigma2-plugin-extensions-xklass \
     enigma2-plugin-extensions-xstreamity \
-    enigma2-plugin-extensions-yahooweather \
-    enigma2-plugin-systemplugins-terrestrialscan \
+    enigma2-plugin-extensions-yampmusicplayer \
     enigma2-plugin-systemplugins-satscanlcn \
     exteplayer3 \
     eplayer5 \
@@ -93,7 +92,7 @@ RDEPENDS:${PN} = " \
     edid-decode \
     extundelete \
     exfatprogs \
-    ${@bb.utils.contains_any("MACHINEBUILD", "gbquad4k gbue4k galaxy4k lunix34k", "enigma2-plugin-extensions-forcefbclnbpower" , "", d)} \
+    ${@bb.utils.contains_any("MACHINEBUILD", "gbquad4k gbquad4kpro gbue4k galaxy4k lunix34k", "enigma2-plugin-extensions-forcefbclnbpower" , "", d)} \
     f2fs-tools \
     fio \
     fuse-exfat \
@@ -104,6 +103,7 @@ RDEPENDS:${PN} = " \
     idle3-tools \
     inadyn-mt \
     iperf3 \
+    ipkg-tools \
     joe \
     liba52 \
     lighttpd \
@@ -166,6 +166,7 @@ RDEPENDS:${PN} = " \
     ${PYTHON_PN}-tmdbsimple \
     ${PYTHON_PN}-tvdbsimple \
     ${PYTHON_PN}-tmdbv3api \
+    ${PYTHON_PN}-transmission-rpc \
     ${PYTHON_PN}-ujson \
     ${PYTHON_PN}-url-normalize \
     ${PYTHON_PN}-singledispatch \
@@ -191,6 +192,7 @@ RDEPENDS:${PN} = " \
     tcpdump \
     tmux \
     transmission \
+    uhubctl \
     ushare \
     vim \
     wakelan \

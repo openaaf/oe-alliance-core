@@ -15,10 +15,14 @@ inherit packagegroup
 RCONFLICTS:${PN} = "enigma2-plugin-extensions-permanenttimeshift enigma2-plugin-systemplugins-skinselector"
 RREPLACES:${PN} = "enigma2-plugin-extensions-permanenttimeshift enigma2-plugin-systemplugins-skinselector"
 
-# required for vix plugin: ffmpeg ofgwrite ${PYTHON_PN}-process libcrypto-compat-0.9.7 ${PYTHON_PN}-compression zip procps bzip2
+# required for vix plugin: ffmpeg ofgwrite ${PYTHON_PN}-process libcrypto-compat-0.9.7 ${PYTHON_PN}-compression zip procps bzip2 mtd-utils mtd-utils-ubifs
+# requied for ftp access: vsftpd 
 DEPENDS = "${PYTHON_PN}-process libcrypto-compat-0.9.7 gettext-native"
 
 RDEPENDS:${PN} = "\
+    vsftpd \
+    mtd-utils \
+    mtd-utils-ubifs \
     ffmpeg \
     ofgwrite \
     ${PYTHON_PN}-process \
@@ -32,6 +36,8 @@ RDEPENDS:${PN} = "\
     "
 
 RRECOMMENDS:${PN} = "\
+    ${E2DEFAULTSKIN} \
+    tzdata \
     enigma2-plugin-systemplugins-vix \
     ${@bb.utils.contains("SMALLBOXWIZARD", "1", "${SMALLBOXWIZARD_IMAGE}", "${NORMAL_IMAGE}", d)} \
     "
@@ -48,10 +54,6 @@ NORMAL_IMAGE = "\
     enigma2-plugin-extensions-imdb \
     enigma2-plugin-extensions-openwebif-themes \
     enigma2-plugin-extensions-openwebif-vxg \
-    ${@bb.utils.contains("MACHINE_FEATURES", "skins1080", "enigma2-plugin-skins-openvix-magic-fhd", "", d)} \
-    enigma2-plugin-skins-openvix-vix-night-hd \
-    enigma2-plugin-skins-openvix-vix-day-hd \
-    ${@bb.utils.contains("MACHINE_FEATURES", "skins1080", "enigma2-plugin-skins-openvix-youvix-blue" , "", d)} \
     enigma2-plugin-systemplugins-aboutboxbranding \
     enigma2-plugin-systemplugins-opentvzapper \
     enigma2-plugin-systemplugins-xmlupdate \
@@ -62,7 +64,6 @@ NORMAL_IMAGE = "\
     openvix-picon-feed-opkg-conf \
 "
 
-RRECOMMENDS:${PN}:append:et8500 = " enigma2-plugin-extensions-yahooweather"
 RRECOMMENDS:${PN}:append:tmnanoseplus = " enigma2-plugin-systemplugins-tempfancontrol"
 RRECOMMENDS:${PN}:append:tmnanosem2 = " enigma2-plugin-systemplugins-tempfancontrol"
 RRECOMMENDS:${PN}:append:tmnanosem2plus = " enigma2-plugin-systemplugins-tempfancontrol"

@@ -37,7 +37,6 @@ notify() {
 
 case $ACTION in
 	add|"")
-		sleep 2
 		ACTION="add"
 		FSTYPE=`blkid /dev/${MDEV} | grep -v 'TYPE="swap"' | grep ${MDEV} | sed -e "s/.*TYPE=//" -e 's/"//g'`
 		FLASHEXPANDERDEV=`cat /proc/mounts | grep '.FlashExpander' | cut -d " " -f1`
@@ -56,19 +55,12 @@ case $ACTION in
 				exit 0
 			fi
 		fi
-		if [ -e /proc/stb/info/boxtype ]; then
-			stbcheck=`cat /proc/stb/info/boxtype`
-			# detected multiboot sdcard
-			if [ $stbcheck == "viper4k" ] || [ $stbcheck == "sf8008" ] || [ $stbcheck == "sf8008m" ] || [ $stbcheck == "ustym4kpro" ] || [ $stbcheck == "beyonwizv2" ] || [ $stbcheck == "gbmv200" ]; then
-				DEVCHECK=`expr substr $MDEV 1 3`
-				if [ "${DEVCHECK}" == "sda" ] ; then
-					DEVSIZE=`cat /sys/block/sda/sda1/size`
-					if [ $DEVSIZE -lt "32769" ]; then
-						BLACKLISTED=`echo ${BLACKLISTED} sda`
-					fi
-				fi
-			fi
-		elif [ -e /proc/stb/info/model ]; then
+		PARTLABEL=$(blkid -s PARTLABEL -o value /dev/$MDEV)
+		if [[ $PARTLABEL =~ "kernel" ]] || [[ $PARTLABEL =~ "rootfs" ]] ; then
+			#echo "PARTABEL excludes "$PARTLABEL >> $LOG
+			exit 0
+		fi
+		if [ -e /proc/stb/info/model ]; then
 			stbcheck=`cat /proc/stb/info/model`
 			# detected multiboot sdcard
 			if [ $stbcheck == "one" ] || [ $stbcheck == "two" ]; then

@@ -4,18 +4,17 @@ MAINTAINER = "Oona Räisänen <windyoona@gmail.com>"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=884926124e31c67b8c1bdaa062802dec"
 
-DEPENDS = "liquid-dsp virtual/libiconv libsndfile1"
+DEPENDS = "nlohmann-json liquid-dsp virtual/libiconv libsndfile1"
 
-inherit gitpkgv
+inherit gittag
 
 SRCREV = "${AUTOREV}"
-PV = "0.18+git"
-PKGV = "0.18+git${GITPKGV}"
+PV = "git${SRCPV}"
+PKGV = "${GITPKGVTAG}"
 
-SRC_URI = "git://github.com/windytan/redsea.git;protocol=http;branch=master;protocol=https"
+SRC_URI = "git://github.com/windytan/redsea.git;protocol=http;branch=master;protocol=https \
+            file://remove-hardcoded-build-path.patch"
 
 S = "${WORKDIR}/git"
 
-inherit autotools-brokensep pkgconfig gettext
-
-EXTRA_OECONF += "--disable-tmc --without-macports"
+inherit pkgconfig meson gettext

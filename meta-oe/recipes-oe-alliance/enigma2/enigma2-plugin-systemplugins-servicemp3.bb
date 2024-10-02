@@ -86,9 +86,10 @@ RRECOMMENDS:${PN} = "\
 	"
 
 SRC_URI = "git://github.com/openpli/servicemp3.git;protocol=https;branch=master"
-SRC_URI:teamblue = "git://github.com/teamblue-e2/servicemp3.git;protocol=https;branch=master"
+SRC_URI:teamblue = "git://github.com/openpli/servicemp3.git;protocol=https;branch=python3 \
+                    file://0001-fix-configure.ac.patch"
 SRCREV = "${AUTOREV}"
-SRCREV_openeight = "c7750c5ab393341f5a65094ceac90fbb6afd12e6"
+SRCREV:openeight = "c7750c5ab393341f5a65094ceac90fbb6afd12e6"
 
 S = "${WORKDIR}/git"
 

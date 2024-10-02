@@ -10,13 +10,22 @@ inherit kernel machine_kernel_pr
 
 MACHINE_KERNEL_PR:append = "r11"
 
-SRC_URI[md5sum] = "6036c5d722071e72d5d66dbf7ee74992"
-SRC_URI[sha256sum] = "eff7eecf55dd75ecb44bd8b8fe16f588d19c1eac92125eaed2b6834348d12def"
+SRC_DATE = "20180206"
+SRC_DATE:gbquad4kpro = "20240729"
+
+SRC_NAME = "legacy"
+SRC_NAME:gbquad4kpro = "pro"
+
+SRC_URI[legacy.md5sum] = "6036c5d722071e72d5d66dbf7ee74992"
+SRC_URI[legacy.sha256sum] = "eff7eecf55dd75ecb44bd8b8fe16f588d19c1eac92125eaed2b6834348d12def"
+SRC_URI[pro.md5sum] = "7280e29239f962717fcf5db4b73ef3be"
+SRC_URI[pro.sha256sum] = "3f90048b6fbf3335959ed4a9ed07a24f6ea6545f11643c7fb7c720a8ca5fd5c7"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
-SRC_URI += "https://source.mynonpublic.com/gigablue/linux/gigablue-linux-${PV}-20180206.tar.gz \
-    file://defconfig \
+SRC_URI += "https://source.mynonpublic.com/gigablue/linux/gigablue-linux-${PV}-${SRC_DATE}.tar.gz;name=${SRC_NAME} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'initrd', 'file://defconfig_initrd' , 'file://defconfig', d)} \
+    file://initramfs-subdirboot.cpio.gz;unpack=0 \
     file://gbfindkerneldevice.py \
     file://0002-linux_dvb-core.patch \
     file://0002-bcmgenet-recovery-fix.patch \
@@ -74,6 +83,14 @@ KERNEL_IMAGEDEST = "tmp"
 KERNEL_OUTPUT = "arch/${ARCH}/boot/${KERNEL_IMAGETYPE}"
 
 FILES:${KERNEL_PACKAGE_NAME}-image = "/${KERNEL_IMAGEDEST}/zImage /${KERNEL_IMAGEDEST}/gbfindkerneldevice.py"
+
+kernel_do_configure:prepend() {
+        install -d ${B}/usr
+        install -m 0644 ${WORKDIR}/initramfs-subdirboot.cpio.gz ${B}/
+        if [ -e ${WORKDIR}/defconfig_initrd ]; then
+            mv ${WORKDIR}/defconfig_initrd ${WORKDIR}/defconfig
+        fi
+}
 
 kernel_do_install:append() {
         install -d ${D}/${KERNEL_IMAGEDEST}
