@@ -8,7 +8,7 @@ require conf/license/license-gplv2.inc
 
 inherit gitpkgv
 
-SRCREV = "${AUTOREV}/tuxtxt"
+SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
 SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/tools;module=tuxtxt;protocol=http"
@@ -17,7 +17,8 @@ DEPENDS = " \
 	tuxtxt-enigma2 \
 	"
 
-S = "${WORKDIR}"
+S = "${WORKDIR}/tuxtxt"
+UNPACKDIR = "${S}"
 
 CFLAGS:append:sh4 = " -DSH4"
 CFLAGS:append:mipsel = " -DMIPSEL"

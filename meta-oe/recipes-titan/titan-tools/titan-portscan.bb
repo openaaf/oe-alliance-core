@@ -14,6 +14,7 @@ PV = "${@bb.fetch2.get_srcrev(d)}"
 SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/tools;module=portscan;protocol=http"
 
 S = "${WORKDIR}/portscan"
+UNPACKDIR = "${S}"
 
 do_compile() {
 	cd ${S}

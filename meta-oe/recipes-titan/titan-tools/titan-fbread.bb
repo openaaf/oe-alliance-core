@@ -20,6 +20,7 @@ DEPENDS = " \
 	"
 
 S = "${WORKDIR}/fbread"
+UNPACKDIR = "${S}"
 
 CFLAGS:append:sh4 = " -DSH4"
 CFLAGS:append:mipsel = " -DMIPSEL"

@@ -20,6 +20,7 @@ DEPENDS = " \
 	"
 
 S = "${WORKDIR}/infobox"
+UNPACKDIR = "${S}"
 
 CFLAGS:append:sh4 = " -DSH4"
 CFLAGS:append:mipsel = " -DMIPSEL"

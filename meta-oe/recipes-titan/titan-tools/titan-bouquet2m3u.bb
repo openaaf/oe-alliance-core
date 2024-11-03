@@ -14,6 +14,7 @@ PV = "${@bb.fetch2.get_srcrev(d)}"
 SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/tools;module=bouquet2m3u;protocol=http"
 
 S = "${WORKDIR}/bouquet2m3u"
+UNPACKDIR = "${S}"
 
 do_compile() {
 	cd ${S}
