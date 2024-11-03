@@ -8,7 +8,7 @@ require conf/license/license-gplv2.inc
 
 inherit gitpkgv
 
-SRCREV = "${AUTOREV}"
+SRCREV = "${AUTOREV}/tuxtxt"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
 SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/tools;module=tuxtxt;protocol=http"
@@ -24,7 +24,7 @@ CFLAGS:append:mipsel = " -DMIPSEL"
 CFLAGS:append:arm = " -DARM"
 
 do_compile() {
-	cd ${WORKDIR}/tuxtxt
+	cd ${S}
 	if [ ${TARGET_ARCH} = "sh4" ];then
 		${CC} -Os -c tuxtxt.c -o tuxtxt.o -I${STAGING_DIR_TARGET}/usr/include -I${STAGING_DIR_TARGET}/usr -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict ${CFLAGS}
 	else

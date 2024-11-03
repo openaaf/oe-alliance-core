@@ -19,7 +19,7 @@ DEPENDS = " \
 	jpeg \
 	"
 
-S = "${WORKDIR}"
+S = "${WORKDIR}/infobox"
 
 CFLAGS:append:sh4 = " -DSH4"
 CFLAGS:append:mipsel = " -DMIPSEL"
@@ -29,7 +29,7 @@ CFLAGS:append:arm:sf8008 = " -DEVENT0 -DDOUBLE"
 CFLAGS:append:mipsel:vusolo2 = " -DEVENT0 -DDOUBLE"
 
 do_compile() {
-	cd ${WORKDIR}/infobox
+	cd ${S}
 	if [ ${TARGET_ARCH} = "sh4" ];then
 		${CC} -Os -c infobox.c -I${STAGING_DIR_TARGET}/usr/include -I${STAGING_DIR_TARGET}/usr/include/freetype2 -o infobox.o -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict ${CFLAGS} -DUSE_BLIT
 		${CC} -Os -c readpng.c -o readpng.o -I${STAGING_DIR_TARGET}/usr/include -I${STAGING_DIR_TARGET}/usr -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict ${CFLAGS}

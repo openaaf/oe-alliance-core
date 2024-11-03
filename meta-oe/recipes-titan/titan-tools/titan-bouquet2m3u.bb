@@ -13,10 +13,10 @@ PV = "${@bb.fetch2.get_srcrev(d)}"
 
 SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/tools;module=bouquet2m3u;protocol=http"
 
-S = "${WORKDIR}"
+S = "${WORKDIR}/bouquet2m3u"
 
 do_compile() {
-	cd ${WORKDIR}/bouquet2m3u
+	cd ${S}
     if [ ${TARGET_ARCH} != "sh4" ];then
     	${CC} GO_bouquet2m3u.c -O2 -mhard-float -o bouquet2m3u
     else

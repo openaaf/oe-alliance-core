@@ -13,10 +13,10 @@ PV = "${@bb.fetch2.get_srcrev(d)}"
 
 SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/tools;module=portscan;protocol=http"
 
-S = "${WORKDIR}"
+S = "${WORKDIR}/portscan"
 
 do_compile() {
-	cd ${WORKDIR}/portscan
+	cd ${S}
 	${CC} portscan.c -O2 -lpthread -o portscan
 }
 
