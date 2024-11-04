@@ -23,6 +23,7 @@ PV = "1.0"
 
 E = "${WORKDIR}/svn"
 UNPACKDIR = "${E}"
+SVNDIR = "${UNPACKDIR}/emus_oscam"
 
 DEPENDS = "libusb openssl libdvbcsa"
 RDEPENDS:${PN} += "libdvbcsa libusb1"
@@ -64,7 +65,8 @@ do_install() {
 	offset="1103"
 	revision=$(git -C ${WORKDIR}/git rev-list --no-merges --count HEAD)
 	SVNVERSION="$(expr $offset + $revision)"
-    sed "s/Description:.*/Description: Latest Version $SVNVERSION of OScam/" -i ${UNPACKDIR}/emus_oscam/CONTROL/control
+    sed "s/Description:.*/Description: Latest Version $SVNVERSION of OScam/" -i ${SVNDIR}/CONTROL/control
+    sed "s/Version:.*/Version: $SVNVERSION/" -i ${SVNDIR}/CONTROL/control
 }
 
 do_rmwork () {
@@ -165,7 +167,7 @@ python populate_packages:prepend() {
             print("prerm ", prerm)
             d.setVar('pkg_prerm:' + full_package, prerm)
 
-    mydir = bb.data.expand('${E}', d)
+    mydir = bb.data.expand('${SVNDIR}', d)
     print("mydir ", mydir)
 
     for package in d.getVar('PACKAGES', d, 1).split():
