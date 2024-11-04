@@ -7,8 +7,9 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit autotools pkgconfig
 
-SRCREV = "${AUTOREV}"
-PV = "${@bb.fetch2.get_srcrev(d)}"
+#SRCREV = "${AUTOREV}"
+#PV = "${@bb.fetch2.get_srcrev(d)}"
+PV = "0.11.0-SVN"
 
 SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/titan;module=libipkg;protocol=http \
           file://build.patch"
