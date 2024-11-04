@@ -21,7 +21,8 @@ SRCREV = "${AUTOREV}"
 SRCREV_FORMAT = "svn_git"
 PV = "1.0"
 
-E = "${WORKDIR}/emus_oscam"
+E = "${WORKDIR}/svn"
+UNPACKDIR = "${E}"
 
 DEPENDS = "libusb openssl libdvbcsa"
 RDEPENDS:${PN} += "libdvbcsa libusb1"
@@ -50,7 +51,7 @@ EXTRA_OECMAKE += "\
 do_install() {
     install -d ${D}/bin
     install -m 0755 ${WORKDIR}/build/oscam ${D}/bin/oscam
-    cd ${E}
+    cd ${UNPACKDIR}/emus_oscam
     cp -a _path_/keys ${D}/
     cp -a _path_/etc ${D}/
 
@@ -63,7 +64,7 @@ do_install() {
 	offset="1103"
 	revision=$(git -C ${WORKDIR}/git rev-list --no-merges --count HEAD)
 	SVNVERSION="$(expr $offset + $revision)"
-    sed "s/Description:.*/Description: Latest Version $SVNVERSION of OScam/" -i ${E}/CONTROL/control
+    sed "s/Description:.*/Description: Latest Version $SVNVERSION of OScam/" -i ${UNPACKDIR}/emus_oscam/CONTROL/control
 }
 
 do_rmwork () {
