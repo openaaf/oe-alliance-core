@@ -5,7 +5,7 @@ protocols along with a UPnP-specific eXtensible Markup Language (XML) parser \
 supporting the Document Object Model (DOM) Level 2 API and an optional, \
 integrated mini web server for serving UPnP related documents."
 HOMEPAGE = "http://pupnp.sourceforge.net/"
-LICENSE = "GPLv3+"
+LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://COPYING;md5=394a0f17b97f33426275571e15920434"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/pupnp/libupnp-${PV}.tar.bz2 \

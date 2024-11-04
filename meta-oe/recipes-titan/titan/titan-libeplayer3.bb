@@ -13,7 +13,8 @@ inherit pkgconfig
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
-SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/titan;module=libeplayer3;protocol=http"
+SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/titan;module=libeplayer3;protocol=http \
+          file://port-to-ffmpeg7.patch"
 
 DEPENDS = "ffmpeg libbluray"
 RDEPENDS:${PN} = "ffmpeg libbluray"
