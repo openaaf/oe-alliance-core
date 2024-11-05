@@ -37,6 +37,6 @@ FILES:${PN} = "/sbin"
 
 do_install() {
 	install -d ${D}/sbin
-	install -m 0755 tuxtxt/tuxtxt ${D}/sbin/tuxtxt
+	install -m 0755 tuxtxt ${D}/sbin/tuxtxt
 }
 do_install[vardepsexclude] += "DATETIME"
