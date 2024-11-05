@@ -18,7 +18,6 @@ DEPENDS = " \
 	"
 
 S = "${WORKDIR}/tuxtxt"
-UNPACKDIR = "${S}"
 
 CFLAGS:append:sh4 = " -DSH4"
 CFLAGS:append:mipsel = " -DMIPSEL"
