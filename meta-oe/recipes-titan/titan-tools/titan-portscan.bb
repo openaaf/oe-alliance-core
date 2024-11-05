@@ -24,6 +24,6 @@ FILES:${PN} = "/sbin"
 
 do_install() {
 	install -d ${D}/sbin
-	install -m 0755 portscan/portscan ${D}/sbin/portscan
+	install -m 0755 portscan ${D}/sbin/portscan
 }
 do_install[vardepsexclude] += "DATETIME"

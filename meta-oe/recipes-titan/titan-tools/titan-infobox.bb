@@ -44,6 +44,6 @@ FILES:${PN} = "/sbin"
 
 do_install() {
 	install -d ${D}/sbin
-	install -m 0755 infobox/infobox ${D}/sbin/infobox
+	install -m 0755 infobox ${D}/sbin/infobox
 }
 do_install[vardepsexclude] += "DATETIME"

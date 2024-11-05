@@ -39,6 +39,6 @@ FILES:${PN} = "/sbin"
 
 do_install() {
 	install -d ${D}/sbin
-	install -m 0755 fbread/fbread ${D}/sbin/fbread
+	install -m 0755 fbread ${D}/sbin/fbread
 }
 do_install[vardepsexclude] += "DATETIME"

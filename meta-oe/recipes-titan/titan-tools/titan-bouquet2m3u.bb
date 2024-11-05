@@ -28,6 +28,6 @@ FILES:${PN} = "/sbin"
 
 do_install() {
 	install -d ${D}/sbin
-	install -m 0755 bouquet2m3u/bouquet2m3u ${D}/sbin/bouquet2m3u
+	install -m 0755 bouquet2m3u ${D}/sbin/bouquet2m3u
 }
 do_install[vardepsexclude] += "DATETIME"
