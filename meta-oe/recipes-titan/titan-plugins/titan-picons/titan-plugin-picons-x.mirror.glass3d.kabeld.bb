@@ -92,6 +92,9 @@ do_package_qa() {
 }
 
 do_package_write_ipk:append() {
-    bb.process.run("cp -a ../deploy-png/* .")
+    bb.build.exec_func("do_copypng", d)
 }
 addtask do_package before do_package_write_ipk
+do_copypng() {
+	if [ -e "../deploy-png" ]; then cp -a ../deploy-png/* .; fi
+}
