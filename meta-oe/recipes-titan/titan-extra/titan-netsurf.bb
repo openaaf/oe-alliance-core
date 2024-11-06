@@ -59,6 +59,7 @@ CFLAGS:append = " \
 	-I${WORKDIR}/netsurf-all-${PV}/libwapcaplet/include/ \
 	-I${WORKDIR}/netsurf-all-${PV}/netsurf/include/ \
 	-I${WORKDIR}/netsurf-all-${PV}/nsgenbind/include/ \
+    -Wno-declaration-missing-parameter-type -Wno-error=incompatible-pointer-types \
 	"
 
 #LDFLAGS:prepend = " -L${WORKDIR}/netsurf-all-${PV}/libnsfb/build-x86_64-linux-gnu-arm-oe-linux-gnueabi-release-lib-static "
