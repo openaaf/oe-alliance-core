@@ -10,7 +10,7 @@ inherit autotools pkgconfig
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
-SRC_URI = "svn://svn.dyndns.tv/svn/titan;module=libipkg;protocol=http;user=public;pswd=public \
+SRC_URI = "svn://sbnc.dyndns.tv/svn/titan;module=libipkg;protocol=http;user=buildbin;pswd=buildbin \
           file://build.patch"
 
 DEPENDS = "libarchive"
