@@ -17,6 +17,7 @@ SRC_URI = "svn://svn.dyndns.tv/svn/ipk/source.arm;module=emus_oscam;protocol=htt
 #SRCREV_FORMAT = "svn_trunk"
 
 SRC_URI += "git://git.streamboard.tv/common/oscam.git;protocol=https;branch=master"
+PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 SRCREV_FORMAT = "svn_git"
 PV = "1.0"

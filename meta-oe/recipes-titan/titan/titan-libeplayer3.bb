@@ -10,6 +10,7 @@ require conf/license/license-gplv2.inc
 
 inherit pkgconfig
 
+PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 

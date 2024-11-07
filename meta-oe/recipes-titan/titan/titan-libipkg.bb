@@ -7,6 +7,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit autotools pkgconfig
 
+PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 

@@ -13,6 +13,7 @@ inherit autotools-brokensep gitpkgv python3native pkgconfig gettext
 #BB_STRICT_CHECKSUM = "1"
 #PREMIRRORS = ""
 
+PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 SVN_VERSION = "${PV}"

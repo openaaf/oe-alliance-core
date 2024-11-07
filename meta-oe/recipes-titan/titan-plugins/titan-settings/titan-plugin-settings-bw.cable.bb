@@ -7,6 +7,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 require conf/license/license-gplv2.inc
 
+PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
