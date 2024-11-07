@@ -6,10 +6,11 @@ PACKAGE_ARCH = "${MACHINEBUILD}"
 
 require conf/license/license-gplv2.inc
 
-inherit gitpkgv gettext
+inherit autotools-brokensep gitpkgv python3native pkgconfig gettext
 
-PREMIRRORS = ""
-#MIRRORS = ""
+#BB_FETCH_PREMIRRORONLY
+#BB_NO_NETWORK
+#BB_STRICT_CHECKSUM = "1"
 
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
@@ -123,7 +124,7 @@ GST_UGLY_RDEPS = "\
     gstreamer1.0-plugins-ugly-dvdsub \
 "
 
-S = "${WORKDIR}/svn/titan"
+S = "${WORKDIR}/svn/titan/titan"
 
 CFLAGS:append = " \
 	-I${STAGING_DIR_TARGET}/usr/include \
@@ -192,11 +193,10 @@ LDFLAGS:prepend:arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' -lglib-2.0 -
 LDFLAGS:prepend = " -leplayer3 -lpthread -ldl -lm -lz -lpng -lfreetype -ldreamdvd -ljpeg -lssl -lcrypto -lcurl -lipkg "
 LDFLAGS:prepend:sh4 = " -lmmeimage "
 
-SOURCE_FILES = "titan.c"
+addtask setbuildcmd before do_configure after do_patch
 
-do_compile() {
-#	cd ${WORKDIR}/titan/titan/tools
-    cd ${S}/titan/tools
+do_setbuildcmd() {
+    cd ${S}/tools
 
     if [ "${MACHINE}" = "vusolo4k" -o "${MACHINE}" = "vusolo2" -o "${MACHINE}" = "vusolose" -o "${MACHINE}" = "vuduo2" -o "${MACHINE}" = "vuuno4k" -o "${MACHINE}" = "vuuno4kse" -o "${MACHINE}" = "vuultimo4k" -o "${MACHINE}" = "vuzero4k" -o "${MACHINE}" = "vuduo4k" -o "${MACHINE}" = "vuduo4kse" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-VUPLUS-BASE}/recipes-drivers/vuplus-dvb-proxy-${MACHINE}.bb | cut -b 12-19`
@@ -278,6 +278,10 @@ do_compile() {
         DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-EDISION-BASE}/recipes-drivers/edision-dvb-modules-${MACHINE}.bb | cut -b 12-19`
     elif [ "${BRAND_OEM}" = "maxytec" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-MAXYTEC-BASE}/recipes-drivers/maxytec-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${BRAND_OEM}" = "abcom" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-ABCOM-BASE}/recipes-drivers/abcom-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${BRAND_OEM}" = "anadol" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-ANADOL-BASE}/recipes-drivers/anadol-dvb-modules-${MACHINE}.bb | cut -b 12-19`
     elif [ "${BRAND_OEM}" = "dreambox" ]; then
         if [ "${MACHINE}" = "dm7080" ]; then
             DRIVERSDATE="20190502"
@@ -298,7 +302,11 @@ do_compile() {
         elif [ "${MACHINE}" = "dm900" ]; then
             DRIVERSDATE="20200226"
         elif [ "${MACHINE}" = "dm920" ]; then
-            DRIVERSDATE="20190830"
+            DRIVERSDATE="20200321"
+        elif [ "${MACHINE}" = "dreamone" ]; then
+            DRIVERSDATE="20210518"
+        elif [ "${MACHINE}" = "dreamtwo" ]; then
+            DRIVERSDATE="20210518"
         else
             DRIVERSDATE="20150618"
         fi
@@ -367,12 +375,17 @@ do_compile() {
 	echo "./oealliance.sh ${CACHEDIR} ${KERNELDIR} ${ROOTDIR} ${TYPE} ${SRCDIR} ${CPU} ${STM} ${BOXNAME} ${DISTRO_NAME} ${DISTRO_TYPE} ${SWTYPE} ${IMAGE_NAME} ${GITVERSION} ${SVNVERSION} ${MACHINE_BRAND} ${MACHINE_NAME} ${DRIVERSDATE} ${DISTRO_VERSION} ${DISTRO_TYPE}"
 	./oealliance.sh "${CACHEDIR}" "${KERNELDIR}" "${ROOTDIR}" "${TYPE}" "${SRCDIR}" "${CPU}" "${STM}" "${BOXNAME}" "${DISTRO_NAME}" "${DISTRO_TYPE}" "${SWTYPE}" "${IMAGE_NAME}" "${GITVERSION}" "${SVNVERSION}" "${MACHINE_BRAND}" "${MACHINE_NAME}" "${DRIVERSDATE}" "${DISTRO_VERSION}" "${DISTRO_TYPE}"
 
-	cd ${S}/titan
-
+	cd ${S}
 	cp Makefile.am.4.3 Makefile.am
-
-    ${CC} ${SOURCE_FILES} ${CFLAGS} -o titan ${LDFLAGS}
+	cd ${S}
 }
+
+EXTRA_OECONF = " \
+    BUILD_SYS=${BUILD_SYS} \
+    HOST_SYS=${HOST_SYS} \
+    STAGING_INCDIR=${STAGING_INCDIR} \
+    STAGING_LIBDIR=${STAGING_LIBDIR} \
+"
 
 FILES:${PN} = " \
 	/bin \
@@ -490,9 +503,9 @@ INSANE_SKIP:${PN} = "already-stripped"
 
 do_install() {
 	install -d ${D}/usr/local/bin
-	install -m 0755 titan/titan ${D}/usr/local/bin/titan
+	install -m 0755 titan ${D}/usr/local/bin/titan
 
-	cp -r oealliance/* ${D}
+	cp -r ../oealliance/* ${D}
 	if [ -e ${D}/etc/titan.restore/mnt/config/titan.${MACHINE}.cfg ];then
 		cp ${D}/etc/titan.restore/mnt/config/titan.${MACHINE}.cfg ${D}/etc/titan.restore/mnt/config/titan.cfg
 	fi
