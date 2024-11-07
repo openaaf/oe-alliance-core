@@ -93,7 +93,9 @@ CFLAGS:append:arm = " -DMIPSEL -DOEBUILD -DEXTGST -DEPLAYER4 -DEXTEPLAYER3 -DEPL
 
 LDFLAGS:prepend = " -lcurl "
 
-do_configure:prepend() {
+addtask setbuildcmd before do_configure after do_patch
+
+do_setbuildcmd() {
     cd ${S}
 
     SVNVERSION=${PV}
@@ -101,7 +103,6 @@ do_configure:prepend() {
 
 	sed "s/^#define PLUGINVERSION .*/#define PLUGINVERSION $SVNVERSION/" -i  ../titan/struct.h
 	cat ../titan/struct.h | grep "define PLUGINVERSION"
-
 }
 
 EXTRA_OECONF = " \
