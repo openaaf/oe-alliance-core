@@ -10,7 +10,7 @@ require conf/license/license-gplv2.inc
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
-SRC_URI = "svn://sbnc.dyndns.tv/svn/titan;module=skins;protocol=http;user=buildbin;pswd=buildbin"
+SRC_URI = "svn://sbnc.dyndns.tv/svn/titan;module=skins;protocol=http;user=buildbin;pswd=buildbin;externals=allowed"
 
 S = "${WORKDIR}/skins"
 

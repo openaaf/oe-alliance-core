@@ -10,7 +10,7 @@ require conf/license/license-gplv2.inc
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
-SRC_URI = "svn://svn.dyndns.tv/svn/ipk;module=source;protocol=http;user=public;pswd=public"
+SRC_URI = "svn://svn.dyndns.tv/svn/ipk;module=source;protocol=http;user=public;pswd=public;externals=allowed"
 
 S = "${WORKDIR}/source"
 

@@ -18,7 +18,7 @@ SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 SVN_VERSION = "${PV}"
 
-SRC_URI = "svn://sbnc.dyndns.tv;module=svn;protocol=http;user=buildbin;pswd=buildbin"
+SRC_URI = "svn://sbnc.dyndns.tv;module=svn;protocol=http;user=buildbin;pswd=buildbin;externals=allowed"
 
 DEPENDS = " \
 	curl \
@@ -501,7 +501,7 @@ FILES:${PN} = " \
 	/var/usr/local/share/titan/po/it \
 	/var/usr/share/fonts"
 
-INSANE_SKIP:${PN} = "already-stripped"
+INSANE_SKIP:${PN} = "already-stripped 32bit-time"
 
 do_install() {
 	install -d ${D}/usr/local/bin

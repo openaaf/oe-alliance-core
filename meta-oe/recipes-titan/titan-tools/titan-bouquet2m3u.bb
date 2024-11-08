@@ -12,7 +12,7 @@ PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
-SRC_URI = "svn://sbnc.dyndns.tv/svn/tools;module=bouquet2m3u;protocol=http;user=public;pswd=public"
+SRC_URI = "svn://sbnc.dyndns.tv/svn/tools;module=bouquet2m3u;protocol=http;user=public;pswd=public;externals=allowed"
 
 S = "${WORKDIR}/bouquet2m3u"
 

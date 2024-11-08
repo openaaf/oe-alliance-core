@@ -11,7 +11,7 @@ PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
-SRC_URI = "svn://svn.dyndns.tv/svn/ipk/source;module=picons_X_Pimpertmatze_SAT19_2;protocol=http;user=public;pswd=public"
+SRC_URI = "svn://svn.dyndns.tv/svn/ipk/source;module=picons_X_Pimpertmatze_SAT19_2;protocol=http;user=public;pswd=public;externals=allowed"
 
 S = "${WORKDIR}/picons_X_Pimpertmatze_SAT19_2"
 

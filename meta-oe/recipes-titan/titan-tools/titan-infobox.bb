@@ -12,7 +12,7 @@ PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
-SRC_URI = "svn://sbnc.dyndns.tv/svn/tools;module=infobox;protocol=http;user=public;pswd=public"
+SRC_URI = "svn://sbnc.dyndns.tv/svn/tools;module=infobox;protocol=http;user=public;pswd=public;externals=allowed"
 
 DEPENDS = " \
 	freetype \
