@@ -11,13 +11,16 @@ PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
-SRC_URI = "svn://sbnc.dyndns.tv/svn/titan;module=libipkg;protocol=http;user=buildbin;pswd=buildbin \
-          file://build.patch"
+SRC_URI = "svn://sbnc.dyndns.tv/svn/titan;module=libipkg;protocol=http;user=buildbin;pswd=buildbin;externals=allowed"
 
 DEPENDS = "libarchive"
 RDEPENDS:${PN} = "libarchive"
 
 S = "${WORKDIR}/libipkg"
+
+CFLAGS:append = " \
+    -Wno-implicit-function-declaration -Wno-incompatible-pointer-types \
+	"
 
 do_configure() {
     cd ${S}

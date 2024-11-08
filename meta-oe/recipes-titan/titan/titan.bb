@@ -501,6 +501,7 @@ FILES:${PN} = " \
 	/var/usr/share/fonts"
 
 INSANE_SKIP:${PN} = "already-stripped 32bit-time ldflags"
+INSANE_SKIP += "32bit-time"
 
 do_install() {
 	install -d ${D}/usr/local/bin
