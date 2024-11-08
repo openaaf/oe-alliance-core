@@ -11,7 +11,6 @@ inherit autotools-brokensep gitpkgv python3native pkgconfig gettext
 #BB_FETCH_PREMIRRORONLY
 #BB_NO_NETWORK
 #BB_STRICT_CHECKSUM = "1"
-#PREMIRRORS = ""
 
 PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
@@ -501,7 +500,7 @@ FILES:${PN} = " \
 	/var/usr/local/share/titan/po/it \
 	/var/usr/share/fonts"
 
-INSANE_SKIP:${PN} = "already-stripped 32bit-time"
+INSANE_SKIP:${PN} = "already-stripped 32bit-time ldflags"
 
 do_install() {
 	install -d ${D}/usr/local/bin

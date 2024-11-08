@@ -8,6 +8,7 @@ PACKAGES_DYNAMIC = "titan-plugin-(?!oea-).*"
 
 require conf/license/license-gplv2.inc
 
+PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
