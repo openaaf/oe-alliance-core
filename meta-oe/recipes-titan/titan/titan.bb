@@ -17,7 +17,7 @@ SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 SVN_VERSION = "${PV}"
 
-SVNDIR = "${PN}"
+SVNDIR = "svn/${PN}"
 SRC_URI = "svn://svn.dyndns.tv;module=svn;protocol=http;user=buildbin;pswd=buildbin;externals=allowed"
 
 DEPENDS = " \

@@ -14,7 +14,7 @@ PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
-SVNDIR = "${PN}"
+SVNDIR = "svn/${PN}"
 SRC_URI = "svn://sbnc.dyndns.tv/svn/titan;module=libeplayer3;protocol=http;user=buildbin;pswd=buildbin \
           file://port-to-ffmpeg7.patch"
 

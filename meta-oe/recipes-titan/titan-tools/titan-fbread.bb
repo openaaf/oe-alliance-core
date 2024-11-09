@@ -12,7 +12,7 @@ PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
-SVNDIR = "${PN}"
+SVNDIR = "svn/${PN}"
 SRC_URI = "svn://sbnc.dyndns.tv/svn/tools;module=fbread;protocol=http;user=public;pswd=public;externals=allowed"
 
 DEPENDS = " \

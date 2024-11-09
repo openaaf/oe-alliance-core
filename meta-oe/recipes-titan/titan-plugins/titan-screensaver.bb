@@ -11,7 +11,7 @@ PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
-SVNDIR = "${PN}"
+SVNDIR = "svn/${PN}"
 SRC_URI = "svn://svn.dyndns.tv/svn/ipk;module=source;protocol=http;user=public;pswd=public;externals=allowed"
 
 S = "${WORKDIR}/source"
