@@ -20,9 +20,9 @@ S = "${WORKDIR}/bouquet2m3u"
 do_compile() {
 	cd ${S}
     if [ ${TARGET_ARCH} != "sh4" ];then
-    	${CC} GO_bouquet2m3u.c -O2 -mhard-float -o bouquet2m3u
+    	${CC} GO_bouquet2m3u.c -O2 -mhard-float ${LDFLAGS} -o bouquet2m3u
     else
-    	${CC} GO_bouquet2m3u.c -O2 -o bouquet2m3u -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict -Wno-int-conversion -Wno-return-mismatch -Wno-implicit-int
+    	${CC} GO_bouquet2m3u.c -O2 ${LDFLAGS} -o bouquet2m3u -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict -Wno-int-conversion -Wno-return-mismatch -Wno-implicit-int
     fi
 }
 

@@ -19,7 +19,7 @@ S = "${WORKDIR}/portscan"
 
 do_compile() {
 	cd ${S}
-	${CC} portscan.c -O2 -lpthread -o portscan -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict -Wno-int-conversion -Wno-return-mismatch -Wno-implicit-int
+	${CC} portscan.c -O2 -lpthread ${LDFLAGS} -o portscan -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict -Wno-int-conversion -Wno-return-mismatch -Wno-implicit-int
 }
 
 FILES:${PN} = "/sbin"

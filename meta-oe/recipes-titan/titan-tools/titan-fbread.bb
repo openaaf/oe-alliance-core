@@ -30,11 +30,11 @@ CFLAGS:append:arm = " -DARM"
 do_compile() {
 	cd ${S}
 	if [ ${TARGET_ARCH} = "sh4" ];then
-		${CC} -Os -c fbread.c -o fbread.o -I${STAGING_DIR_TARGET}/usr/include -I${STAGING_DIR_TARGET}/usr -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict ${CFLAGS}
+		${CC} -Os -c fbread.c ${LDFLAGS} -o fbread.o -I${STAGING_DIR_TARGET}/usr/include -I${STAGING_DIR_TARGET}/usr -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict ${CFLAGS}
 	else
-		${CC} -Os -c fbread.c -o fbread.o -I${STAGING_DIR_TARGET}/usr/include -I${STAGING_DIR_TARGET}/usr -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict -Wno-int-conversion -Wno-return-mismatch -Wno-implicit-int ${CFLAGS}
+		${CC} -Os -c fbread.c ${LDFLAGS} -o fbread.o -I${STAGING_DIR_TARGET}/usr/include -I${STAGING_DIR_TARGET}/usr -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict -Wno-int-conversion -Wno-return-mismatch -Wno-implicit-int ${CFLAGS}
 	fi
-	${CC} -Os fbread.o -L${STAGING_DIR_TARGET}/usr/lib -ljpeg -lpng -lusb-1.0 -lz -o fbread
+	${CC} -Os fbread.o -L${STAGING_DIR_TARGET}/usr/lib -ljpeg -lpng -lusb-1.0 -lz ${LDFLAGS} -o fbread
 }
 
 FILES:${PN} = "/sbin"
