@@ -12,6 +12,7 @@ PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
+SVNDIR = "${PN}"
 SRC_URI = "svn://sbnc.dyndns.tv;module=svn;protocol=http;user=buildbin;pswd=buildbin;externals=allowed"
 
 DEPENDS = "titan \

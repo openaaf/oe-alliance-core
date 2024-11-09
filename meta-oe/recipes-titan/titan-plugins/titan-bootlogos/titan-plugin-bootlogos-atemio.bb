@@ -11,6 +11,7 @@ PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
+SVNDIR = "${PN}"
 SRC_URI = "svn://svn.dyndns.tv/svn/ipk/source;module=bootlogos_Atemio_0_1;protocol=http;user=public;pswd=public;externals=allowed"
 
 S = "${WORKDIR}/bootlogos_Atemio_0_1"

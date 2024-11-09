@@ -11,6 +11,7 @@ PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
+SVNDIR = "${PN}"
 SRC_URI = "svn://svn.dyndns.tv/svn/ipk/source.arm;module=playersnp_codecpack;protocol=http;user=public;pswd=public;externals=allowed"
 
 S = "${WORKDIR}/playersnp_codecpack"
