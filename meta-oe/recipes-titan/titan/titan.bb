@@ -190,6 +190,8 @@ CFLAGS:append:sh4 = " -DSSLNEW -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DSH4 -DSH4NEW
 CFLAGS:append:mipsel = " -DSSLNEW -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
 CFLAGS:append:arm = " -DSSLNEW -DOEBUILD -DEXTGST -DEPLAYER4 -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
 
+CFLAGS:append = " -Wno-format -Wno-address -Wno-use-after-free -Wno-deprecated-declarations -Wno-implicit-function-declaration -Wno-incompatible-pointer-types -Wno-int-conversion -Wno-return-mismatch -Wno-implicit-int -Wno-declaration-missing-parameter-type"
+
 LDFLAGS:prepend:arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' -lglib-2.0 -lgobject-2.0 -lxml2 -lgstreamer-1.0 ', '', d)}"
 
 LDFLAGS:prepend = " -leplayer3 -lpthread -ldl -lm -lz -lpng -lfreetype -ldreamdvd -ljpeg -lssl -lcrypto -lcurl -lipkg "
