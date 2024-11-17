@@ -8,10 +8,12 @@ PACKAGES_DYNAMIC = "titan-plugin-(?!oea-).*"
 
 require conf/license/license-gplv2.inc
 
+PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
-SRC_URI = "svn://buildbin:buildbin@sbnc.dyndns.tv;module=svn;protocol=http"
+SVNDIR = "svn/${PN}"
+SRC_URI = "svn://svn.dyndns.tv;module=svn;protocol=http;user=buildbin;pswd=buildbin;externals=allowed"
 
 DEPENDS = "titan \
     ${PYTHON_PN}-pyopenssl \
@@ -93,7 +95,9 @@ CFLAGS:append:arm = " -DMIPSEL -DOEBUILD -DEXTGST -DEPLAYER4 -DEXTEPLAYER3 -DEPL
 
 LDFLAGS:prepend = " -lcurl "
 
-do_configure:prepend() {
+addtask setbuildcmd before do_configure after do_patch
+
+do_setbuildcmd() {
     cd ${S}
 
     SVNVERSION=${PV}
@@ -101,7 +105,6 @@ do_configure:prepend() {
 
 	sed "s/^#define PLUGINVERSION .*/#define PLUGINVERSION $SVNVERSION/" -i  ../titan/struct.h
 	cat ../titan/struct.h | grep "define PLUGINVERSION"
-
 }
 
 EXTRA_OECONF = " \
@@ -115,64 +118,7 @@ FILES:${PN} = "/usr/local/share/titan/plugins"
 INSANE_SKIP:${PN} = "already-stripped"
 
 do_install() {
-	if [ ${HOST_SYS} = "sh4-oe-linux" ];then
-		HOST=sh4
-	elif [ ${HOST_SYS} = "arm-oe-linux-gnueabi" ];then
-		HOST=arm
-	else
-		HOST=mipsel
-	fi
-	
-	install -d ${D}/usr/local/share/titan/plugins
-	
-	SECTIONLIST="`cat ../plugins/Makefile.am | sed 's/\\t\+/ /g' | sed 's/ \\+//g' | sed 's/\\\//g' | grep -v =`"
-	echo SECTIONLIST $SECTIONLIST
-	for SECTION in $SECTIONLIST;do
-		echo SECTION $SECTION
-    	PLUGINLIST="`cat ../plugins/$SECTION/Makefile.am | sed 's/\\t\+/ /g' | sed 's/ \\+//g' | sed 's/\\\//g' | grep -v =`"
-
-	    for PLUGIN in $PLUGINLIST;do
-		    echo PLUGIN $PLUGIN
-		    install -d ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN
-		    install -m 0644 ../plugins/$SECTION/$PLUGIN/.libs/*.so ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
-
-echo SECTION $SECTION
-echo PLUGIN $PLUGIN
-echo HOST_SYS ${HOST_SYS}
-echo HOST $HOST
-	
-		    if test -e ../plugins/$SECTION/$PLUGIN/$PLUGIN.sh;then
-			    install -m 0655 ../plugins/$SECTION/$PLUGIN/*.sh ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN
-		    fi
-		    if test -e ../plugins/$SECTION/$PLUGIN/$PLUGIN.conf;then
-			    install -m 0655 ../plugins/$SECTION/$PLUGIN/*.conf ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN
-		    fi
-		    if test -e ../plugins/$SECTION/$PLUGIN/files;then
-			    cp -a ../plugins/$SECTION/$PLUGIN/files/* ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
-		    fi
-		    if test -e ../plugins/$SECTION/$PLUGIN/$HOST;then
-			    cp -a ../plugins/$SECTION/$PLUGIN/${HOST}/* ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
-		    fi
-		    if test -e ../plugins/$SECTION/$PLUGIN/${HOST_SYS};then
-			    cp -a ../plugins/$SECTION/$PLUGIN/f${HOST_SYS}/* ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
-		    fi
-		    if test -e ../plugins/$SECTION/$PLUGIN/picons;then
-			    cp -a ../plugins/$SECTION/$PLUGIN/picons ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
-		    fi
-		    if test -e ../plugins/$SECTION/$PLUGIN/skin;then
-			    cp -a ../plugins/$SECTION/$PLUGIN/skin ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
-		    fi
-		    if test -e ../plugins/$SECTION/$PLUGIN/skin.xml;then
-			    install -m 0644 ../plugins/$SECTION/$PLUGIN/skin.xml ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
-		    fi
-		    if test -e ../plugins/$SECTION/$PLUGIN/plugin.png;then
-			    install -m 0644 ../plugins/$SECTION/$PLUGIN/plugin.png ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
-		    fi
-		    if test -e ../plugins/$SECTION/$PLUGIN/default.jpg;then
-			    install -m 0644 ../plugins/$SECTION/$PLUGIN/default.jpg ${D}/usr/local/share/titan/plugins/$SECTION/$PLUGIN/
-		    fi
-	    done
-	done
+	./inst.sh ${HOST_SYS} ${D}
 }
 
 python populate_packages:prepend() {

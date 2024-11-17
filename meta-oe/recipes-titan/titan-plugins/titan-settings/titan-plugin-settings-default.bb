@@ -7,10 +7,12 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 require conf/license/license-gplv2.inc
 
+PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
-SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source;module=settings_default_sat_1_0;protocol=http"
+SVNDIR = "svn/${PN}"
+SRC_URI = "svn://svn.dyndns.tv/svn/ipk/source;module=settings_default_sat_1_0;protocol=http;user=public;pswd=public;externals=allowed"
 
 S = "${WORKDIR}/settings_default_sat_1_0"
 
@@ -124,10 +126,13 @@ do_package_qa() {
 }
 
 do_package_write_ipk:append() {
-    bb.process.run("cp -a ../deploy-png/* .")
+    bb.build.exec_func("do_copypng", d)
 }
 
 #fetch allways
 #do_fetch[nostamp] = "1"
 #build allways
 #do_configure[nostamp] = "1"
+do_copypng() {
+	if [ -e "../deploy-png" ]; then cp -a ../deploy-png/* .; fi
+}

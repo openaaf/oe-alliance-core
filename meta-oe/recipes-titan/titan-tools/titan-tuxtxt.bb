@@ -8,35 +8,37 @@ require conf/license/license-gplv2.inc
 
 inherit gitpkgv
 
+PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
-SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/tools;module=tuxtxt;protocol=http"
+SVNDIR = "svn/${PN}"
+SRC_URI = "svn://sbnc.dyndns.tv/svn/tools;module=tuxtxt;protocol=http;user=public;pswd=public;externals=allowed"
 
 DEPENDS = " \
 	tuxtxt-enigma2 \
 	"
 
-S = "${WORKDIR}"
+S = "${WORKDIR}/tuxtxt"
 
 CFLAGS:append:sh4 = " -DSH4"
 CFLAGS:append:mipsel = " -DMIPSEL"
 CFLAGS:append:arm = " -DARM"
 
 do_compile() {
-	cd ${WORKDIR}/tuxtxt
+	cd ${S}
 	if [ ${TARGET_ARCH} = "sh4" ];then
-		${CC} -Os -c tuxtxt.c -o tuxtxt.o -I${STAGING_DIR_TARGET}/usr/include -I${STAGING_DIR_TARGET}/usr -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict ${CFLAGS}
+		${CC} -Os -c tuxtxt.c ${LDFLAGS} -o tuxtxt.o -I${STAGING_DIR_TARGET}/usr/include -I${STAGING_DIR_TARGET}/usr -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict ${CFLAGS}
 	else
-		${CC} -Os -c tuxtxt.c -o tuxtxt.o -I${STAGING_DIR_TARGET}/usr/include -I${STAGING_DIR_TARGET}/usr -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict ${CFLAGS}
+		${CC} -Os -c tuxtxt.c ${LDFLAGS} -o tuxtxt.o -I${STAGING_DIR_TARGET}/usr/include -I${STAGING_DIR_TARGET}/usr -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict -Wno-int-conversion -Wno-return-mismatch -Wno-implicit-int ${CFLAGS}
 	fi
-	${CC} -Os tuxtxt.o -L${STAGING_DIR_TARGET}/usr/lib -lpthread -ltuxtxt32bpp -ltuxtxt -lz -o tuxtxt
+	${CC} -Os tuxtxt.o -L${STAGING_DIR_TARGET}/usr/lib -lpthread -ltuxtxt32bpp -ltuxtxt -lz ${LDFLAGS} -o tuxtxt
 }
 
 FILES:${PN} = "/sbin"
 
 do_install() {
 	install -d ${D}/sbin
-	install -m 0755 tuxtxt/tuxtxt ${D}/sbin/tuxtxt
+	install -m 0755 tuxtxt ${D}/sbin/tuxtxt
 }
 do_install[vardepsexclude] += "DATETIME"

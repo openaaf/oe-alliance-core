@@ -7,10 +7,12 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 require conf/license/license-gplv2.inc
 
+PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
-SRC_URI = "svn://buildbin:buildbin@sbnc.dyndns.tv/svn/titan;module=skins;protocol=http"
+SVNDIR = "svn/${PN}"
+SRC_URI = "svn://sbnc.dyndns.tv/svn/titan;module=skins;protocol=http;user=buildbin;pswd=buildbin;externals=allowed"
 
 S = "${WORKDIR}/skins"
 

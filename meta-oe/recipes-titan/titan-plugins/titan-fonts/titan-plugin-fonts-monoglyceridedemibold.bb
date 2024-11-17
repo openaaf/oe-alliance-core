@@ -7,10 +7,12 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 require conf/license/license-gplv2.inc
 
+PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
-SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source;module=fonts_monoglyceridedemibold_1_0;protocol=http"
+SVNDIR = "svn/${PN}"
+SRC_URI = "svn://svn.dyndns.tv/svn/ipk/source;module=fonts_monoglyceridedemibold_1_0;protocol=http;user=public;pswd=public;externals=allowed"
 
 S = "${WORKDIR}/fonts_monoglyceridedemibold_1_0"
 
@@ -124,5 +126,8 @@ do_package_qa() {
 }
 
 do_package_write_ipk:append() {
-    bb.process.run("cp -a ../deploy-png/* .")
+    bb.build.exec_func("do_copypng", d)
+}
+do_copypng() {
+	if [ -e "../deploy-png" ]; then cp -a ../deploy-png/* .; fi
 }

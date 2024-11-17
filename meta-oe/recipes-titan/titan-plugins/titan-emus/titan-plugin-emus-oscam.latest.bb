@@ -8,7 +8,8 @@ SUMMARY = "OScam ${PV} Open Source Softcam"
 LICENSE = "GPLv3"
 LIC_FILES:CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
-SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source.arm;module=emus_oscam;protocol=http;name=svn;destsuffix=emus_oscam"
+SVNDIR = "svn/${PN}"
+SRC_URI = "svn://svn.dyndns.tv/svn/ipk/source.arm;module=emus_oscam;protocol=http;name=svn;destsuffix=emus_oscam;user=public;pswd=public;externals=allowed"
 #SRC_URI += "svn://svn.streamboard.tv/oscam;protocol=https;module=trunk;scmdata=keep;externals=nowarn;name=trunk;destsuffix=trunk"
 #SRC_URI += "file://config.patch"
 #SRCREV_svn = "${AUTOREV}"
@@ -17,11 +18,14 @@ SRC_URI = "svn://public:public@sbnc.dyndns.tv/svn/ipk/source.arm;module=emus_osc
 #SRCREV_FORMAT = "svn_trunk"
 
 SRC_URI += "git://git.streamboard.tv/common/oscam.git;protocol=https;branch=master"
+PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
 SRCREV_FORMAT = "svn_git"
 PV = "1.0"
 
-E = "${WORKDIR}/emus_oscam"
+E = "${WORKDIR}/svn"
+UNPACKDIR = "${E}"
+EMUDIR = "${UNPACKDIR}/emus_oscam"
 
 DEPENDS = "libusb openssl libdvbcsa"
 RDEPENDS:${PN} += "libdvbcsa libusb1"
@@ -50,7 +54,7 @@ EXTRA_OECMAKE += "\
 do_install() {
     install -d ${D}/bin
     install -m 0755 ${WORKDIR}/build/oscam ${D}/bin/oscam
-    cd ${E}
+    cd ${UNPACKDIR}/emus_oscam
     cp -a _path_/keys ${D}/
     cp -a _path_/etc ${D}/
 
@@ -63,7 +67,8 @@ do_install() {
 	offset="1103"
 	revision=$(git -C ${WORKDIR}/git rev-list --no-merges --count HEAD)
 	SVNVERSION="$(expr $offset + $revision)"
-    sed "s/Description:.*/Description: Latest Version $SVNVERSION of OScam/" -i ${E}/CONTROL/control
+    sed "s/Description:.*/Description: Latest Version $SVNVERSION of OScam/" -i ${EMUDIR}/CONTROL/control
+    sed "s/Version:.*/Version: $SVNVERSION/" -i ${EMUDIR}/CONTROL/control
 }
 
 do_rmwork () {
@@ -164,7 +169,7 @@ python populate_packages:prepend() {
             print("prerm ", prerm)
             d.setVar('pkg_prerm:' + full_package, prerm)
 
-    mydir = bb.data.expand('${E}', d)
+    mydir = bb.data.expand('${EMUDIR}', d)
     print("mydir ", mydir)
 
     for package in d.getVar('PACKAGES', d, 1).split():
@@ -175,7 +180,7 @@ do_package_qa() {
 }
 
 do_package_write_ipk:append() {
-    bb.process.run("cp -a ../deploy-png/* .")
+    bb.build.exec_func("do_copypng", d)
 }
 
 pkg_preinst:${PN}:prepend() {
@@ -212,3 +217,6 @@ echo * $*
 #do_configure[nostamp] = "1"
 do_install[vardepsexclude] += "DATE"
 
+do_copypng() {
+	if [ -e "../deploy-png" ]; then cp -a ../deploy-png/* .; fi
+}
