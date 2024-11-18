@@ -44,12 +44,13 @@ DEPENDS = " \
 	oe-alliance-remote \
 	oe-alliance-skins \	
 	"
-#openatv 5.4 tasks 19573
-#openaaf 5.4 tasks 19861
-#openaaf 5.4 tasks 20644
 
-#openatv 5.5 tasks 20612
-#openaaf 5.5 tasks 23301
+#openatv 5.4 tasks 20612
+#openaaf 5.4 tasks 23301
+
+#openatv 5.5 tasks 19573
+#openaaf 5.5 tasks 19861
+#openaaf 5.5 tasks 20644
 
 TITANPACKAGES += "\
 	titan-autorestore \
