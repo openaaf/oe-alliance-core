@@ -24,8 +24,9 @@ SRCREV_FORMAT = "svn_git"
 PV = "1.0"
 
 E = "${WORKDIR}/svn"
-UNPACKDIR = "${E}"
-EMUDIR = "${UNPACKDIR}/emus_oscam"
+#UNPACKDIR = "${E}"
+#EMUDIR = "${UNPACKDIR}/emus_oscam"
+EMUDIR = "${E}/emus_oscam"
 
 DEPENDS = "libusb openssl libdvbcsa"
 RDEPENDS:${PN} += "libdvbcsa libusb1"
