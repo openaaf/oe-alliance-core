@@ -22,10 +22,8 @@ SSTATE_SKIP_CREATION = "1"
 
 URL = "http://www.aaf-digital.info"
 
-# if DATE in PR changes (next day), workdir name changes too
-# this makes sstate unhappy and breakes many tasks in many weird ways
-
-WORKDIR = "${TMPDIR}/work/${MULTIMACH_TARGET_SYS}/${PN}/${EXTENDPE}${PV}"
+S = "${WORKDIR}/sources"
+UNPACKDIR = "${S}"
 
 PACKAGES = "${PN}"
 
@@ -83,7 +81,7 @@ do_install() {
     printf "compile-date=${DATE}\n" >> ${D}/etc/image-version
     printf "compile-datetime=${DATETIME}\n" >> ${D}/etc/image-version
 }
-do_install[vardepsexclude] += "DATETIME"
 
-FILES:${PN} += "/etc/model /etc/image-version /etc/oe-git.log /etc/e2-git.log"
+do_install[vardepsexclude] += "DATE DATETIME"
 
+FILES:${PN} += "${sysconfdir}/image-version ${sysconfdir}/model"
