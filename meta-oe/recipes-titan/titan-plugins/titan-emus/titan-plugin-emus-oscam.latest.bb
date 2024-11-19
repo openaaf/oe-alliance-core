@@ -10,12 +10,6 @@ LIC_FILES:CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
 SVNDIR = "svn/${PN}"
 SRC_URI = "svn://svn.dyndns.tv/svn/ipk/source.arm;module=emus_oscam;protocol=http;name=svn;destsuffix=emus_oscam;user=public;pswd=public;externals=allowed"
-#SRC_URI += "svn://svn.streamboard.tv/oscam;protocol=https;module=trunk;scmdata=keep;externals=nowarn;name=trunk;destsuffix=trunk"
-#SRC_URI += "file://config.patch"
-#SRCREV_svn = "${AUTOREV}"
-#SRCREV_trunk = "${AUTOREV}"
-#SRCREV_trunk = "11748"
-#SRCREV_FORMAT = "svn_trunk"
 
 SRC_URI += "git://git.streamboard.tv/common/oscam.git;protocol=https;branch=master"
 PREMIRRORS = ""
@@ -30,7 +24,6 @@ RDEPENDS:${PN} += "libdvbcsa libusb1"
 
 LDFLAGS:prepend = "-ldvbcsa "
 
-#S = "${WORKDIR}/trunk"
 S = "${WORKDIR}/git"
 
 EXTRA_OECMAKE += "\
@@ -55,12 +48,6 @@ do_install() {
     cd ${EMUDIR}
     cp -a _path_/keys ${D}/
     cp -a _path_/etc ${D}/
-
-#    SVNVERSION=$(svnversion ${WORKDIR}/trunk)
-#    sed "s/Description:.*/Description: Latest Version $SVNVERSION of OScam/" -i ${E}/CONTROL/control
-
-#	 which git > /dev/null 2>&1 && revision=`git log -10 --pretty=%B | grep git-svn-id | head -n 1 | sed -n -e 's/^.*trunk@\([0-9]*\) .*$/\1/p'`
-#    sed "s/Description:.*/Description: Latest Version $revision of OScam/" -i ${E}/CONTROL/control
 
 	offset="1103"
 	revision=$(git -C ${WORKDIR}/git rev-list --no-merges --count HEAD)
@@ -209,10 +196,6 @@ echo 1 $1
 echo * $*
 }
 
-#fetch allways
-#do_fetch[nostamp] = "1"
-#build allways
-#do_configure[nostamp] = "1"
 do_install[vardepsexclude] += "DATE"
 
 do_copypng() {
