@@ -4,6 +4,8 @@ LICENSE = "GPL-3.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=1ebbd3e34237af26da5dc08a4e440464"
 HOMEPAGE = "https://github.com/DimitarCC"
 
+RDEPENDS:${PN} = "${PYTHON_PN}-multiprocessing ${PYTHON_PN}-requests"
+
 inherit gitpkgv allarch ${PYTHON_PN}native gettext
 
 PV = "1.0+git"
@@ -31,7 +33,7 @@ do_install:append() {
 			cc=${filename%%.*}
 			folder=${D}${pluginpath}/locale/${cc}/LC_MESSAGES
 			mkdir -p ${folder}
-			/usr/bin/msgfmt -o ${folder}/eitconfig.mo ${po}
+			/usr/bin/msgfmt -o ${folder}/m3uiptv.mo ${po}
 		done
 	fi
 }
