@@ -73,7 +73,8 @@ DEPENDS += " \
           "
 inherit gitpkgv
 # 22.0 Piers
-SRCREV = "${AUTOREV}"
+#SRCREV = "${AUTOREV}"
+SRCREV = "a3fe3a4d0ccc8129b1d1fe6f2d939ed6b50860b6"
 
 # 'patch' doesn't support binary diffs
 PATCHTOOL = "git"
