@@ -11,6 +11,7 @@ SRC_URI += "file://editor.sh"
 SRC_URI += "file://terminfo.sh"
 SRC_URI += "file://mount-helper.sh"
 SRC_URI += "file://filesystems"
+SRC_URI += "file://85-crypt.rules"
 
 hostname = "${MACHINEBUILD}"
 
