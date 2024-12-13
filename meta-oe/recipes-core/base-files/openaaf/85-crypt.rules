@@ -1,0 +1,55 @@
+##################################################################################
+# rule 1: decrypt the disk once it gets plugged in
+##################################################################################
+
+# matches partitions (there is precisely one) of block devices with the serial
+# number of my backup external hard disk
+
+ACTION=="add", SUBSYSTEM=="block", ENV{DEVTYPE}=="partition", \
+PROGRAM="/etc/udev/mount-helper.sh cryptsetup %k", ENV{CMD}="%c"
+#ACTION=="add", SUBSYSTEM=="block", ENV{DEVTYPE}=="partition", ATTRS{serial}=="12021700235388", \
+#PROGRAM="/etc/udev/crypt cryptsetup %k", ENV{CMD}="%c"
+
+ACTION=="add|change", SUBSYSTEM=="block", ENV{DM_NAME}=="sd*", \
+PROGRAM="/etc/udev/mount-helper.sh mount $env{DM_NAME}", ENV{CMD}="%c"
+#PROGRAM="/etc/udev/crypt mount $env{DM_NAME}", ENV{CMD}="%c"
+
+#RUN+="/etc/udev/mount-helper.sh"
+
+#ACTION=="add|change", SUBSYSTEM=="block", ENV{DM_NAME}=="sd*", RUN+="/bin/ln -sf /media/autofs/crypt-$env{DM_NAME} /media/$env{DM_NAME}"
+#RUN+="/etc/udev/mount-helper.sh"
+
+#ENV{TMPDEV}="%k", \
+#PROGRAM="/etc/udev/crypt %k", ENV{FSTYPE}="%c", \
+#ENV{FSTYPE}=="crypto_LUKS", \
+#RUN+="/usr/sbin/cryptsetup --key-file /home/root/keyfilesmal -S 3 luksOpen $env{DEVNAME} env{FSTYPE}"
+
+#PROGRAM="/etc/udev/crypt %k", ENV{FSTYPE}="%c", \
+#%c=="crypto_LUKS", \
+#RUN+="/usr/sbin/cryptsetup --key-file /home/root/keyfilesmal -S 3 luksOpen $env{DEVNAME} %c"
+
+
+#ENV{FSTYPE}=="crypto_LUKS", \
+#RUN+="/usr/sbin/cryptsetup --key-file /home/root/keyfilesmal -S 3 luksOpen $env{DEVNAME} ENV{FSTYPE}"
+
+#PROGRAM="/sbin/blkid /dev/%k | grep -v \'TYPE=\"swap\"\' | grep %k | sed -nr \'s/.*TYPE=\"([^\"]+)\".*/\1/p\'", ENV{FSTYPE}="%c", \
+
+#PROGRAM="/bin/echo testvar", ENV{TESTVAR}="%c", \
+#%c{2}
+#PROGRAM="/sbin/blkid /dev/%k | grep -v 'TYPE=\"swap\"' | grep %k | sed -nr 's/.*TYPE=\"([^\"]+)\".*/\1/p' > /etc/udev/cmd", ENV{FSTYPE}="%c", \
+#PROGRAM="/sbin/blkid /dev/%k | grep -v 'TYPE=\"swap\"' | grep %k | sed -nr 's/.*TYPE=\"([^\"]+)\".*/\1/p'", ENV{FSTYPE}="%c", \
+
+#PROGRAM="/bin/echo %k", ENV{TMPDEV3}="%c{1}", \
+
+#RUN+="/usr/sbin/cryptsetup --key-file /home/root/keyfilesmal -S 3 luksOpen $env{DEVNAME} ${TMPDEV2}"
+#RUN+="/usr/sbin/cryptsetup --key-file /home/root/keyfilesmal -S 3 luksOpen $env{DEVNAME} $env{TMPDEV}"
+#IMPORT{program}="/bin/sh -c '/bin/echo %k | xargs -0 printf TMPDEV2=%s'", \
+
+##################################################################################
+# rule 2: as soon as the crypt container is opened, mount the filesystem inside it
+##################################################################################
+
+# we (also) match on change because the device name is known only after some time
+#ACTION=="add|change", SUBSYSTEM=="block", ENV{DM_NAME}=="sd*", RUN+="/bin/ln -sf /media/autofs/crypt-$env{DM_NAME} /media/$env{DM_NAME}"
+#RUN+="/etc/udev/mount-helper.sh"
+

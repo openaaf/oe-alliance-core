@@ -448,9 +448,9 @@ index 1deb7d2ba7d..1a2d393e142 100644
 +#include "cores/hiplayer/HiPlayerVideo.h"
 +#include "cores/hiplayer/HiPlayerAudio.h"
 +#endif
+ #include "windowing/GraphicContext.h"
  #include "windowing/WinSystem.h"
  
- #include <chrono>
 @@ -580,14 +584,31 @@ int CSelectionStreams::CountType(StreamType type) const
  
  void CVideoPlayer::CreatePlayers()
@@ -18619,7 +18619,8 @@ index 00000000000..877323611c3
 +/** CNcomment:已经设定窗口内存模式 0xB0078005 */
 +#define HIGO_ERR_ALREADYSETMODE HIGO_DEF_ERR(HIGO_MOD_WINC, ERR_WINC_ALREADYSETMODE)
 +
-+/**Error codes of the HiGo surface module*/
++/**Error codes of the HiGo surface module*/
+
 +/** CNcomment:HiGo Cursor模块错误码 */
 +typedef enum
 +{

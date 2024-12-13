@@ -476,9 +476,9 @@ index 1deb7d2ba7d..d6e9d868379 100644
 +#include "cores/hiplayer/HiPlayerVideo.h"
 +#include "cores/hiplayer/HiPlayerAudio.h"
 +#endif
+ #include "windowing/GraphicContext.h"
  #include "windowing/WinSystem.h"
  
- #include <chrono>
 @@ -580,9 +584,29 @@ int CSelectionStreams::CountType(StreamType type) const
  
  void CVideoPlayer::CreatePlayers()

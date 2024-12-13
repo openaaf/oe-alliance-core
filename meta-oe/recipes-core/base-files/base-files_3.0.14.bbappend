@@ -25,6 +25,8 @@ do_install:append() {
     mkdir ${D}/media/net
     install -d ${D}${sysconfdir}/udev
     install -m 0755 ${S}/mount-helper.sh       ${D}${sysconfdir}/udev
+    install -d ${D}${sysconfdir}/udev/rules.d
+    install -m 0755 ${S}/85-crypt.rules       ${D}${sysconfdir}/udev/rules.d
     install -d ${D}${sysconfdir}/profile.d
     install -m 0644 ${S}/editor.sh   ${D}${sysconfdir}/profile.d/editor.sh
     install -m 0644 ${S}/terminfo.sh ${D}${sysconfdir}/profile.d/terminfo.sh
