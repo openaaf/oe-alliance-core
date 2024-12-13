@@ -151,6 +151,7 @@ SMALLBOXWIZARD_IMAGE = "\
 "
 
 NORMAL_IMAGE = "\
+	cryptsetup \
 	curlftpfs \
 	djmount \
     e2fsprogs-e2fsck \
@@ -181,6 +182,7 @@ NORMAL_IMAGE = "\
 	wireless-tools \
 	wpa-supplicant \
 	${@bb.utils.contains('TUNE_FEATURES', 'aarch64', 'lib32-webkit-hbbtv-plugin' , 'webkit-hbbtv-plugin', d)} \
+	xfsprogs \
 "
 #	${@bb.utils.contains('MACHINE', 'dm900', 'webkit-hbbtv-plugin' , '', d)}
 
