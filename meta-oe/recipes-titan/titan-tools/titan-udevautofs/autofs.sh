@@ -82,79 +82,117 @@ getlabel()
 
 case $ACTION in
 	add)
+		echo  >> $LOG
+		echo "###################" >> $LOG
+		echo "Action=$ACTION" >> $LOG
+		echo  >> $LOG
 		case $ID_FS_TYPE in
 			crypto_LUKS)
-				##crypt
-#				ACTION=="add", SUBSYSTEM=="block", ENV{DEVTYPE}=="partition", ENV{ID_FS_TYPE}=="crypto_LUKS", \
-#				RUN+="/usr/sbin/cryptsetup --key-file /mnt/crypt/partid/$env{ID_PART_ENTRY_UUID} -S 3 luksOpen $env{DEVNAME} %k"
-				#RUN+="/usr/sbin/cryptsetup --key-file /mnt/crypt/$env{ID_FS_UUID} -S 3 luksOpen $env{DEVNAME} %k"
-				echo "/usr/sbin/cryptsetup --key-file /mnt/crypt/partid/${ID_PART_ENTRY_UUID} -S 3 luksOpen ${DEVNAME} ${MDEV}"
 				echo "/usr/sbin/cryptsetup --key-file /mnt/crypt/partid/${ID_PART_ENTRY_UUID} -S 3 luksOpen ${DEVNAME} ${MDEV}" >> $LOG
 				/usr/sbin/cryptsetup --key-file /mnt/crypt/partid/${ID_PART_ENTRY_UUID} -S 3 luksOpen ${DEVNAME} ${MDEV} >> $LOG 2>&1
 				;;
 			*)
-				#usb/sata
-#				KERNEL=="sd*", SUBSYSTEM=="block", ENV{DEVTYPE}=="partition", ACTION=="add", ENV{ID_FS_TYPE}!="crypto_LUKS", \
-#				RUN+="/sbin/fsck.$env{ID_FS_TYPE} -f -p $env{DEVNAME}", \
-#				RUN+="/bin/ln -s /media/autofs/%k /media/%k"
-				#RUN+="/bin/ln -s /media/autofs/%k /media/%k-$env{ID_FS_LABEL}"
-#				echo "/sbin/fsck.${ID_FS_TYPE} -f -p ${DEVNAME}" >> $LOG
-#				/sbin/fsck.${ID_FS_TYPE} -f -p ${DEVNAME} >> $LOG 2>&1
-				echo "/sbin/fsck -f -p ${DEVNAME}"
+				LABEL=$( getlabel )
+				[ ! -e /media/usb ] && mkdir /media/usb
+				FSTYPE=${ID_FS_TYPE}
+				[[ -z $FSTYPE ]] && FSTYPE=$(blkid -o value -s TYPE ${DEVNAME})
+
+#				echo "/sbin/fsck.${FSTYPE} -f -p ${DEVNAME}" >> $LOG
+#				/sbin/fsck.${FSTYPE} -f -p ${DEVNAME} >> $LOG 2>&1
 				echo "/sbin/fsck -f -p ${DEVNAME}" >> $LOG
 				/sbin/fsck -f -p ${DEVNAME} >> $LOG 2>&1
-#				echo "/bin/ln -s /media/autofs/${MDEV} /media/${MDEV}" >> $LOG
-#				/bin/ln -s /media/autofs/${MDEV} /media/${MDEV} >> $LOG 2>&1
-				LABEL=$( getlabel )
-				echo "/bin/ln -s /media/autofs/${MDEV} /media/${LABEL}"
-				echo "/bin/ln -s /media/autofs/${MDEV} /media/${LABEL}" >> $LOG
-				/bin/ln -s /media/autofs/${MDEV} /media/${LABEL} >> $LOG 2>&1
-				startudev
+
+				echo "/bin/ln -s /media/autofs/${MDEV} /media/usb/${LABEL}" >> $LOG
+				/bin/ln -s /media/autofs/${MDEV} /media/usb/${LABEL} >> $LOG 2>&1
+
+				echo "/bin/mkdir /media/${LABEL}" >> $LOG
+				/bin/mkdir "/media/${LABEL}" >> $LOG 2>&1
+				echo "/bin/mount ${DEVNAME} /media/${LABEL}" >> $LOG
+				/bin/mount ${DEVNAME} "/media/${LABEL}" >> $LOG 2>&1
+
+				[ -L /media/hdd ] && [ ! -e $(readlink /media/hdd) ] && rm /media/hdd && rm /media/.moviedev
+				[ ! -e /media/hdd ] && [ -d "/media/${LABEL}/movie" ] && ln -s "/media/${LABEL}" /media/hdd && echo "$MDEV#$FSTYPE#$LABEL" > /media/.moviedev
+
+				[ -L /var/backup ] && [ ! -e $(readlink /var/backup) ] && rm /var/backup && rm /media/.backupdev
+				[ ! -e /var/backup ] && [ -d "/media/${LABEL}/backup" ] && ln -s "/media/${LABEL}/backup" /var/backup && echo "$MDEV#$FSTYPE#$LABEL" > /media/.backupdev
+
+				[ -L /var/swapextensions ] && [ ! -e $(readlink /var/swapextensions) ] && rm /var/swapextensions && rm /media/.swapextensionsdev
+				[ ! -e /var/swapextensions ] && [ -d "/media/${LABEL}/swapextensions" ] && ln -s "/media/${LABEL}/swapextensions" /var/swapextensions && echo "$MDEV#$FSTYPE#$LABEL" > /media/.swapextensionsdev
 				;;
 		esac
 		;;
 	change)
-		##crypt linking
-#		ACTION=="change", SUBSYSTEM=="block", ENV{DM_NAME}=="sd*", ENV{ID_FS_TYPE}!="", \
-#		RUN+="/sbin/fsck.$env{ID_FS_TYPE} -f -p $env{DEVNAME}", \
-#		RUN+="/bin/ln -s /media/autofs/crypt-$env{DM_NAME} /media/$env{DM_NAME}-$env{ID_FS_LABEL}(%k)"
-
-#		DEV=$MDEV
-#		MDEV=$1
-
-#		DEV=$MDEV
+		echo  >> $LOG
+		echo "###################" >> $LOG
+		echo "Action=$ACTION" >> $LOG
+		echo  >> $LOG
 		DEV=$1
-#		DEVDIR="/dev/mapper"
-#		MISCNAMEEXTRA="crypt-"
-		echo "/sbin/fsck.${ID_FS_TYPE} -f -p ${DEVNAME}"
-		echo "/sbin/fsck.${ID_FS_TYPE} -f -p ${DEVNAME}" >> $LOG
-		/sbin/fsck.${ID_FS_TYPE} -f -p ${DEVNAME} >> $LOG 2>&1
-		echo "/bin/ln -s /media/autofs/crypt-${DEV} /media/${DEV}-${ID_FS_LABEL}($MDEV)"
-		echo "/bin/ln -s /media/autofs/crypt-${DEV} /media/${DEV}-${ID_FS_LABEL}($MDEV)" >> $LOG
-#		/bin/ln -s /media/autofs/crypt-${DEV} "/media/${DEV}-${ID_FS_LABEL}($MDEV)" >> $LOG 2>&1	
 		LABEL=$( getlabel )
-		echo "1/bin/ln -s /media/autofs/crypt-${DEV} /media/${LABEL})"
-		echo "1/bin/ln -s /media/autofs/crypt-${DEV} /media/${LABEL})" >> $LOG
-		/bin/ln -s /media/autofs/crypt-${DEV} "/media/${LABEL}" >> $LOG 2>&1
-		startudev
+		[ ! -e /media/usb ] && mkdir /media/usb
+		FSTYPE=${ID_FS_TYPE}
+		[[ -z $FSTYPE ]] && FSTYPE=$(blkid -o value -s TYPE ${DEVNAME})
+
+#		echo "/sbin/fsck.${FSTYPE} -f -p ${DEVNAME}" >> $LOG
+#		/sbin/fsck.${FSTYPE} -f -p ${DEVNAME} >> $LOG 2>&1
+		echo "/sbin/fsck -f -p ${DEVNAME}" >> $LOG
+		/sbin/fsck -f -p ${DEVNAME} >> $LOG 2>&1
+
+		echo "/bin/ln -s /media/autofs/crypt-${DEV} /media/${LABEL})" >> $LOG
+		/bin/ln -s /media/autofs/crypt-${DEV} "/media/usb/${LABEL}" >> $LOG 2>&1
+
+		echo "/bin/mkdir /media/${LABEL}" >> $LOG
+		/bin/mkdir "/media/${LABEL}" >> $LOG 2>&1
+
+		echo "/bin/mount /dev/mapper/${DEV} /media/${LABEL}" >> $LOG
+		/bin/mount /dev/mapper/${DEV} "/media/${LABEL}" >> $LOG 2>&1
+
+		[ -L /media/hdd ] && [ ! -e $(readlink /media/hdd) ] && rm /media/hdd && rm /media/.moviedev
+		[ ! -e /media/hdd ] && [ -d "/media/${LABEL}/movie" ] && ln -s "/media/${LABEL}" /media/hdd && echo "$DEV#$FSTYPE#$LABEL" > /media/.moviedev
+
+		[ -L /var/backup ] && [ ! -e $(readlink /var/backup) ] && rm /var/backup && rm /media/.backupdev
+		[ ! -e /var/backup ] && [ -d "/media/${LABEL}/backup" ] && ln -s "/media/${LABEL}/backup" /var/backup && echo "$DEV#$FSTYPE#$LABEL" > /media/.backupdev
+
+		[ -L /var/swapextensions ] && [ ! -e $(readlink /var/swapextensions) ] && rm /var/swapextensions && rm /media/.swapextensionsdev
+		[ ! -e /var/swapextensions ] && [ -d "/media/${LABEL}/swapextensions" ] && ln -s "/media/${LABEL}/swapextensions" /var/swapextensions && echo "$DEV#$FSTYPE#$LABEL" > /media/.swapextensionsdev
 		;;
 	remove)
+		echo  >> $LOG
+		echo "###################" >> $LOG
+		echo "Action=$ACTION" >> $LOG
+		echo  >> $LOG
 		case $ID_FS_TYPE in
 			crypto_LUKS)
-				echo /usr/sbin/cryptsetup close /dev/mapper/${MDEV}
+				echo /bin/umount /media/*-${MDEV}-* >>$LOG
+				/bin/umount /media/*-${MDEV}-* >>$LOG 2>&1
+
 				echo /usr/sbin/cryptsetup close /dev/mapper/${MDEV} >>$LOG
 				/usr/sbin/cryptsetup close /dev/mapper/${MDEV} >>$LOG 2>&1
-				echo /bin/rm /media/*-${MDEV}-*
-				echo /bin/rm /media/*-${MDEV}-* >>$LOG
-				/bin/rm /media/*-${MDEV}-* >>$LOG 2>&1
+
+				echo /bin/rmdir /media/*-${MDEV}-* >>$LOG
+				/bin/rmdir /media/*-${MDEV}-* >>$LOG 2>&1
+
+				echo /bin/rm /media/usb/*-${MDEV}-* >>$LOG
+				/bin/rm /media/usb/*-${MDEV}-* >>$LOG 2>&1
+
+				[ -L /media/hdd ] && [ ! -e $(readlink /media/hdd) ] && rm /media/hdd && rm /media/.moviedev
+				[ -L /var/backup ] && [ ! -e $(readlink /var/backup) ] && rm /var/backup && rm /media/.backupdev
+				[ -L /var/swapextensions ] && [ ! -e $(readlink /var/swapextensions) ] && rm /var/swapextensions && rm /media/.swapextensionsdev
 				;;
 			*)
-				echo /bin/rm /media/*-${MDEV}-*
-				echo /bin/rm /media/*-${MDEV}-* >>$LOG
-				/bin/rm /media/*-${MDEV}-* >>$LOG 2>&1
+				echo /bin/umount /media/*-${MDEV}-* >>$LOG
+				/bin/umount /media/*-${MDEV}-* >>$LOG 2>&1
+
+				echo /bin/rmdir /media/*-${MDEV}-* >>$LOG
+				/bin/rmdir /media/*-${MDEV}-* >>$LOG 2>&1
+
+				echo /bin/rm /media/usb/*-${MDEV}-* >>$LOG
+				/bin/rm /media/usb/*-${MDEV}-* >>$LOG 2>&1
+
+				[ -L /media/hdd ] && [ ! -e $(readlink /media/hdd) ] && rm /media/hdd && rm /media/.moviedev
+				[ -L /var/backup ] && [ ! -e $(readlink /var/backup) ] && rm /var/backup && rm /media/.backupdev
+				[ -L /var/swapextensions ] && [ ! -e $(readlink /var/swapextensions) ] && rm /var/swapextensions && rm /media/.swapextensionsdev
 				;;
 		esac
-		startudev
 		;;
 esac
 
