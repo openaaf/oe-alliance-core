@@ -383,8 +383,8 @@ case $ACTION in
 ##						[ -L /media/hdd-neu ] && [ ! -e $(readlink /media/hdd-neu) ] && rm /media/hdd-neu && rm /media/.moviedev
 #						[ ! -e /media/hdd-neu ] && [ -d $MOUNTPOINT/movie ] && ln -s "/media/autofs/${MISCNAMEEXTRA}${MDEV}/movie" /media/hdd-neu && echo "$MDEV#$FSTYPE#$LABEL" > /media/.moviedev
 
-						[ -d $MOUNTPOINT/movie ] && [ -d /media/hdd ] && umount /media/hdd && rmdir /media/hdd && rm /media/.moviedev && ln -s "/media/autofs/${MISCNAMEEXTRA}${MDEV}/movie" /media/hdd && echo "$MDEV#$FSTYPE#$LABEL" > /media/.moviedev
-						[ ! -e /media/hdd ] && [ -d $MOUNTPOINT/movie ] && ln -s "/media/autofs/${MISCNAMEEXTRA}${MDEV}/movie" /media/hdd && echo "$MDEV#$FSTYPE#$LABEL" > /media/.moviedev
+						[ -d $MOUNTPOINT/movie ] && [ -d /media/hdd ] && umount /media/hdd && rmdir /media/hdd && rm /media/.moviedev && ln -s "/media/autofs/${MISCNAMEEXTRA}${MDEV}" /media/hdd && echo "$MDEV#$FSTYPE#$LABEL" > /media/.moviedev
+						[ ! -e /media/hdd ] && [ -d $MOUNTPOINT/movie ] && ln -s "/media/autofs/${MISCNAMEEXTRA}${MDEV}" /media/hdd && echo "$MDEV#$FSTYPE#$LABEL" > /media/.moviedev
 
 #						[ -L /var/backup ] && [ ! -e $(readlink /var/backup) ] && rm /var/backup && rm /media/.backupdev
 						[ ! -e /var/backup ] && [ -d $MOUNTPOINT/backup ] && ln -s "/media/autofs/${MISCNAMEEXTRA}${MDEV}/backup" /var/backup && echo "$MDEV#$FSTYPE#$LABEL" > /media/.backupdev

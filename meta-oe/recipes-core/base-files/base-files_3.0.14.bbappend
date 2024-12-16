@@ -11,7 +11,7 @@ SRC_URI += "file://editor.sh"
 SRC_URI += "file://terminfo.sh"
 SRC_URI += "file://mount-helper.sh"
 SRC_URI += "file://filesystems"
-SRC_URI += "file://85-crypt.rules"
+SRC_URI += "file://85-autofs.rules"
 
 hostname = "${MACHINEBUILD}"
 
@@ -26,8 +26,10 @@ do_install:append() {
     mkdir ${D}/media/net
     install -d ${D}${sysconfdir}/udev
     install -m 0755 ${S}/mount-helper.sh       ${D}${sysconfdir}/udev
-    install -d ${D}${sysconfdir}/udev/rules.d
-    install -m 0755 ${S}/85-crypt.rules       ${D}${sysconfdir}/udev/rules.d
+    if ${@bb.utils.contains_any('DISTRO_NAME','openaaf','true','false',d)}; then
+	    install -d ${D}${sysconfdir}/udev/rules.d
+	    install -m 0755 ${S}/85-autofs.rules       ${D}${sysconfdir}/udev/rules.d
+    fi 
     install -d ${D}${sysconfdir}/profile.d
     install -m 0644 ${S}/editor.sh   ${D}${sysconfdir}/profile.d/editor.sh
     install -m 0644 ${S}/terminfo.sh ${D}${sysconfdir}/profile.d/terminfo.sh
