@@ -172,6 +172,7 @@ NORMAL_IMAGE = "\
 	packagegroup-base-smbfs-server \
    	packagegroup-base-smbfs-utils \
    	packagegroup-base-nfs \
+	rsync \
 	samba \
     sdparm \
 	smbclient \
