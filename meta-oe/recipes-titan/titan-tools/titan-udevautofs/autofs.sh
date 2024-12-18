@@ -80,16 +80,38 @@ getlabel()
 	echo $LABEL
 }
 
+ACTION=add
 case $ACTION in
 	add)
 		echo  >> $LOG
 		echo "###################" >> $LOG
 		echo "Action=$ACTION" >> $LOG
 		echo  >> $LOG
+
 		case $ID_FS_TYPE in
 			crypto_LUKS)
-				echo "/usr/sbin/cryptsetup --key-file /mnt/crypt/partid/${ID_PART_ENTRY_UUID} -S 3 luksOpen ${DEVNAME} ${MDEV}" >> $LOG
-				/usr/sbin/cryptsetup --key-file /mnt/crypt/partid/${ID_PART_ENTRY_UUID} -S 3 luksOpen ${DEVNAME} ${MDEV} >> $LOG 2>&1
+#				echo "/usr/sbin/cryptsetup --key-file /mnt/crypt/partid/${ID_PART_ENTRY_UUID} -S 3 luksOpen ${DEVNAME} ${MDEV}" >> $LOG
+#				/usr/sbin/cryptsetup --key-file /mnt/crypt/partid/${ID_PART_ENTRY_UUID} -S 3 luksOpen ${DEVNAME} ${MDEV} >> $LOG 2>&1
+				echo "ifup eth0" >> $LOG
+				ifup eth0 >> $LOG 2>&1
+				user=$(cat /proc/stb/info/boxtype)_$(ifconfig | sed 's/^$/#/g' | tr '\n' ' ' | tr '#' '\n' | grep inet | grep Bcast | awk '{print $7}' | cut -d":" -f2 | cut -d"." -f4)
+				echo "user $user" >> $LOG
+				[ -e /sys/class/net/eth0/address ] && pass=$(cat /sys/class/net/eth0/address | md5sum | awk '{ print $1 }')
+				[ -e /proc/stb/info/sn ] && pass=$(cat /proc/stb/info/sn | md5sum | awk '{ print $1 }')
+				echo "pass $pass" >> $LOG
+				ip=$(route -n | grep -v 'default\|Destination\|Kernel' | awk '{ print $2}' | head -n1)
+				echo ip $ip >> $LOG
+				echo pwd
+				pwd >> $LOG 2>&1
+				echo "wget ftp://$user:$pass@$ip/Dokumente/crypt/partid/${ID_PART_ENTRY_UUID}" >> $LOG
+				wget ftp://$user:$pass@$ip/Dokumente/crypt/partid/${ID_PART_ENTRY_UUID} >> $LOG 2>&1
+
+				[ -e /mnt/crypt/partid/${ID_PART_ENTRY_UUID} ] && ID_PART_ENTRY_UUID="/mnt/crypt/partid/${ID_PART_ENTRY_UUID}"
+				echo "/usr/sbin/cryptsetup --key-file ${ID_PART_ENTRY_UUID} -S 3 luksOpen ${DEVNAME} ${MDEV}" >> $LOG
+				echo ID_PART_ENTRY_UUID ${ID_PART_ENTRY_UUID} >> $LOG
+				/usr/sbin/cryptsetup --key-file ${ID_PART_ENTRY_UUID} -S 3 luksOpen ${DEVNAME} ${MDEV} >> $LOG 2>&1
+				[ /mnt/crypt/partid/${ID_PART_ENTRY_UUID} ] rm ${ID_PART_ENTRY_UUID}
+				[ $(echo ${ID_PART_ENTRY_UUID} | grep ^/ | wc -l) -eq 0 ] && echo rm ${ID_PART_ENTRY_UUID} >> $LOG && rm ${ID_PART_ENTRY_UUID}
 				;;
 			*)
 				LABEL=$( getlabel )
