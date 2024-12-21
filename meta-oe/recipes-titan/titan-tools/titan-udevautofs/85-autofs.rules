@@ -2,6 +2,6 @@
 # udev - autofs rules with crypt support by obi
 #
 
-ACTION=="add", KERNEL=="sd*", SUBSYSTEM=="block", ENV{DEVTYPE}=="partition", RUN+="/etc/udev/autofs.sh %k"
+ACTION=="add", KERNEL=="sd*", SUBSYSTEM=="block", RUN+="/etc/udev/autofs.sh %k"
 ACTION=="change", SUBSYSTEM=="block", ENV{DM_NAME}=="sd*", ENV{ID_FS_TYPE}!="", RUN+="/etc/udev/autofs.sh $env{DM_NAME}"
-ACTION=="remove", SUBSYSTEM=="block", ENV{DEVTYPE}=="partition", RUN+="/etc/udev/autofs.sh %k"
+ACTION=="remove", SUBSYSTEM=="block", RUN+="/etc/udev/autofs.sh %k"

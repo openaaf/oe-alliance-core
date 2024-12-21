@@ -1,18 +1,22 @@
 #!/bin/sh
 #
 
+startconfig=/mnt/config/start-config
+if [ ! -e "$startconfig" ]; then startconfig="/etc/titan.restore/mnt/config/start-config"; fi
+
+. $startconfig
 . /sbin/start-function
+
+# (e)udev compatibility
+[[ -z $MDEV ]] && MDEV=$(basename $DEVNAME)
 
 if [ -e /etc/.debug ];then
 	LOGDIR="/home/root/logs"
 	[ ! -e "$LOGDIR" ] && mkdir -p "$LOGDIR"
-	LOG="$LOGDIR/udev-autofs.log"
+	LOG="$LOGDIR/udev-autofs.$MDEV.log"
 else
 	LOG=/dev/null
 fi
-
-# (e)udev compatibility
-[[ -z $MDEV ]] && MDEV=$(basename $DEVNAME)
 
 BLACKLISTED="mmcblk0"
 FIRST_MEDIA="hdd"
@@ -73,14 +77,14 @@ getlabel()
 			;;
 	esac
 
-	case ${ACTION} in
-		"")	LABEL="${LABEL}";;
-		*)	LABEL="${LABEL}-(${ACTION})";;
-	esac
+#	case ${ACTION} in
+#		"")	LABEL="${LABEL}";;
+#		*)	LABEL="${LABEL}-(${ACTION})";;
+#	esac
 	echo $LABEL
 }
 
-ACTION=add
+#ACTION=add
 case $ACTION in
 	add)
 		echo  >> $LOG
@@ -89,7 +93,7 @@ case $ACTION in
 		echo  >> $LOG
 
 		case $ID_FS_TYPE in
-			crypto_LUKS)
+			crypto_LUKS_old)
 #				echo "/usr/sbin/cryptsetup --key-file /mnt/crypt/partid/${ID_PART_ENTRY_UUID} -S 3 luksOpen ${DEVNAME} ${MDEV}" >> $LOG
 #				/usr/sbin/cryptsetup --key-file /mnt/crypt/partid/${ID_PART_ENTRY_UUID} -S 3 luksOpen ${DEVNAME} ${MDEV} >> $LOG 2>&1
 				echo "ifup eth0" >> $LOG
@@ -113,19 +117,49 @@ case $ACTION in
 				[ /mnt/crypt/partid/${ID_PART_ENTRY_UUID} ] rm ${ID_PART_ENTRY_UUID}
 				[ $(echo ${ID_PART_ENTRY_UUID} | grep ^/ | wc -l) -eq 0 ] && echo rm ${ID_PART_ENTRY_UUID} >> $LOG && rm ${ID_PART_ENTRY_UUID}
 				;;
-			*)
+			crypto_LUKS)
+#				echo "/usr/sbin/cryptsetup --key-file /mnt/crypt/partid/${ID_PART_ENTRY_UUID} -S 3 luksOpen ${DEVNAME} ${MDEV}" >> $LOG
+#				/usr/sbin/cryptsetup --key-file /mnt/crypt/partid/${ID_PART_ENTRY_UUID} -S 3 luksOpen ${DEVNAME} ${MDEV} >> $LOG 2>&1
+				echo "ifup eth0" >> $LOG
+				ifup eth0 >> $LOG 2>&1
+				user=$(cat /proc/stb/info/boxtype)_$(ifconfig | sed 's/^$/#/g' | tr '\n' ' ' | tr '#' '\n' | grep inet | grep Bcast | awk '{print $7}' | cut -d":" -f2 | cut -d"." -f4)
+#				echo "user $user" >> $LOG
+				[ -e /sys/class/net/eth0/address ] && pass=$(cat /sys/class/net/eth0/address | md5sum | awk '{ print $1 }')
+				[ -e /proc/stb/info/sn ] && pass=$(cat /proc/stb/info/sn | md5sum | awk '{ print $1 }')
+#				echo "pass $pass" >> $LOG
+				ip=$(route -n | grep -v 'default\|Destination\|Kernel' | awk '{ print $2}' | head -n1)
+#				echo ip $ip >> $LOG
+#				echo pwd
+				pwd >> $LOG 2>&1
+#				echo "wget ftp://$user:$pass@$ip/Dokumente/${ID_FS_UUID}" >> $LOG
+				wget ftp://$user:$pass@$ip/Dokumente/crypt/${ID_FS_UUID} >> $LOG 2>&1
+
+#				[ -e /mnt/crypt/${ID_FS_UUID} ] && ID_FS_UUID="/mnt/crypt/${ID_FS_UUID}"
+#				echo ID_FS_UUID ${ID_FS_UUID} >> $LOG
+				echo "/usr/sbin/cryptsetup --key-file ${ID_FS_UUID} -S 2 luksOpen ${DEVNAME} ${MDEV}" >> $LOG
+				/usr/sbin/cryptsetup --key-file ${ID_FS_UUID} -S 2 luksOpen ${DEVNAME} ${MDEV} >> $LOG 2>&1
+#				[ ${ID_FS_UUID} ] rm ${ID_FS_UUID}
+				[ -e ${ID_FS_UUID} ] rm ${ID_FS_UUID}
+#				[ -e /mnt/crypt/${ID_FS_UUID} ] rm ${ID_FS_UUID}
+#				[ $(echo ${ID_FS_UUID} | grep ^/ | wc -l) -eq 0 ] && echo rm ${ID_FS_UUID} >> $LOG && rm ${ID_FS_UUID}}
+				;;
+			ext2|ext3|ext4|xfs|jfs)
 				LABEL=$( getlabel )
+				echo "LABEL ${LABEL}" >> $LOG
+
 				[ ! -e /media/usb ] && mkdir /media/usb
 				FSTYPE=${ID_FS_TYPE}
 				[[ -z $FSTYPE ]] && FSTYPE=$(blkid -o value -s TYPE ${DEVNAME})
-
-#				echo "/sbin/fsck.${FSTYPE} -f -p ${DEVNAME}" >> $LOG
-#				/sbin/fsck.${FSTYPE} -f -p ${DEVNAME} >> $LOG 2>&1
-				echo "/sbin/fsck -f -p ${DEVNAME}" >> $LOG
-				/sbin/fsck -f -p ${DEVNAME} >> $LOG 2>&1
-
-				echo "/bin/ln -s /media/autofs/${MDEV} /media/usb/${LABEL}" >> $LOG
-				/bin/ln -s /media/autofs/${MDEV} /media/usb/${LABEL} >> $LOG 2>&1
+				echo "FSTYPE ${FSTYPE}" >> $LOG
+				case $autofsck in
+					y)
+		#				echo "/sbin/fsck.${FSTYPE} -f -p ${DEVNAME}" >> $LOG
+		#				/sbin/fsck.${FSTYPE} -f -p ${DEVNAME} >> $LOG 2>&1
+						echo "/sbin/fsck -C -f -p ${DEVNAME}" >> $LOG
+						/sbin/fsck -C -f -p ${DEVNAME} >> $LOG 2>&1
+				esac
+				echo "/bin/ln -s /media/autofs/crypt-${DEV} /media/usb/${LABEL})" >> $LOG
+				/bin/ln -s /media/autofs/crypt-${DEV} "/media/usb/${LABEL}" >> $LOG 2>&1
 
 				echo "/bin/mkdir /media/${LABEL}" >> $LOG
 				/bin/mkdir "/media/${LABEL}" >> $LOG 2>&1
@@ -150,17 +184,23 @@ case $ACTION in
 		echo  >> $LOG
 		DEV=$1
 		LABEL=$( getlabel )
+		echo "LABEL ${LABEL}" >> $LOG
+
 		[ ! -e /media/usb ] && mkdir /media/usb
 		FSTYPE=${ID_FS_TYPE}
 		[[ -z $FSTYPE ]] && FSTYPE=$(blkid -o value -s TYPE ${DEVNAME})
-
-#		echo "/sbin/fsck.${FSTYPE} -f -p ${DEVNAME}" >> $LOG
-#		/sbin/fsck.${FSTYPE} -f -p ${DEVNAME} >> $LOG 2>&1
-		echo "/sbin/fsck -f -p ${DEVNAME}" >> $LOG
-		/sbin/fsck -f -p ${DEVNAME} >> $LOG 2>&1
-
-		echo "/bin/ln -s /media/autofs/crypt-${DEV} /media/${LABEL})" >> $LOG
-		/bin/ln -s /media/autofs/crypt-${DEV} "/media/usb/${LABEL}" >> $LOG 2>&1
+		echo "FSTYPE ${FSTYPE}" >> $LOG
+		case $autofsck in
+			y)
+#				echo "/sbin/fsck.${FSTYPE} -f -p ${DEVNAME}" >> $LOG
+#				/sbin/fsck.${FSTYPE} -f -p ${DEVNAME} >> $LOG 2>&1
+				echo "/sbin/fsck -C -f -p ${DEVNAME}" >> $LOG
+				/sbin/fsck -C -f -p ${DEVNAME} >> $LOG 2>&1
+#			;;
+		esac
+#		;;
+		echo "/bin/ln -s /media/autofs/${DEV} /media/usb/${LABEL})" >> $LOG
+		/bin/ln -s /media/autofs/${DEV} "/media/usb/${LABEL}" >> $LOG 2>&1
 
 		echo "/bin/mkdir /media/${LABEL}" >> $LOG
 		/bin/mkdir "/media/${LABEL}" >> $LOG 2>&1
@@ -182,10 +222,11 @@ case $ACTION in
 		echo "###################" >> $LOG
 		echo "Action=$ACTION" >> $LOG
 		echo  >> $LOG
+		echo "ID_FS_TYPE ${ID_FS_TYPE}" >> $LOG
 		case $ID_FS_TYPE in
 			crypto_LUKS)
-				echo /bin/umount /media/*-${MDEV}-* >>$LOG
-				/bin/umount /media/*-${MDEV}-* >>$LOG 2>&1
+				echo /bin/umount "/media/*-${MDEV}-*" >>$LOG
+				/bin/umount "/media/*-${MDEV}-*" >>$LOG 2>&1
 
 				echo /usr/sbin/cryptsetup close /dev/mapper/${MDEV} >>$LOG
 				/usr/sbin/cryptsetup close /dev/mapper/${MDEV} >>$LOG 2>&1
