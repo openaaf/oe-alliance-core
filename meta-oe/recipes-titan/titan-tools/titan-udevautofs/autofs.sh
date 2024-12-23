@@ -77,6 +77,7 @@ getlabel()
 			;;
 	esac
 
+#	showaction=1
 #	case ${ACTION} in
 #		"")	LABEL="${LABEL}";;
 #		*)	LABEL="${LABEL}-(${ACTION})";;
@@ -98,14 +99,14 @@ case $ACTION in
 				ifup eth0 >> $LOG 2>&1
 				user=$(cat /proc/stb/info/boxtype)_$(ifconfig | sed 's/^$/#/g' | tr '\n' ' ' | tr '#' '\n' | grep inet | grep Bcast | awk '{print $7}' | cut -d":" -f2 | cut -d"." -f4)
 				echo "user $user" >> $LOG
-				[ -e /sys/class/net/eth0/address ] && pass=$(cat /sys/class/net/eth0/address | md5sum | awk '{ print $1 }')
-				[ -e /proc/stb/info/sn ] && pass=$(cat /proc/stb/info/sn | md5sum | awk '{ print $1 }')
+				echo cat /sys/class/net/eth0/address >> $LOG
+				cat /sys/class/net/eth0/address >> $LOG 2>&1
+				[ -e /sys/class/net/eth0/address ] && pass=$(cat /sys/class/net/eth0/address | tr -d ":" | md5sum | awk '{ print $1 }')
 				echo "pass $pass" >> $LOG
 				ip=$(route -n | grep -v 'default\|Destination\|Kernel' | awk '{ print $2}' | head -n1)
 				echo ip $ip >> $LOG
 				echo pwd
 				pwd >> $LOG 2>&1
-#				echo "wget ftp://$user:$pass@$ip/Dokumente/${ID_FS_UUID}" >> $LOG
 				wget ftp://$user:$pass@$ip/Dokumente/crypt/${ID_FS_UUID} >> $LOG 2>&1
 				echo "/usr/sbin/cryptsetup --debug --key-file ${ID_FS_UUID} -S 2 luksOpen ${DEVNAME} ${MDEV}" >> $LOG
 				/usr/sbin/cryptsetup --debug --key-file ${ID_FS_UUID} -S 2 luksOpen ${DEVNAME} ${MDEV} >> $LOG 2>&1
@@ -196,8 +197,8 @@ case $ACTION in
 		echo "ID_FS_TYPE ${ID_FS_TYPE}" >> $LOG
 		case $ID_FS_TYPE in
 			crypto_LUKS)
-				echo /bin/umount "/media/*-${MDEV}-*" >>$LOG
-				/bin/umount /media/*-${MDEV}-* >>$LOG 2>&1
+				echo /bin/umount -fl "/media/*-${MDEV}-*" >>$LOG
+				/bin/umount -fl /media/*-${MDEV}-* >>$LOG 2>&1
 
 				echo /usr/sbin/cryptsetup close /dev/mapper/${MDEV} >>$LOG
 				/usr/sbin/cryptsetup close /dev/mapper/${MDEV} >>$LOG 2>&1
@@ -213,15 +214,25 @@ case $ACTION in
 				[ -L /var/swapextensions ] && [ ! -e $(readlink /var/swapextensions) ] && rm /var/swapextensions && rm /media/.swapextensionsdev
 				;;
 			*)
-				echo /bin/umount /media/*-${MDEV}-* >>$LOG
-				/bin/umount /media/*-${MDEV}-* >>$LOG 2>&1
+				if [ -z "$showaction" ];then
+					echo /bin/umount -fl /media/*-${MDEV} >>$LOG
+					/bin/umount -fl /media/*-${MDEV} >>$LOG 2>&1
 
-				echo /bin/rmdir /media/*-${MDEV}-* >>$LOG
-				/bin/rmdir /media/*-${MDEV}-* >>$LOG 2>&1
+					echo /bin/rmdir /media/*-${MDEV} >>$LOG
+					/bin/rmdir /media/*-${MDEV} >>$LOG 2>&1
 
-				echo /bin/rm /media/usb/*-${MDEV}-* >>$LOG
-				/bin/rm /media/usb/*-${MDEV}-* >>$LOG 2>&1
+					echo /bin/rm /media/usb/*-${MDEV} >>$LOG
+					/bin/rm /media/usb/*-${MDEV} >>$LOG 2>&1
+				else
+					echo /bin/umount -fl /media/*-${MDEV}-* >>$LOG
+					/bin/umount -fl /media/*-${MDEV}-* >>$LOG 2>&1
 
+					echo /bin/rmdir /media/*-${MDEV}-* >>$LOG
+					/bin/rmdir /media/*-${MDEV}-* >>$LOG 2>&1
+
+					echo /bin/rm /media/usb/*-${MDEV}-* >>$LOG
+					/bin/rm /media/usb/*-${MDEV}-* >>$LOG 2>&1
+				fi
 				[ -L /media/hdd ] && [ ! -e $(readlink /media/hdd) ] && rm /media/hdd && rm /media/.moviedev
 				[ -L /var/backup ] && [ ! -e $(readlink /var/backup) ] && rm /var/backup && rm /media/.backupdev
 				[ -L /var/swapextensions ] && [ ! -e $(readlink /var/swapextensions) ] && rm /var/swapextensions && rm /media/.swapextensionsdev
