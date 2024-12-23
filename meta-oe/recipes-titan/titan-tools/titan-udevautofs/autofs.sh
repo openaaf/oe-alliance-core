@@ -76,6 +76,7 @@ getlabel()
 			esac
 			;;
 	esac
+	echo $LABEL
 }
 
 #ACTION=add
