@@ -76,13 +76,6 @@ getlabel()
 			esac
 			;;
 	esac
-
-#	showaction=1
-#	case ${ACTION} in
-#		"")	LABEL="${LABEL}";;
-#		*)	LABEL="${LABEL}-(${ACTION})";;
-#	esac
-	echo $LABEL
 }
 
 #ACTION=add
@@ -214,25 +207,14 @@ case $ACTION in
 				[ -L /var/swapextensions ] && [ ! -e $(readlink /var/swapextensions) ] && rm /var/swapextensions && rm /media/.swapextensionsdev
 				;;
 			*)
-				if [ -z "$showaction" ];then
-					echo /bin/umount -fl /media/*-${MDEV} >>$LOG
-					/bin/umount -fl /media/*-${MDEV} >>$LOG 2>&1
+				echo /bin/umount -fl /media/*-${MDEV} >>$LOG
+				/bin/umount -fl /media/*-${MDEV} >>$LOG 2>&1
 
-					echo /bin/rmdir /media/*-${MDEV} >>$LOG
-					/bin/rmdir /media/*-${MDEV} >>$LOG 2>&1
+				echo /bin/rmdir /media/*-${MDEV} >>$LOG
+				/bin/rmdir /media/*-${MDEV} >>$LOG 2>&1
 
-					echo /bin/rm /media/usb/*-${MDEV} >>$LOG
-					/bin/rm /media/usb/*-${MDEV} >>$LOG 2>&1
-				else
-					echo /bin/umount -fl /media/*-${MDEV}-* >>$LOG
-					/bin/umount -fl /media/*-${MDEV}-* >>$LOG 2>&1
-
-					echo /bin/rmdir /media/*-${MDEV}-* >>$LOG
-					/bin/rmdir /media/*-${MDEV}-* >>$LOG 2>&1
-
-					echo /bin/rm /media/usb/*-${MDEV}-* >>$LOG
-					/bin/rm /media/usb/*-${MDEV}-* >>$LOG 2>&1
-				fi
+				echo /bin/rm /media/usb/*-${MDEV} >>$LOG
+				/bin/rm /media/usb/*-${MDEV} >>$LOG 2>&1
 				[ -L /media/hdd ] && [ ! -e $(readlink /media/hdd) ] && rm /media/hdd && rm /media/.moviedev
 				[ -L /var/backup ] && [ ! -e $(readlink /var/backup) ] && rm /var/backup && rm /media/.backupdev
 				[ -L /var/swapextensions ] && [ ! -e $(readlink /var/swapextensions) ] && rm /var/swapextensions && rm /media/.swapextensionsdev
