@@ -108,10 +108,15 @@ case $ACTION in
 #				echo "wget ftp://$user:$pass@$ip/Dokumente/${ID_FS_UUID}" >> $LOG
 				wget ftp://$user:$pass@$ip/Dokumente/crypt/${ID_FS_UUID} >> $LOG 2>&1
 				echo "/usr/sbin/cryptsetup --key-file ${ID_FS_UUID} -S 2 luksOpen ${DEVNAME} ${MDEV}" >> $LOG
-				/usr/sbin/cryptsetup --key-file ${ID_FS_UUID} -S 2 luksOpen ${DEVNAME} ${MDEV} >> $LOG 2>&1
+				/usr/sbin/cryptsetup -v --key-file ${ID_FS_UUID} -S 2 luksOpen ${DEVNAME} ${MDEV} >> $LOG 2>&1
 				rm ${ID_FS_UUID}
 				;;
-			ext2|ext3|ext4|xfs|jfs)
+			"")
+				FSTYPE=${ID_FS_TYPE}
+				[[ -z $FSTYPE ]] && FSTYPE=$(blkid -o value -s TYPE ${DEVNAME})
+				echo "FSTYPE: ${FSTYPE} ID_FS_TYPE: ${ID_FS_TYPE} no filesystem found" >> $LOG
+				;;
+			*)
 				LABEL=$( getlabel )
 				echo "LABEL ${LABEL}" >> $LOG
 
@@ -126,8 +131,8 @@ case $ACTION in
 						echo "/sbin/fsck -C -f -p ${DEVNAME}" >> $LOG
 						/sbin/fsck -C -f -p ${DEVNAME} >> $LOG 2>&1
 				esac
-				echo "/bin/ln -s /media/autofs/crypt-${DEV} /media/usb/${LABEL})" >> $LOG
-				/bin/ln -s /media/autofs/crypt-${DEV} "/media/usb/${LABEL}" >> $LOG 2>&1
+				echo "/bin/ln -s /media/autofs/${MDEV} /media/usb/${LABEL}" >> $LOG
+				/bin/ln -s /media/autofs/${MDEV} "/media/usb/${LABEL}" >> $LOG 2>&1
 
 				echo "/bin/mkdir /media/${LABEL}" >> $LOG
 				/bin/mkdir "/media/${LABEL}" >> $LOG 2>&1
@@ -165,8 +170,8 @@ case $ACTION in
 				echo "/sbin/fsck -C -f -p ${DEVNAME}" >> $LOG
 				/sbin/fsck -C -f -p ${DEVNAME} >> $LOG 2>&1
 		esac
-		echo "/bin/ln -s /media/autofs/${DEV} /media/usb/${LABEL})" >> $LOG
-		/bin/ln -s /media/autofs/${DEV} "/media/usb/${LABEL}" >> $LOG 2>&1
+		echo "/bin/ln -s /media/autofs/crypt-${DEV} /media/usb/${LABEL}" >> $LOG
+		/bin/ln -s /media/autofs/crypt-${DEV} "/media/usb/${LABEL}" >> $LOG 2>&1
 
 		echo "/bin/mkdir /media/${LABEL}" >> $LOG
 		/bin/mkdir "/media/${LABEL}" >> $LOG 2>&1
