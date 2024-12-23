@@ -107,8 +107,8 @@ case $ACTION in
 				pwd >> $LOG 2>&1
 #				echo "wget ftp://$user:$pass@$ip/Dokumente/${ID_FS_UUID}" >> $LOG
 				wget ftp://$user:$pass@$ip/Dokumente/crypt/${ID_FS_UUID} >> $LOG 2>&1
-				echo "/usr/sbin/cryptsetup --key-file ${ID_FS_UUID} -S 2 luksOpen ${DEVNAME} ${MDEV}" >> $LOG
-				/usr/sbin/cryptsetup -v --key-file ${ID_FS_UUID} -S 2 luksOpen ${DEVNAME} ${MDEV} >> $LOG 2>&1
+				echo "/usr/sbin/cryptsetup --debug --key-file ${ID_FS_UUID} -S 2 luksOpen ${DEVNAME} ${MDEV}" >> $LOG
+				/usr/sbin/cryptsetup --debug --key-file ${ID_FS_UUID} -S 2 luksOpen ${DEVNAME} ${MDEV} >> $LOG 2>&1
 				rm ${ID_FS_UUID}
 				;;
 			"")
@@ -197,7 +197,7 @@ case $ACTION in
 		case $ID_FS_TYPE in
 			crypto_LUKS)
 				echo /bin/umount "/media/*-${MDEV}-*" >>$LOG
-				/bin/umount "/media/*-${MDEV}-*" >>$LOG 2>&1
+				/bin/umount /media/*-${MDEV}-* >>$LOG 2>&1
 
 				echo /usr/sbin/cryptsetup close /dev/mapper/${MDEV} >>$LOG
 				/usr/sbin/cryptsetup close /dev/mapper/${MDEV} >>$LOG 2>&1
