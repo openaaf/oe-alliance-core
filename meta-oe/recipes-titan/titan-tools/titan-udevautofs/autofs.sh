@@ -20,6 +20,7 @@ fi
 
 BLACKLISTED="mmcblk0"
 FIRST_MEDIA="hdd"
+EXTRA=""
 
 ## device information log
 echo  >> $LOG
@@ -67,19 +68,114 @@ getlabel()
 		"")	if [ $(echo "${MDEV}" | grep "mmcblk0" | wc -l) -eq 1 ];then 
 				LABEL="FLASH-${MDEV}"
 			else
-				LABEL="NONLABEL-${MDEV}"
+				case ${DM_NAME} in
+					"")	LABEL="NONLABEL-${MDEV}";;
+					*)	LABEL="NONLABEL-${DM_NAME}-(${MDEV})";;
+				esac
 			fi
 			;;
-		*)	case ${DEV} in
+		*)	case ${DM_NAME} in
 				"")	LABEL="${LABEL}-${MDEV}";;
-				*)	LABEL="${LABEL}-${DEV}-(${MDEV})";;
+				*)	LABEL="${LABEL}-${DM_NAME}-(${MDEV})";;
 			esac
 			;;
 	esac
 	echo $LABEL
 }
 
-#ACTION=add
+
+usescript()
+{
+
+	MDEV=${1}
+	AUTOFS=${2}
+	DEVNAME=${3}
+	FSTYPE=${4}
+	LABEL=${5}
+	EXTRA=${6}
+
+	SCRIPTDIR="/media/.script"
+	[ ! -e "$SCRIPTDIR" ] && mkdir -p "$SCRIPTDIR"
+	SCRIPT=/media/.script/${MDEV}
+
+	echo "#!/bin/bash" > $SCRIPT
+	echo "#" >> $SCRIPT
+	echo "" >> $SCRIPT
+	echo "case $autofsck in" >> $SCRIPT
+	echo "	y)" >> $SCRIPT
+	echo "		case ${FSTYPE} in" >> $SCRIPT
+	echo "			\"ntfs\")	echo Found NTFS skip filesystem check;;" >> $SCRIPT
+	echo "			*)" >> $SCRIPT
+	echo "#				echo \"/sbin/fsck.${FSTYPE} -f -p ${DEVNAME}\" >> $LOG" >> $SCRIPT
+	echo "#				/sbin/fsck.${FSTYPE} -f -p ${DEVNAME} >> $LOG 2>&1" >> $SCRIPT
+	echo "				echo \"/sbin/fsck -C -f -p ${DEVNAME}\" >> $LOG" >> $SCRIPT
+	echo "				/sbin/fsck -C -f -p ${DEVNAME} >> $LOG 2>&1" >> $SCRIPT
+	echo "		esac" >> $SCRIPT
+	echo "esac" >> $SCRIPT
+	echo "echo \"/bin/ln -s /media/autofs/${AUTOFS} /media/usb/${LABEL}\" >> $LOG" >> $SCRIPT
+	echo "/bin/ln -s /media/autofs/${AUTOFS} \"/media/usb/${LABEL}\" >> $LOG 2>&1" >> $SCRIPT
+	echo "" >> $SCRIPT
+	echo "echo \"/bin/mkdir /media/${LABEL}\" >> $LOG" >> $SCRIPT
+	echo "/bin/mkdir \"/media/${LABEL}\" >> $LOG 2>&1" >> $SCRIPT
+	echo "echo \"/bin/mount ${DEVNAME} /media/${LABEL}\" >> $LOG" >> $SCRIPT
+	echo "/bin/mount ${DEVNAME} \"/media/${LABEL}\" >> $LOG 2>&1" >> $SCRIPT
+	echo "" >> $SCRIPT
+	echo "[ -L /media/hdd ] && [ ! -e $(readlink /media/hdd) ] && rm /media/hdd && rm /media/.moviedev" >> $SCRIPT
+	echo "[ ! -e /media/hdd ] && [ -d \"/media/${LABEL}/movie\" ] && ln -s \"/media/${LABEL}\" /media/hdd && echo \"$MDEV#$FSTYPE#$LABEL\" > /media/.moviedev" >> $SCRIPT
+	echo "" >> $SCRIPT
+	echo "[ -L /var/backup ] && [ ! -e $(readlink /var/backup) ] && rm /var/backup && rm /media/.backupdev" >> $SCRIPT
+	echo "[ ! -e /var/backup ] && [ -d \"/media/${LABEL}/backup\" ] && ln -s \"/media/${LABEL}/backup\" /var/backup && echo \"$MDEV#$FSTYPE#$LABEL\" > /media/.backupdev" >> $SCRIPT
+	echo "" >> $SCRIPT
+	echo "[ -L /var/swapextensions ] && [ ! -e $(readlink /var/swapextensions) ] && rm /var/swapextensions && rm /media/.swapextensionsdev" >> $SCRIPT
+	echo "[ ! -e /var/swapextensions ] && [ -d \"/media/${LABEL}/swapextensions\" ] && ln -s \"/media/${LABEL}/swapextensions\" /var/swapextensions && echo \"$MDEV#$FSTYPE#$LABEL\" > /media/.swapextensionsdev" >> $SCRIPT
+
+	chmod 755 $SCRIPT
+	if [ -z ${EXTRA} ];then
+		$SCRIPT ${EXTRA}
+	else
+		$SCRIPT &
+	fi
+}
+
+usecommand()
+{
+	MDEV=${1}
+	AUTOFS=${2}
+	DEVNAME=${3}
+	FSTYPE=${4}
+	LABEL=${5}
+	EXTRA=${6}
+
+	case $autofsck in
+		y)
+			case ${FSTYPE} in
+				"ntfs")	echo Found NTFS skip filesystem check;;
+				*)
+#					echo "/sbin/fsck.${FSTYPE} -f -p ${DEVNAME}" >> $LOG
+#					/sbin/fsck.${FSTYPE} -f -p ${DEVNAME} >> $LOG 2>&1
+					echo "/sbin/fsck -C -f -p ${DEVNAME}" >> $LOG
+					/sbin/fsck -C -f -p ${DEVNAME} >> $LOG 2>&1
+			esac
+	esac
+	echo /bin/ln -s /media/autofs/${AUTOFS} /media/usb/${LABEL} >> $LOG
+	/bin/ln -s /media/autofs/${AUTOFS} "/media/usb/${LABEL}" >> $LOG 2>&1
+
+	echo /bin/mkdir /media/${LABEL} >> $LOG
+	/bin/mkdir "/media/${LABEL}" >> $LOG 2>&1
+
+	echo /bin/mount ${DEVNAME} /media/${LABEL} >> $LOG
+	/bin/mount ${DEVNAME} "/media/${LABEL}" >> $LOG 2>&1
+
+	[ -L /media/hdd ] && [ ! -e $(readlink /media/hdd) ] && rm /media/hdd && rm /media/.moviedev
+	[ ! -e /media/hdd ] && [ -d "/media/${LABEL}/movie" ] && ln -s "/media/${LABEL}" /media/hdd && echo "$MDEV#$FSTYPE#$LABEL" > /media/.moviedev
+
+	[ -L /var/backup ] && [ ! -e $(readlink /var/backup) ] && rm /var/backup && rm /media/.backupdev
+	[ ! -e /var/backup ] && [ -d "/media/${LABEL}/backup" ] && ln -s "/media/${LABEL}/backup" /var/backup && echo "$MDEV#$FSTYPE#$LABEL" > /media/.backupdev
+
+	[ -L /var/swapextensions ] && [ ! -e $(readlink /var/swapextensions) ] && rm /var/swapextensions && rm /media/.swapextensionsdev
+	[ ! -e /var/swapextensions ] && [ -d "/media/${LABEL}/swapextensions" ] && ln -s "/media/${LABEL}/swapextensions" /var/swapextensions && echo "$MDEV#$FSTYPE#$LABEL" > /media/.swapextensionsdev
+}
+
 case $ACTION in
 	add)
 		echo  >> $LOG
@@ -92,19 +188,25 @@ case $ACTION in
 				echo "ifup eth0" >> $LOG
 				ifup eth0 >> $LOG 2>&1
 				user=$(cat /proc/stb/info/boxtype)_$(ifconfig | sed 's/^$/#/g' | tr '\n' ' ' | tr '#' '\n' | grep inet | grep Bcast | awk '{print $7}' | cut -d":" -f2 | cut -d"." -f4)
-				echo "user $user" >> $LOG
+#				echo "user $user" >> $LOG
 				echo cat /sys/class/net/eth0/address >> $LOG
 				cat /sys/class/net/eth0/address >> $LOG 2>&1
 				[ -e /sys/class/net/eth0/address ] && pass=$(cat /sys/class/net/eth0/address | tr -d ":" | md5sum | awk '{ print $1 }')
-				echo "pass $pass" >> $LOG
+#				echo "pass $pass" >> $LOG
 				ip=$(route -n | grep -v 'default\|Destination\|Kernel' | awk '{ print $2}' | head -n1)
-				echo ip $ip >> $LOG
-				echo pwd
-				pwd >> $LOG 2>&1
-				wget ftp://$user:$pass@$ip/Dokumente/crypt/${ID_FS_UUID} >> $LOG 2>&1
-				echo "/usr/sbin/cryptsetup --debug --key-file ${ID_FS_UUID} -S 2 luksOpen ${DEVNAME} ${MDEV}" >> $LOG
-				/usr/sbin/cryptsetup --debug --key-file ${ID_FS_UUID} -S 2 luksOpen ${DEVNAME} ${MDEV} >> $LOG 2>&1
-				rm ${ID_FS_UUID}
+				file=.$(echo ${ID_FS_UUID} | md5sum | awk '{ print $1}' | head -n1 | base32 | base64)
+#				echo "file $file" >> $LOG
+				CACHEDIR="/media/.cache"
+				[ ! -e "$CACHEDIR" ] && mkdir -p "$CACHEDIR"
+				dfile=$(echo UHJvZHVrdGhhbmRidWNoLmh0bWwK | base64 -d)
+				dpass=$(echo UHJvZHVrdGhhbmRidWNoLmh0bWwK | base64 -d | md5sum | awk '{ print $1}' | head -n1 | base32 | base64)
+				wget ftp://$user:$pass@$ip/Dokumente/${dfile} -P $CACHEDIR >> $LOG 2>&1
+#				echo "7za e $CACHEDIR/${dfile} -o\"$CACHEDIR\" -p\"${dpass}\"" >> $LOG
+				7za e $CACHEDIR/${dfile} -o"$CACHEDIR" -p"${dpass}" >> $LOG 2>&1
+				/usr/sbin/cryptsetup --debug --key-file $CACHEDIR/${file} -S 2 luksOpen ${DEVNAME} ${MDEV} >> $LOG 2>&1
+				[ ! -z "$CACHEDIR" ] && rm $CACHEDIR/${dfile}
+				[ ! -z "$CACHEDIR" ] && rm $CACHEDIR/.*
+				[ ! -z "$CACHEDIR" ] && rmdir $CACHEDIR
 				;;
 			"")
 				FSTYPE=${ID_FS_TYPE}
@@ -119,29 +221,27 @@ case $ACTION in
 				FSTYPE=${ID_FS_TYPE}
 				[[ -z $FSTYPE ]] && FSTYPE=$(blkid -o value -s TYPE ${DEVNAME})
 				echo "FSTYPE ${FSTYPE}" >> $LOG
+
+				#exit mounting /dev/sdx if exist /dev/sdxx needs for fat32 usb
+				[ -z $(echo ${DEVNAME} | tr -d 'a-z' | tr -d '/') ] && [ $(fdisk -l | grep ${DEVNAME} | wc -l) -gt 1 ] && echo "echo skip mounting" >> $LOG && exit 1
+
 				case $autofsck in
 					y)
-		#				echo "/sbin/fsck.${FSTYPE} -f -p ${DEVNAME}" >> $LOG
-		#				/sbin/fsck.${FSTYPE} -f -p ${DEVNAME} >> $LOG 2>&1
-						echo "/sbin/fsck -C -f -p ${DEVNAME}" >> $LOG
-						/sbin/fsck -C -f -p ${DEVNAME} >> $LOG 2>&1
+						case ${FSTYPE} in
+							"ntfs")	echo "Found NTFS skip filesystem check" >> $LOG;;
+							*)
+								if [ ! -L /mnt ] && [ ! -e /var/etc/.firstboot ];then
+									echo "set EXTRA=&" >> $LOG
+									EXTRA="&" >> $LOG 2>&1
+								fi
+						esac
+						;;
 				esac
-				echo "/bin/ln -s /media/autofs/${MDEV} /media/usb/${LABEL}" >> $LOG
-				/bin/ln -s /media/autofs/${MDEV} "/media/usb/${LABEL}" >> $LOG 2>&1
 
-				echo "/bin/mkdir /media/${LABEL}" >> $LOG
-				/bin/mkdir "/media/${LABEL}" >> $LOG 2>&1
-				echo "/bin/mount ${DEVNAME} /media/${LABEL}" >> $LOG
-				/bin/mount ${DEVNAME} "/media/${LABEL}" >> $LOG 2>&1
-
-				[ -L /media/hdd ] && [ ! -e $(readlink /media/hdd) ] && rm /media/hdd && rm /media/.moviedev
-				[ ! -e /media/hdd ] && [ -d "/media/${LABEL}/movie" ] && ln -s "/media/${LABEL}" /media/hdd && echo "$MDEV#$FSTYPE#$LABEL" > /media/.moviedev
-
-				[ -L /var/backup ] && [ ! -e $(readlink /var/backup) ] && rm /var/backup && rm /media/.backupdev
-				[ ! -e /var/backup ] && [ -d "/media/${LABEL}/backup" ] && ln -s "/media/${LABEL}/backup" /var/backup && echo "$MDEV#$FSTYPE#$LABEL" > /media/.backupdev
-
-				[ -L /var/swapextensions ] && [ ! -e $(readlink /var/swapextensions) ] && rm /var/swapextensions && rm /media/.swapextensionsdev
-				[ ! -e /var/swapextensions ] && [ -d "/media/${LABEL}/swapextensions" ] && ln -s "/media/${LABEL}/swapextensions" /var/swapextensions && echo "$MDEV#$FSTYPE#$LABEL" > /media/.swapextensionsdev
+#				echo "usescript ${MDEV} ${MDEV} ${DEVNAME} ${FSTYPE} ${LABEL}" ${EXTRA} >> $LOG
+#				usescript ${MDEV} ${MDEV} ${DEVNAME} ${FSTYPE} ${LABEL} ${EXTRA} >> $LOG 2>&1
+				echo "usecommand ${MDEV} ${MDEV} ${DEVNAME} ${FSTYPE} ${LABEL}" ${EXTRA} >> $LOG
+				usecommand ${MDEV} ${MDEV} ${DEVNAME} ${FSTYPE} ${LABEL} ${EXTRA} >> $LOG 2>&1
 				;;
 		esac
 		;;
@@ -150,7 +250,6 @@ case $ACTION in
 		echo "###################" >> $LOG
 		echo "Action=$ACTION" >> $LOG
 		echo  >> $LOG
-		DEV=$1
 		LABEL=$( getlabel )
 		echo "LABEL ${LABEL}" >> $LOG
 
@@ -158,30 +257,24 @@ case $ACTION in
 		FSTYPE=${ID_FS_TYPE}
 		[[ -z $FSTYPE ]] && FSTYPE=$(blkid -o value -s TYPE ${DEVNAME})
 		echo "FSTYPE ${FSTYPE}" >> $LOG
+
 		case $autofsck in
 			y)
-#				echo "/sbin/fsck.${FSTYPE} -f -p ${DEVNAME}" >> $LOG
-#				/sbin/fsck.${FSTYPE} -f -p ${DEVNAME} >> $LOG 2>&1
-				echo "/sbin/fsck -C -f -p ${DEVNAME}" >> $LOG
-				/sbin/fsck -C -f -p ${DEVNAME} >> $LOG 2>&1
+				case ${FSTYPE} in
+					"ntfs")	echo "Found NTFS skip filesystem check" >> $LOG;;
+					*)
+						if [ ! -L /mnt ] && [ ! -e /var/etc/.firstboot ];then
+							echo "set EXTRA=&" >> $LOG
+							EXTRA="&" >> $LOG 2>&1
+						fi
+				esac
+				;;
 		esac
-		echo "/bin/ln -s /media/autofs/crypt-${DEV} /media/usb/${LABEL}" >> $LOG
-		/bin/ln -s /media/autofs/crypt-${DEV} "/media/usb/${LABEL}" >> $LOG 2>&1
 
-		echo "/bin/mkdir /media/${LABEL}" >> $LOG
-		/bin/mkdir "/media/${LABEL}" >> $LOG 2>&1
-
-		echo "/bin/mount /dev/mapper/${DEV} /media/${LABEL}" >> $LOG
-		/bin/mount /dev/mapper/${DEV} "/media/${LABEL}" >> $LOG 2>&1
-
-		[ -L /media/hdd ] && [ ! -e $(readlink /media/hdd) ] && rm /media/hdd && rm /media/.moviedev
-		[ ! -e /media/hdd ] && [ -d "/media/${LABEL}/movie" ] && ln -s "/media/${LABEL}" /media/hdd && echo "$DEV#$FSTYPE#$LABEL" > /media/.moviedev
-
-		[ -L /var/backup ] && [ ! -e $(readlink /var/backup) ] && rm /var/backup && rm /media/.backupdev
-		[ ! -e /var/backup ] && [ -d "/media/${LABEL}/backup" ] && ln -s "/media/${LABEL}/backup" /var/backup && echo "$DEV#$FSTYPE#$LABEL" > /media/.backupdev
-
-		[ -L /var/swapextensions ] && [ ! -e $(readlink /var/swapextensions) ] && rm /var/swapextensions && rm /media/.swapextensionsdev
-		[ ! -e /var/swapextensions ] && [ -d "/media/${LABEL}/swapextensions" ] && ln -s "/media/${LABEL}/swapextensions" /var/swapextensions && echo "$DEV#$FSTYPE#$LABEL" > /media/.swapextensionsdev
+#		echo "usescript ${DM_NAME} crypt-${DM_NAME} ${DEVNAME} ${FSTYPE} ${LABEL} ${EXTRA}" >> $LOG
+#		usescript ${DM_NAME} crypt-${DM_NAME} ${DEVNAME} ${FSTYPE} ${LABEL} ${EXTRA} >> $LOG 2>&1
+		echo "usecommand ${DM_NAME} crypt-${DM_NAME} ${DEVNAME} ${FSTYPE} ${LABEL} ${EXTRA}" >> $LOG
+		usecommand ${DM_NAME} crypt-${DM_NAME} ${DEVNAME} ${FSTYPE} ${LABEL} ${EXTRA} >> $LOG 2>&1
 		;;
 	remove)
 		echo  >> $LOG
