@@ -58,7 +58,6 @@ STABLE:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.STABLE').read().rs
 STABLEBRANCH:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.STABLEBRANCH').read().rstrip()}"
 GROUPOUT = "${@bb.utils.contains("SVNVERSION", "${STABLE}", "stable", "nigthly", d)}"
 export IMAGE_NAME = "${@bb.utils.contains("IMAGE_VERSION", "${STABLEBRANCH}", "M${SVN_VERSION}_${MACHINEBUILD}_${TITANVERSION}_${GROUPOUT}_UPDATEUSB_g${GITVERSION}", "M${SVN_VERSION}_${MACHINEBUILD}_${TITANVERSION}_beta_UPDATEUSB_oe${IMAGE_VERSION}_g${GITVERSION}", d)}"
-WRITE_IMAGE_NAME:="${@os.system('echo "${IMAGE_NAME}" > ${TMPDIR}/svncache/${MACHINEBUILD}/.imagename-oenew')}"
 
 #ok3
 ####export IMAGE_NAME:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.imagename-svn').read().rstrip()}"
