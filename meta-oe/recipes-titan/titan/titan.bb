@@ -519,4 +519,4 @@ do_install() {
 	fi
 }
 
-#SSTATE_SKIP_CREATION = "1"
+SSTATE_SKIP_CREATION = "1"
