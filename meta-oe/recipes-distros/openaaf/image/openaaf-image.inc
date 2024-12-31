@@ -56,8 +56,10 @@ GITVERSION:="${@os.popen('git --git-dir=${OE-ALLIANCE_BASE}/.git log  --pretty=f
 TITANVERSION:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/titanversion').read().rstrip()}"
 STABLE:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.STABLE').read().rstrip()}"
 STABLEBRANCH:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.STABLEBRANCH').read().rstrip()}"
+IMAGE_VERSION_STRIP:="${@os.popen('echo ${IMAGE_VERSION} | sed "s/\./-/"').read().rstrip()}"
+TITANVERSION_STRIP:="${@os.popen('echo ${TITANVERSION} | sed "s/\./-/"').read().rstrip()}"
 GROUPOUT = "${@bb.utils.contains("SVNVERSION", "${STABLE}", "stable", "nigthly", d)}"
-export IMAGE_NAME = "${@bb.utils.contains("IMAGE_VERSION", "${STABLEBRANCH}", "M${SVN_VERSION}_${MACHINEBUILD}_${TITANVERSION}_${GROUPOUT}_UPDATEUSB_g${GITVERSION}", "M${SVN_VERSION}_${MACHINEBUILD}_${TITANVERSION}_beta_UPDATEUSB_oe${IMAGE_VERSION}_g${GITVERSION}", d)}"
+export IMAGE_NAME = "${@bb.utils.contains("IMAGE_VERSION", "${STABLEBRANCH}", "M${SVN_VERSION}_${MACHINEBUILD}_${TITANVERSION_STRIP}_${GROUPOUT}_UPDATEUSB_g${GITVERSION}", "M${SVN_VERSION}_${MACHINEBUILD}_${TITANVERSION}_beta_UPDATEUSB_oe${IMAGE_VERSION_STRIP}_g${GITVERSION}", d)}"
 WRITE_IMAGE_NAME:="${@os.system('echo "${IMAGE_NAME}" > ${TMPDIR}/svncache/${MACHINEBUILD}/.imagename-oenew')}"
 
 #ok3
