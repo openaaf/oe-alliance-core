@@ -169,9 +169,9 @@ usecommand()
 	echo /bin/mount ${DEVNAME} /media/${LABEL} >> $LOG
 	/bin/mount ${DEVNAME} "/media/${LABEL}" >> $LOG 2>&1
 
-#	sleeptime=$(echo "$(cat $titanconfig | grep timetosleep= | cut -d\= -f2) / 6 * 1.2" | bc | cut -d\. -f1)
-#	echo /sbin/hdparm -S $sleeptime -B 127 /dev/${MDEV} >> $LOG
-#	/sbin/hdparm -S $sleeptime -B 127 /dev/${MDEV} >> $LOG 2>&1
+	sleeptime=$(echo "$(cat $titanconfig | grep timetosleep= | cut -d\= -f2) / 6 * 1.2" | bc | cut -d\. -f1)
+	echo /sbin/hdparm -S $sleeptime -B 127 /dev/${MDEV} >> $LOG
+	/sbin/hdparm -S $sleeptime -B 127 /dev/${MDEV} >> $LOG 2>&1
 
 #/sbin/hdparm -S 60 -B 127 /dev/sdf1
 # HDIO_DRIVE_CMD failed: Input/output error
