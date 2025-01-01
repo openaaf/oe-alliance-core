@@ -10,7 +10,7 @@ test -r /proc/mounts || mount -t proc proc /proc
 
 #########
 echo "[umountfs] /sbin/umount.sh"
-/sbin/umountfs.sh
+/sbin/umount.sh
 #########
 
 echo "Deactivating swap..."
