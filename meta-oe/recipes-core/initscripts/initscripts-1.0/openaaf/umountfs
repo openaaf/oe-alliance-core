@@ -8,28 +8,9 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin
 # Ensure /proc is mounted
 test -r /proc/mounts || mount -t proc proc /proc
 
-[ -e /home/root/logs ] && rm -rf /home/root/logs
-
 #########
-MOUNTS=$(cat /proc/mounts)
-echo "[umountfs] MOUNTS $MOUNTS"
-
-MAPPER=$(fdisk -l | grep /dev/mapper | awk '{ print $2 }' | tr -d ":")
-echo "[umountfs] Show active MAPPER start $MAPPER"
-
-[ -e /var/backup ] && echo "[umountfs] remove /var/backup" && rm /var/backup
-[ -e /var/swapextensions ] && echo "[umountfs] remove /var/swapextensions" && rm /var/swapextensions
-
-for ROUND in $MAPPER; do
-	DEV=$(echo $ROUND | sed 's!/dev/mapper/!!')
-	echo [umountfs] umount /media/*-${DEV}-*
-	umount /media/*-${DEV}-*
-	echo "[umountfs] cryptsetup close $ROUND"
-	cryptsetup close $ROUND
-done
-
-MAPPER=$(fdisk -l | grep /dev/mapper | awk '{ print $2 }' | tr -d ":")
-echo "[umountfs] Show active MAPPER end $MAPPER"
+echo "[umountfs] /sbin/umount.sh"
+/sbin/umountfs.sh
 #########
 
 echo "Deactivating swap..."
