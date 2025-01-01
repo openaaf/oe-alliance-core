@@ -4,6 +4,9 @@
 startconfig=/mnt/config/start-config
 if [ ! -e "$startconfig" ]; then startconfig="/etc/titan.restore/mnt/config/start-config"; fi
 
+titanconfig=/mnt/config/titan.cfg
+if [ ! -e "$titanconfig" ]; then titanconfig="/etc/titan.restore/mnt/config/titan.cfg"; fi
+
 . $startconfig
 . /sbin/start-function
 
@@ -166,8 +169,10 @@ usecommand()
 	echo /bin/mount ${DEVNAME} /media/${LABEL} >> $LOG
 	/bin/mount ${DEVNAME} "/media/${LABEL}" >> $LOG 2>&1
 
-	echo /sbin/hdparm -S 12 -B 127 /dev/${MDEV} >> $LOG
-	/sbin/hdparm -S 12 -B 127 /dev/${MDEV} >> $LOG 2>&1
+	sleeptime="$(cat $titanconfig | grep timetosleep= | cut -d\= -f2) / 6 * 1.2" | bc | cut -d\. -f1
+
+	echo /sbin/hdparm -S $sleeptime -B 127 /dev/${MDEV} >> $LOG
+	/sbin/hdparm -S $sleeptime -B 127 /dev/${MDEV} >> $LOG 2>&1
 
 	[ -L /media/hdd ] && [ ! -e $(readlink /media/hdd) ] && rm /media/hdd && rm /media/.moviedev
 	[ ! -e /media/hdd ] && [ -d "/media/${LABEL}/movie" ] && ln -s "/media/${LABEL}" /media/hdd && echo "$MDEV#$FSTYPE#$LABEL" > /media/.moviedev
