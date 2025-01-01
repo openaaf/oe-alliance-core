@@ -169,10 +169,17 @@ usecommand()
 	echo /bin/mount ${DEVNAME} /media/${LABEL} >> $LOG
 	/bin/mount ${DEVNAME} "/media/${LABEL}" >> $LOG 2>&1
 
-	sleeptime="$(cat $titanconfig | grep timetosleep= | cut -d\= -f2) / 6 * 1.2" | bc | cut -d\. -f1
+#	sleeptime=$(echo "$(cat $titanconfig | grep timetosleep= | cut -d\= -f2) / 6 * 1.2" | bc | cut -d\. -f1)
+#	echo /sbin/hdparm -S $sleeptime -B 127 /dev/${MDEV} >> $LOG
+#	/sbin/hdparm -S $sleeptime -B 127 /dev/${MDEV} >> $LOG 2>&1
 
-	echo /sbin/hdparm -S $sleeptime -B 127 /dev/${MDEV} >> $LOG
-	/sbin/hdparm -S $sleeptime -B 127 /dev/${MDEV} >> $LOG 2>&1
+#/sbin/hdparm -S 60 -B 127 /dev/sdf1
+# HDIO_DRIVE_CMD failed: Input/output error
+#
+#/dev/sdf1:
+# setting Advanced Power Management level to 0x7f (127)
+# setting standby to 120 (10 minutes)
+# APM_level	= not supported
 
 	[ -L /media/hdd ] && [ ! -e $(readlink /media/hdd) ] && rm /media/hdd && rm /media/.moviedev
 	[ ! -e /media/hdd ] && [ -d "/media/${LABEL}/movie" ] && ln -s "/media/${LABEL}" /media/hdd && echo "$MDEV#$FSTYPE#$LABEL" > /media/.moviedev
