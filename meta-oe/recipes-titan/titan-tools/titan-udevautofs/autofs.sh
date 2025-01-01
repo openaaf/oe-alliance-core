@@ -166,6 +166,9 @@ usecommand()
 	echo /bin/mount ${DEVNAME} /media/${LABEL} >> $LOG
 	/bin/mount ${DEVNAME} "/media/${LABEL}" >> $LOG 2>&1
 
+	echo /sbin/hdparm -S 12 -B 127 /dev/${MDEV} >> $LOG
+	/sbin/hdparm -S 12 -B 127 /dev/${MDEV} >> $LOG 2>&1
+
 	[ -L /media/hdd ] && [ ! -e $(readlink /media/hdd) ] && rm /media/hdd && rm /media/.moviedev
 	[ ! -e /media/hdd ] && [ -d "/media/${LABEL}/movie" ] && ln -s "/media/${LABEL}" /media/hdd && echo "$MDEV#$FSTYPE#$LABEL" > /media/.moviedev
 

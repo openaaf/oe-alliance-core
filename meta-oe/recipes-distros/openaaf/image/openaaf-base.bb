@@ -158,6 +158,7 @@ NORMAL_IMAGE = "\
     e2fsprogs-tune2fs \
 	exteplayer3 \
 	evtest \
+	hdparm \
 	libavahi-client \
 	libusb1 \
 	nfs-utils \
