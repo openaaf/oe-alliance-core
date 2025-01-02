@@ -24,6 +24,7 @@ else
 fi
 
 [ -e /etc/rcS.d/S04udev ] && echo remove udev start >> $LOG && rm /etc/rcS.d/S04udev
+[ $(/etc/init.d/udev status | grep running | wc -l) -eq 1 ] && /etc/init.d/udev stop && echo stop udev
 
 BLACKLISTED="mmcblk0"
 FIRST_MEDIA="hdd"
