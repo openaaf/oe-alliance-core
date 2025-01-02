@@ -13,6 +13,7 @@ if [ ! -e "$titanconfig" ]; then titanconfig="/etc/titan.restore/mnt/config/tita
 # (e)udev compatibility
 [[ -z $MDEV ]] && MDEV=$(basename $DEVNAME)
 [[ -z $DEVNAME ]] && DEVNAME=/dev/$MDEV
+[ $(/etc/init.d/udev status | grep running | wc -l) -eq 1 ] && /etc/init.d/udev stop
 
 if [ -e /etc/.debug ];then
 	LOGDIR="/home/root/logs"
@@ -21,6 +22,8 @@ if [ -e /etc/.debug ];then
 else
 	LOG=/dev/null
 fi
+
+[ -e /etc/rcS.d/S04udev ] && echo remove udev start >> $LOG && rm /etc/rcS.d/S04udev
 
 BLACKLISTED="mmcblk0"
 FIRST_MEDIA="hdd"
@@ -407,7 +410,8 @@ case $ACTION in
 		echo "FSTYPE ${ID_FS_TYPE}" >> $LOG
 #		case $ID_FS_TYPE in
 		case $FSTYPE in
-			crypto_LUKS)
+			*)
+#			crypto_LUKS)
 				echo /bin/umount -fl "/media/*-${MDEV}-*" >>$LOG
 				/bin/umount -fl /media/*-${MDEV}-* >>$LOG 2>&1
 
@@ -423,8 +427,8 @@ case $ACTION in
 				[ -L /media/hdd ] && [ ! -e $(readlink /media/hdd) ] && rm /media/hdd && rm /media/.moviedev
 				[ -L /var/backup ] && [ ! -e $(readlink /var/backup) ] && rm /var/backup && rm /media/.backupdev
 				[ -L /var/swapextensions ] && [ ! -e $(readlink /var/swapextensions) ] && rm /var/swapextensions && rm /media/.swapextensionsdev
-				;;
-			*)
+##				;;
+#			*)
 				echo /bin/umount -fl /media/*-${MDEV} >>$LOG
 				/bin/umount -fl /media/*-${MDEV} >>$LOG 2>&1
 
