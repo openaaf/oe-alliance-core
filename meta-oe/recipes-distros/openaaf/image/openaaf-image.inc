@@ -45,7 +45,7 @@ export IMAGE_BASENAME = "openaaf-image"
 #STABLE_BRANCH:="${@os.popen('svn export --force --username buildbin --password buildbin --force -r ${SVN_VERSION} http://svn.dyndns.tv/svn/titan/titan/tools/oealliance.sh ${TMPDIR}/svncache/${MACHINEBUILD}/oealliance.sh | cat ${TMPDIR}/svncache/${MACHINEBUILD}/oealliance.sh | grep STABLEBRANCH= | sed -nr "s,.*=([^=]+).*,\1,p"').read().rstrip()}"
 #TITAN_VERSION:="${@os.popen('svn export --force --username buildbin --password buildbin --force -r ${SVN_VERSION} http://svn.dyndns.tv/svn/titan/titan/struct.h ${TMPDIR}/svncache/${MACHINEBUILD}/struct.h | cat ${TMPDIR}/svncache/${MACHINEBUILD}/struct.h | grep "#define OVERSION" | cut -d\'"\' -f2 | sed "s/\./-/"').read().rstrip()}"
 #IMAGE_VERSION_STRIP:="${@os.popen('echo ${IMAGE_VERSION} | sed "s/\./-/"').read().rstrip()}"
-#GROUPOUT = "${@bb.utils.contains("SVN_VERSION", "${STABLE}", "stable", "nigthly", d)}"
+#GROUPOUT = "${@bb.utils.contains("SVN_VERSION", "${STABLE}", "stable", "nightly", d)}"
 #export IMAGE_NAME = "${@bb.utils.contains("IMAGE_VERSION", "${STABLE_BRANCH}", "M${SVN_VERSION}_${MACHINEBUILD}_v${TITAN_VERSION}_${GROUPOUT}_UPDATEUSB_g${GIT_VERSION}", "M${SVN_VERSION}_${MACHINEBUILD}_v${TITAN_VERSION}_beta_UPDATEUSB_oe${IMAGE_VERSION_STRIP}_g${GIT_VERSION}", d)}"
 #WRITE_IMAGE_NAME:="${@os.system('echo "${IMAGE_NAME}" > ${TMPDIR}/svncache/${MACHINEBUILD}/.imagename-oenew')}"
 
@@ -58,7 +58,7 @@ STABLE:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.STABLE').read().rs
 STABLEBRANCH:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.STABLEBRANCH').read().rstrip()}"
 IMAGE_VERSION_STRIP:="${@os.popen('echo ${IMAGE_VERSION} | sed "s/\./-/"').read().rstrip()}"
 TITANVERSION_STRIP:="${@os.popen('echo ${TITANVERSION} | sed "s/\./-/"').read().rstrip()}"
-GROUPOUT = "${@bb.utils.contains("SVNVERSION", "${STABLE}", "stable", "nigthly", d)}"
+GROUPOUT = "${@bb.utils.contains("SVNVERSION", "${STABLE}", "stable", "nightly", d)}"
 export IMAGE_NAME = "${@bb.utils.contains("IMAGE_VERSION", "${STABLEBRANCH}", "M${SVN_VERSION}_${MACHINEBUILD}_${TITANVERSION_STRIP}_${GROUPOUT}_UPDATEUSB_g${GITVERSION}", "M${SVN_VERSION}_${MACHINEBUILD}_${TITANVERSION}_beta_UPDATEUSB_oe${IMAGE_VERSION_STRIP}_g${GITVERSION}", d)}"
 WRITE_IMAGE_NAME:="${@os.system('echo "${IMAGE_NAME}" > ${TMPDIR}/svncache/${MACHINEBUILD}/.imagename-oenew')}"
 
