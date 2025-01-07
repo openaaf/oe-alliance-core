@@ -184,10 +184,15 @@ NORMAL_IMAGE = "\
 	wakelan \
 	wireless-tools \
 	wpa-supplicant \
-	${@bb.utils.contains('TUNE_FEATURES', 'aarch64', 'lib32-webkit-hbbtv-plugin' , 'webkit-hbbtv-plugin', d)} \
+	${@bb.utils.contains("MACHINE_FEATURES", "hbbtv-browser-webkit", " webkit-hbbtv-plugin", "", d)} \
 	xfsprogs \
 "
-#	${@bb.utils.contains('MACHINE', 'dm900', 'webkit-hbbtv-plugin' , '', d)}
+
+#RRECOMMENDS:${PN}:append:sf8008 = " webkit-hbbtv-plugin"
+#RRECOMMENDS:${PN}:append:sf8008m = " webkit-hbbtv-plugin"
+#RRECOMMENDS:${PN}:append:dm900 = " webkit-hbbtv-plugin"
+#RRECOMMENDS:${PN}:append:dm920 = " webkit-hbbtv-plugin"
+#RRECOMMENDS:${PN}:append:hd61 = " webkit-hbbtv-plugin"
 
 NORMAL_GUI = "\
 	${TITANGUI} \
