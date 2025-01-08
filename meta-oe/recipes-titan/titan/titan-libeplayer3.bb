@@ -106,9 +106,9 @@ output/writer/mipsel/vc1.c ", d)}"
 do_compile() {
 	cd ${WORKDIR}/libeplayer3
 #	make clean
+	if [ -e ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so ]; then rm ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so; fi
+	if [ -e ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0 ]; then rm ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0; fi
 	if [ -e ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0.0.0 ]; then rm ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0.0.0; fi
-	if [ -e ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0.0.0 ]; then rm ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0; fi
-	if [ -e ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0.0.0 ]; then rm ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so; fi
 
 	${CC} ${SOURCE_FILES:LIB} ${CFLAGS} -fPIC -shared -Wl,-soname,libeplayer3.so.0 -o libeplayer3.so.0.0.0 ${LDFLAGS}
 #	${STRIP} libeplayer3.so.0.0.0
@@ -131,8 +131,8 @@ do_install:append() {
     install -d ${D}${libdir}
     install -m 0755 eplayer3 ${D}${bindir}
     install -m 0755 libeplayer3.so.0.0.0 ${D}${libdir}/
-    ln -s libeplayer3.so.0.0.0 ${D}${libdir}/libeplayer3.so
-    ln -s libeplayer3.so.0.0.0 ${D}${libdir}/libeplayer3.so.0
+    ln -sf libeplayer3.so.0.0.0 ${D}${libdir}/libeplayer3.so
+    ln -sf libeplayer3.so.0.0.0 ${D}${libdir}/libeplayer3.so.0
 }
 
 INSANE_SKIP:${PN} += "ldflags"

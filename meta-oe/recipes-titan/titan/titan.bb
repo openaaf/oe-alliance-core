@@ -6,11 +6,7 @@ PACKAGE_ARCH = "${MACHINEBUILD}"
 
 require conf/license/license-gplv2.inc
 
-inherit autotools-brokensep gitpkgv python3native pkgconfig gettext
-
-#BB_FETCH_PREMIRRORONLY
-#BB_NO_NETWORK
-#BB_STRICT_CHECKSUM = "1"
+inherit gitpkgv gettext
 
 PREMIRRORS = ""
 SRCREV = "${AUTOREV}"
@@ -126,7 +122,7 @@ GST_UGLY_RDEPS = "\
     gstreamer1.0-plugins-ugly-dvdsub \
 "
 
-S = "${WORKDIR}/svn/titan/titan"
+S = "${WORKDIR}/svn/titan"
 
 CFLAGS:append = " \
 	-I${STAGING_DIR_TARGET}/usr/include \
@@ -141,30 +137,17 @@ CFLAGS:append = " \
 	-I${WORKDIR}/svn/titan/libeplayer3/include \
 	"
 
-
-CFLAGS:append:arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
-	-I${STAGING_DIR_TARGET}/usr/include \
+CFLAGS:append = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
 	-I${STAGING_DIR_TARGET}/usr/lib/gstreamer-1.0/include \
 	-I${STAGING_DIR_TARGET}/usr/include/gstreamer-1.0 \
 	-I${STAGING_DIR_TARGET}/usr/include/glib-2.0 \
 	-I${STAGING_DIR_TARGET}/usr/include/libxml2 \
 	-I${STAGING_DIR_TARGET}/usr/lib/glib-2.0/include \
-	-I${STAGING_DIR_TARGET}/usr/include/freetype2 \
-	-I${STAGING_DIR_TARGET}/usr/include/dreamdvd \
-	-I${STAGING_DIR_TARGET}/usr/include/libdreamdvd \	
-	-I${WORKDIR}/titan/libdreamdvd \
-	-I${WORKDIR}/titan/titan \
     ', ' \
-	-I${STAGING_DIR_TARGET}/usr/include \
 	-I${STAGING_DIR_TARGET}/usr/include/gstreamer-0.10 \
 	-I${STAGING_DIR_TARGET}/usr/include/glib-2.0 \
 	-I${STAGING_DIR_TARGET}/usr/include/libxml2 \
 	-I${STAGING_DIR_TARGET}/usr/lib/glib-2.0/include \
-	-I${STAGING_DIR_TARGET}/usr/include/freetype2 \
-	-I${STAGING_DIR_TARGET}/usr/include/dreamdvd \
-	-I${STAGING_DIR_TARGET}/usr/include/libdreamdvd \	
-	-I${WORKDIR}/titan/libdreamdvd \
-	-I${WORKDIR}/titan/titan \
 ', d)}"
 
 CFLAGS:append:sh4 = " \
@@ -172,7 +155,7 @@ CFLAGS:append:sh4 = " \
 	-I${STAGING_KERNEL_DIR}/extra/bpamem \
 	"
 
-#CFLAGS:append = " -DDVDPLAYER"
+CFLAGS:append:sh4 = " -DDVDPLAYER"
 
 CFLAGS:append:arm = " -DARM -DMIPSEL"
 CFLAGS:append:arm:dm900 = " -DDREAMBOX -DCONFIG_ION"
@@ -186,21 +169,21 @@ CFLAGS:append:mipsel:dm7020hd = " -DDREAMBOX"
 CFLAGS:append:mipsel:dm520 = " -DDREAMBOX -DCONFIG_ION"
 CFLAGS:append:mipsel:dm525 = " -DDREAMBOX -DCONFIG_ION"
 
-CFLAGS:append:sh4 = " -DSSLNEW -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DSH4 -DSH4NEW -DCAMSUPP -Os -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration"
-CFLAGS:append:mipsel = " -DSSLNEW -DOEBUILD -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
+CFLAGS:append:sh4 = " -DSSLNEW -DOEBUILD -DEXTGST -DEPLAYER4 -DEXTEPLAYER3 -DEPLAYER3 -DSH4 -DSH4NEW -DCAMSUPP -Os -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration"
+CFLAGS:append:mipsel = " -DSSLNEW -DOEBUILD -DEXTGST -DEPLAYER4 -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
 CFLAGS:append:arm = " -DSSLNEW -DOEBUILD -DEXTGST -DEPLAYER4 -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
 
 CFLAGS:append = " -Wno-format -Wno-address -Wno-use-after-free -Wno-deprecated-declarations -Wno-implicit-function-declaration -Wno-incompatible-pointer-types -Wno-int-conversion -Wno-return-mismatch -Wno-implicit-int -Wno-declaration-missing-parameter-type"
 
-LDFLAGS:prepend:arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' -lglib-2.0 -lgobject-2.0 -lxml2 -lgstreamer-1.0 ', '', d)}"
+LDFLAGS:prepend = "${@bb.utils.contains('GST_VERSION', '1.0', ' -lglib-2.0 -lgobject-2.0 -lxml2 -lgstreamer-1.0 ', '', d)}"
 
 LDFLAGS:prepend = " -leplayer3 -lpthread -ldl -lm -lz -lpng -lfreetype -ldreamdvd -ljpeg -lssl -lcrypto -lcurl -lipkg "
 LDFLAGS:prepend:sh4 = " -lmmeimage "
 
-addtask setbuildcmd before do_configure after do_patch
+SOURCE_FILES = "titan.c"
 
-do_setbuildcmd() {
-    cd ${S}/tools
+do_compile() {
+    cd ${S}/titan/tools
 
     if [ "${MACHINE}" = "vusolo4k" -o "${MACHINE}" = "vusolo2" -o "${MACHINE}" = "vusolose" -o "${MACHINE}" = "vuduo2" -o "${MACHINE}" = "vuuno4k" -o "${MACHINE}" = "vuuno4kse" -o "${MACHINE}" = "vuultimo4k" -o "${MACHINE}" = "vuzero4k" -o "${MACHINE}" = "vuduo4k" -o "${MACHINE}" = "vuduo4kse" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-VUPLUS-BASE}/recipes-drivers/vuplus-dvb-proxy-${MACHINE}.bb | cut -b 12-19`
@@ -282,10 +265,6 @@ do_setbuildcmd() {
         DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-EDISION-BASE}/recipes-drivers/edision-dvb-modules-${MACHINE}.bb | cut -b 12-19`
     elif [ "${BRAND_OEM}" = "maxytec" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-MAXYTEC-BASE}/recipes-drivers/maxytec-dvb-modules-${MACHINE}.bb | cut -b 12-19`
-    elif [ "${BRAND_OEM}" = "abcom" ]; then
-        DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-ABCOM-BASE}/recipes-drivers/abcom-dvb-modules-${MACHINE}.bb | cut -b 12-19`
-    elif [ "${BRAND_OEM}" = "anadol" ]; then
-        DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-ANADOL-BASE}/recipes-drivers/anadol-dvb-modules-${MACHINE}.bb | cut -b 12-19`
     elif [ "${BRAND_OEM}" = "dreambox" ]; then
         if [ "${MACHINE}" = "dm7080" ]; then
             DRIVERSDATE="20190502"
@@ -306,11 +285,7 @@ do_setbuildcmd() {
         elif [ "${MACHINE}" = "dm900" ]; then
             DRIVERSDATE="20200226"
         elif [ "${MACHINE}" = "dm920" ]; then
-            DRIVERSDATE="20200321"
-        elif [ "${MACHINE}" = "dreamone" ]; then
-            DRIVERSDATE="20210518"
-        elif [ "${MACHINE}" = "dreamtwo" ]; then
-            DRIVERSDATE="20210518"
+            DRIVERSDATE="20190830"
         else
             DRIVERSDATE="20150618"
         fi
@@ -318,7 +293,6 @@ do_setbuildcmd() {
         DRIVERSDATE='N/A'
     fi
 
-#	CACHEDIR=$(echo ${TMPDIR} | sed "s!builds/${DISTRO_NAME}/${DISTRO_TYPE}/${MACHINE}/tmp!svncache!")
 	CACHEDIR=${TMPDIR}/svncache/${MACHINEBUILD}
 	echo "CACHEDIR ${CACHEDIR}"
 
@@ -355,7 +329,7 @@ do_setbuildcmd() {
     SVNVERSION=${PV}
 	echo "SVNVERSION: ${SVNVERSION}"
 
-	SVNVERSIONHTTP=$(svn info http://sbnc.dyndns.tv/svn/titan | grep Revision | sed s/'Revision: '//g)
+	SVNVERSIONHTTP=$(svn info http://svn.dyndns.tv/svn/titan | grep Revision | sed s/'Revision: '//g)
 	echo "SVNVERSIONHTTP: ${SVNVERSIONHTTP}"
 
 	GITVERSION=$(git --git-dir=${OE-ALLIANCE_BASE}/.git log  --pretty=format:"%s" | wc -l)
@@ -379,17 +353,12 @@ do_setbuildcmd() {
 	echo "./oealliance.sh ${CACHEDIR} ${KERNELDIR} ${ROOTDIR} ${TYPE} ${SRCDIR} ${CPU} ${STM} ${BOXNAME} ${DISTRO_NAME} ${DISTRO_TYPE} ${SWTYPE} ${IMAGE_NAME} ${GITVERSION} ${SVNVERSION} ${MACHINE_BRAND} ${MACHINE_NAME} ${DRIVERSDATE} ${DISTRO_VERSION} ${DISTRO_TYPE}"
 	./oealliance.sh "${CACHEDIR}" "${KERNELDIR}" "${ROOTDIR}" "${TYPE}" "${SRCDIR}" "${CPU}" "${STM}" "${BOXNAME}" "${DISTRO_NAME}" "${DISTRO_TYPE}" "${SWTYPE}" "${IMAGE_NAME}" "${GITVERSION}" "${SVNVERSION}" "${MACHINE_BRAND}" "${MACHINE_NAME}" "${DRIVERSDATE}" "${DISTRO_VERSION}" "${DISTRO_TYPE}"
 
-	cd ${S}
-	cp Makefile.am.4.3 Makefile.am
-	cd ${S}
-}
+	cd ${S}/titan
 
-EXTRA_OECONF = " \
-    BUILD_SYS=${BUILD_SYS} \
-    HOST_SYS=${HOST_SYS} \
-    STAGING_INCDIR=${STAGING_INCDIR} \
-    STAGING_LIBDIR=${STAGING_LIBDIR} \
-"
+	cp Makefile.am.4.3 Makefile.am
+
+    ${CC} ${SOURCE_FILES} ${CFLAGS} -o titan ${LDFLAGS}
+}
 
 FILES:${PN} = " \
 	/bin \
@@ -508,9 +477,9 @@ INSANE_SKIP += "32bit-time"
 
 do_install() {
 	install -d ${D}/usr/local/bin
-	install -m 0755 titan ${D}/usr/local/bin/titan
+	install -m 0755 titan/titan ${D}/usr/local/bin/titan
 
-	cp -r ../oealliance/* ${D}
+	cp -r oealliance/* ${D}
 	if [ -e ${D}/etc/titan.restore/mnt/config/titan.${MACHINE}.cfg ];then
 		cp ${D}/etc/titan.restore/mnt/config/titan.${MACHINE}.cfg ${D}/etc/titan.restore/mnt/config/titan.cfg
 	fi
