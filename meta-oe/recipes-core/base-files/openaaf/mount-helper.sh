@@ -291,6 +291,9 @@ case $ACTION in
 		FSTYPE=$(blkid -o value -s TYPE ${DEVNAME})
 		echo "FSTYPE ${FSTYPE}" >> $LOG
 
+		echo "modprobe ${FSTYPE}" >> $LOG 2>&1
+		modprobe ${FSTYPE} >> $LOG 2>&1
+
 		case $autofsck in
 			y)
 				case ${FSTYPE} in
@@ -348,6 +351,9 @@ case $ACTION in
 
 				#exit mounting /dev/sdx if exist /dev/sdxx needs for fat32 usb
 				[ -z $(echo ${DEVNAME} | tr -d 'a-z' | tr -d '/') ] && [ $(fdisk -l | grep ${DEVNAME} | wc -l) -gt 1 ] && echo "echo skip mounting" >> $LOG && exit 1
+
+				echo "modprobe ${FSTYPE}" >> $LOG 2>&1
+				modprobe ${FSTYPE} >> $LOG 2>&1
 
 				case $autofsck in
 					y)
