@@ -109,6 +109,7 @@ SRC_URI = "git://github.com/xbmc/xbmc.git;protocol=https;branch=master \
            file://0014-cmake-findsmbclient.patch \
            file://0015-ifdef-on-gles3-texture-mappings.patch \
            file://0100-e2-player.patch \
+           file://0100-stb-player.patch \
            file://0101-gst-player.patch \
           "
 
