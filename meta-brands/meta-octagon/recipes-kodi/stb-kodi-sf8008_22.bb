@@ -1,6 +1,6 @@
 require recipes-mediacenter/kodi/stb-kodi_${PV}.bb
 
-SRC_URI:append = "file://hiplayer-22.patch"
+#SRC_URI:append = "file://hiplayer-22.patch"
 
 DEPENDS += "octagon-libs-${MACHINE}"
 PROVIDES += "virtual/kodi"
