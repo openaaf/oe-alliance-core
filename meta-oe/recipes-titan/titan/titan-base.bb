@@ -9,7 +9,6 @@ ALLOW_EMPTY_${PN} = "1"
 
 inherit packagegroup
 
-
 DEPENDS = "\
 	titan-gmediarender \
 	titan-netsurf \
