@@ -16,9 +16,6 @@ WORKDIR = "${TMPDIR}/work/${MULTIMACH_TARGET_SYS}/${PN}/${EXTENDPE}${PV}"
 
 do_rootfs[deptask] = "do_rm_work"
 
-image_combine_spdx() {
-}
-
 SSTATE_ALLOW_OVERLAP_FILES += "${DEPLOY_DIR_IMAGE}"
 IMAGE_INSTALL = "opendroid-base \
     ${@bb.utils.contains("MACHINE_FEATURES", "smallflash", "", \
@@ -37,6 +34,13 @@ IMAGE_FEATURES += "package-management"
 INHIBIT_DEFAULT_DEPS = "1"
 
 inherit image
+
+image_preprocess() {
+    # Set root password to blank
+    sed 's%^root:[^:]*:%root::%' < ${IMAGE_ROOTFS}/etc/shadow > ${IMAGE_ROOTFS}/etc/shadow.new
+    mv ${IMAGE_ROOTFS}/etc/shadow.new ${IMAGE_ROOTFS}/etc/shadow
+}
+IMAGE_PREPROCESS_COMMAND += "image_preprocess; "
 
 do_package_index[nostamp] = "1"
 do_package_index[depends] += "${PACKAGEINDEXDEPS}"
