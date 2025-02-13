@@ -32,6 +32,8 @@ SRC_URI = "http://nodejs.org/dist/v${PV}/node-v${PV}.tar.xz \
            file://0001-build-support-python-3.13.patch \
            "
 
+SRC_URI:append:openaaf = " file://fix-build-with-icu-76.patch"
+
 SRC_URI:append:class-target = " \
            file://0001-Using-native-binaries.patch \
            "
