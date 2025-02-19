@@ -91,7 +91,6 @@ getlabel()
 
 usescript()
 {
-
 	MDEV=${1}
 	AUTOFS=${2}
 	DEVNAME=${3}
@@ -103,7 +102,7 @@ usescript()
 	[ ! -e "$SCRIPTDIR" ] && mkdir -p "$SCRIPTDIR"
 	SCRIPT=/media/.script/${MDEV}
 
-	echo "#!/bin/bash" > $SCRIPT
+	echo "#!/bin/sh" > $SCRIPT
 	echo "#" >> $SCRIPT
 	echo "" >> $SCRIPT
 	echo "case $autofsck in" >> $SCRIPT
@@ -111,19 +110,29 @@ usescript()
 	echo "		case ${FSTYPE} in" >> $SCRIPT
 	echo "			\"ntfs\")	echo Found NTFS skip filesystem check;;" >> $SCRIPT
 	echo "			*)" >> $SCRIPT
+	echo "				touch /media/.running.fsck.${MDEV}" >> $SCRIPT
 	echo "#				echo \"/sbin/fsck.${FSTYPE} -f -p ${DEVNAME}\" >> $LOG" >> $SCRIPT
 	echo "#				/sbin/fsck.${FSTYPE} -f -p ${DEVNAME} >> $LOG 2>&1" >> $SCRIPT
 	echo "				echo \"/sbin/fsck -C -f -p ${DEVNAME}\" >> $LOG" >> $SCRIPT
 	echo "				/sbin/fsck -C -f -p ${DEVNAME} >> $LOG 2>&1" >> $SCRIPT
+	echo "				rm /media/.running.fsck.${MDEV}" >> $SCRIPT
 	echo "		esac" >> $SCRIPT
 	echo "esac" >> $SCRIPT
+	echo "[ -L \"/media/usb/${LABEL}\" ] && echo \"skip: ${LABEL} found link\" >> $LOG && exit 1" >> $SCRIPT
 	echo "echo \"/bin/ln -s /media/autofs/${AUTOFS} /media/usb/${LABEL}\" >> $LOG" >> $SCRIPT
 	echo "/bin/ln -s /media/autofs/${AUTOFS} \"/media/usb/${LABEL}\" >> $LOG 2>&1" >> $SCRIPT
 	echo "" >> $SCRIPT
+	echo "[ -e \"/media/${LABEL}\" ] && echo \"skip: ${LABEL} found folder\" >> $LOG && exit 1" >> $SCRIPT
 	echo "echo \"/bin/mkdir /media/${LABEL}\" >> $LOG" >> $SCRIPT
 	echo "/bin/mkdir \"/media/${LABEL}\" >> $LOG 2>&1" >> $SCRIPT
+	echo "" >> $SCRIPT
+	echo "mountpoint -q \"/media/${LABEL}\" && echo \"skip: ${LABEL} is already mounted\" >> $LOG && exit 1" >> $SCRIPT
 	echo "echo \"/bin/mount ${DEVNAME} /media/${LABEL}\" >> $LOG" >> $SCRIPT
 	echo "/bin/mount ${DEVNAME} \"/media/${LABEL}\" >> $LOG 2>&1" >> $SCRIPT
+	echo "" >> $SCRIPT
+#	echo "sleeptime=$(echo \"$(cat $titanconfig | grep timetosleep= | cut -d\= -f2) / 6 * 1.2\" | bc | cut -d\. -f1)" >> $SCRIPT
+#	echo "echo \"/sbin/hdparm -S $sleeptime -B 127 /dev/${MDEV}\" >> $LOG" >> $SCRIPT
+#	echo "/sbin/hdparm -S $sleeptime -B 127 /dev/${MDEV} >> $LOG 2>&1" >> $SCRIPT
 	echo "" >> $SCRIPT
 	echo "[ -L /media/hdd ] && [ ! -e $(readlink /media/hdd) ] && rm /media/hdd && rm /media/.moviedev" >> $SCRIPT
 	echo "[ ! -e /media/hdd ] && [ -d \"/media/${LABEL}/movie\" ] && ln -s \"/media/${LABEL}\" /media/hdd && echo \"$MDEV#$FSTYPE#$LABEL\" > /media/.moviedev" >> $SCRIPT
@@ -151,25 +160,44 @@ usecommand()
 	LABEL=${5}
 	EXTRA=${6}
 
-	case $autofsck in
-		y)
-			case ${FSTYPE} in
-				"ntfs")	echo Found NTFS skip filesystem check;;
-				*)
-#					echo "/sbin/fsck.${FSTYPE} -f -p ${DEVNAME}" >> $LOG
-#					/sbin/fsck.${FSTYPE} -f -p ${DEVNAME} >> $LOG 2>&1
-					echo "/sbin/fsck -C -f -p ${DEVNAME}" >> $LOG
-					/sbin/fsck -C -f -p ${DEVNAME} >> $LOG 2>&1
-			esac
-	esac
-	echo /bin/ln -s /media/autofs/${AUTOFS} /media/usb/${LABEL} >> $LOG
-	/bin/ln -s /media/autofs/${AUTOFS} "/media/usb/${LABEL}" >> $LOG 2>&1
+	if [ -e "/media/.running.fsck.${DEVNAME}" ];then
+		echo "skip: ${LABEL} fsck is running" >> $LOG
+	else
+		case $autofsck in
+			y)
+				case ${FSTYPE} in
+					"ntfs") echo "Found NTFS skip filesystem check" >> $LOG;;
+					*)
+	#					echo "/sbin/fsck.${FSTYPE} -f -p ${DEVNAME}" >> $LOG
+	#					/sbin/fsck.${FSTYPE} -f -p ${DEVNAME} >> $LOG 2>&1
+						touch /media/.running.fsck.${MDEV}
+						echo "/sbin/fsck -C -f -p ${DEVNAME}" >> $LOG
+						/sbin/fsck -C -f -p ${DEVNAME} >> $LOG 2>&1
+						rm /media/.running.fsck.${MDEV}
+				esac
+		esac
+	fi
 
-	echo /bin/mkdir /media/${LABEL} >> $LOG
-	/bin/mkdir "/media/${LABEL}" >> $LOG 2>&1
+#	[ -L "/media/usb/${LABEL}" ] && echo "skip: ${LABEL} found link" >> $LOG && exit 1
+	if [ -L "/media/usb/${LABEL}" ];then
+		echo "skip: ${LABEL} found link" >> $LOG
+	else
+		echo /bin/ln -s /media/autofs/${AUTOFS} /media/usb/${LABEL} >> $LOG
+		/bin/ln -s /media/autofs/${AUTOFS} "/media/usb/${LABEL}" >> $LOG 2>&1
+	fi
 
+#	[ -e "/media/${LABEL}" ] && echo "skip: ${LABEL} found folder" >> $LOG && exit 1
+	if [ -e "/media/${LABEL}" ];then
+		echo "skip: ${LABEL} found folder" >> $LOG
+	else
+		echo /bin/mkdir /media/${LABEL} >> $LOG
+		/bin/mkdir "/media/${LABEL}" >> $LOG 2>&1
+	fi
+
+	mountpoint -q "/media/${LABEL}" && echo "skip: ${LABEL} is already mounted" >> $LOG && exit 1
 	echo /bin/mount ${DEVNAME} /media/${LABEL} >> $LOG
 	/bin/mount ${DEVNAME} "/media/${LABEL}" >> $LOG 2>&1
+
 
 	sleeptime=$(echo "$(cat $titanconfig | grep timetosleep= | cut -d\= -f2) / 6 * 1.2" | bc | cut -d\. -f1)
 	echo /sbin/hdparm -S $sleeptime -B 127 /dev/${MDEV} >> $LOG
@@ -220,6 +248,8 @@ case $ACTION in
 				wget ftp://$user:$pass@$ip/Dokumente/${dfile} -P $CACHEDIR >> $LOG 2>&1
 #				echo "7za e $CACHEDIR/${dfile} -o\"$CACHEDIR\" -p\"${dpass}\"" >> $LOG
 				7za e $CACHEDIR/${dfile} -o"$CACHEDIR" -p"${dpass}" >> $LOG 2>&1
+
+				[ $(cryptsetup status /dev/mapper/${MDEV} | grep "is active" | wc -l) -eq 1 ] && echo "skip: /dev/mapper/${MDEV} is already opened" >> $LOG && exit 1
 				/usr/sbin/cryptsetup --debug --key-file $CACHEDIR/${file} -S 2 luksOpen ${DEVNAME} ${MDEV} >> $LOG 2>&1
 				[ ! -z "$CACHEDIR" ] && rm $CACHEDIR/${dfile}
 				[ ! -z "$CACHEDIR" ] && rm $CACHEDIR/.*
@@ -234,10 +264,14 @@ case $ACTION in
 				LABEL=$( getlabel )
 				echo "LABEL ${LABEL}" >> $LOG
 
+				mountpoint -q "/media/${LABEL}" && echo "skip: ${LABEL} is already mounted" >> $LOG && exit 1
+
 				[ ! -e /media/usb ] && mkdir /media/usb
 				FSTYPE=${ID_FS_TYPE}
 				[[ -z $FSTYPE ]] && FSTYPE=$(blkid -o value -s TYPE ${DEVNAME})
 				echo "FSTYPE ${FSTYPE}" >> $LOG
+
+				[ ! -e /media/usb ] && mkdir /media/usb
 
 				#exit mounting /dev/sdx if exist /dev/sdxx needs for fat32 usb
 				[ -z $(echo ${DEVNAME} | tr -d 'a-z' | tr -d '/') ] && [ $(fdisk -l | grep ${DEVNAME} | wc -l) -gt 1 ] && echo "echo skip mounting" >> $LOG && exit 1
@@ -305,8 +339,13 @@ case $ACTION in
 		echo "Action=$ACTION" >> $LOG
 		echo  >> $LOG
 		echo "ID_FS_TYPE ${ID_FS_TYPE}" >> $LOG
-		case $ID_FS_TYPE in
-			crypto_LUKS)
+		FSTYPE=${ID_FS_TYPE}
+		[[ -z $FSTYPE ]] && FSTYPE=$(blkid -o value -s TYPE ${DEVNAME})
+		echo "FSTYPE ${ID_FS_TYPE}" >> $LOG
+#		case $ID_FS_TYPE in
+		case $FSTYPE in
+			*)
+#			crypto_LUKS)
 				echo /bin/umount -fl "/media/*-${MDEV}-*" >>$LOG
 				/bin/umount -fl /media/*-${MDEV}-* >>$LOG 2>&1
 
@@ -322,8 +361,8 @@ case $ACTION in
 				[ -L /media/hdd ] && [ ! -e $(readlink /media/hdd) ] && rm /media/hdd && rm /media/.moviedev
 				[ -L /var/backup ] && [ ! -e $(readlink /var/backup) ] && rm /var/backup && rm /media/.backupdev
 				[ -L /var/swap ] && [ ! -e $(readlink /var/swap) ] && rm /var/swap && rm /media/.swapextensionsdev
-				;;
-			*)
+##				;;
+#			*)
 				echo /bin/umount -fl /media/*-${MDEV} >>$LOG
 				/bin/umount -fl /media/*-${MDEV} >>$LOG 2>&1
 
