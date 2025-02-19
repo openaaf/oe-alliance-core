@@ -21,6 +21,8 @@ else
 	LOG=/dev/null
 fi
 
+[ -e /var/swap ] && [ -d /var/swap ] && rm -rf /var/swap && echo remove /var/swap folder >> $LOG
+
 BLACKLISTED="mmcblk0"
 FIRST_MEDIA="hdd"
 EXTRA=""
