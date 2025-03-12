@@ -1,5 +1,5 @@
-GO_IMPORT = "rclone.org"
-GO_INSTALL = "${GO_IMPORT}"
+GO_IMPORT = "tailscale.com"
+GO_INSTALL = "${GO_IMPORT}/cmd/tailscale ${GO_IMPORT}/cmd/tailscaled"
 
 # generate standalone executable without dependencies to any shared objects at runtime
 GO_LINKSHARED = ""

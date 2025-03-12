@@ -1,41 +1,11 @@
 #!/bin/sh
 # Interlude script to set the time using time servers.
 #
-
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 
 # If this isn't present then we are doomed...
 #
 [ -x /usr/sbin/ntpd ] || exit 1
-
-# Do nothing when bringing up the loopback device
-# We'll be called by via the if-up.d script directory
-#
-if [ "$METHOD" = loopback ]; then
-    exit 0
-fi
-
-# Avoid running more than one at a time
-#
-LOCKFILE=/var/lock/ntpdate
-TFILE=$LOCKFILE.$$
-
-touch $TFILE
-ln $TFILE $LOCKFILE
-status=$?
-rm -f $TFILE
-
-# If we failed to link it then it already exists. So we exit.
-# Someone else got there first.
-#
-[ $status -ne 0 ] && exit 0
-
-# Ensure we'll remove the lock file when we exit
-#
-free_lock() {
-    rm -f $LOCKFILE
-}
-trap free_lock 0
 
 # At boot time we'll check whether the external Internet is reachable.
 #
@@ -68,40 +38,30 @@ check_online() {
 # Historically this file could set NTPV4 to an NTP server,
 #
 [ -f /var/tmp/ntpv4.local ] && . /var/tmp/ntpv4.local
-
-# Were we given one on the command -line? If so, use it
-#
-if [ -n "$1" ]; then                # Overrides everything
-    NTPSERVER="$1"
-elif [ -n "$NTPV4" ]; then          # ntpv4.local setting
-    NTPSERVER="$NTPV4"
-else                                # Any enigma2 setting?
-    NTPSERVER="`awk -F= '$1 == "config.misc.NTPserver" {print $2; exit;}' /etc/enigma2/settings`"
-    if [ -z "$NTPSERVER" ]; then
-        NTPSERVER="pool.ntp.org"    # The default....
-    fi
+if [ -n "$NTPV4" ]; then # ntpv4.local setting
+NTPSERVER="$NTPV4"
+else # Any enigma2 setting?
+NTPSERVER="`awk -F= '$1 == "config.misc.NTPserver" {print $2; exit;}' /etc/enigma2/settings`"
 fi
+[ -z "$NTPSERVER" ] && NTPSERVER="pool.ntp.org" # The fall-back....
 
 # Interfaces are usually brought up during boot, but then we need to
 # check that the Internet is reachable as well.
 #
-DELAY=""
-if [ "$0" = "/etc/network/if-up.d/ntpdate-sync" ]; then
-    DELAY="check_online"
+
+DELAY="check_online"
+
+# Now do the work - allow 5 seconds, kill after 7 seconds, if still there.
+#
+$DELAY
+if timeout -k 7 5 /usr/sbin/ntpd -nq -p $NTPSERVER 2>/dev/null; then
+if [ "$UPDATE_HWCLOCK" = "yes" ] && [ -x /sbin/stb-hwclock ]; then
+/sbin/stb-hwclock --systohc
+fi
 fi
 
-(
-    $DELAY      # No-op if empty....
-    if /usr/sbin/ntpd -nq -p $NTPSERVER 2>/dev/null; then
-        if [ "$UPDATE_HWCLOCK" = "yes" ] && [ -x /sbin/stb-hwclock ]; then
-            /sbin/stb-hwclock --systohc
-        fi
-    fi
-    exit 0
-) &
-
 # wait for all subprocesses to finish
-# this is required when using systemd service as ntpd will start before ntpdate finishes
-# and results in a bind error (port 123)
+# This is required when using systemd service as ntpd will start before
+# ntpdate finishes and results in a bind error (port 123)
 #
 wait
