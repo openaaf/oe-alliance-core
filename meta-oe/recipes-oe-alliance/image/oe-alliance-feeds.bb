@@ -111,6 +111,7 @@ RDEPENDS:${PN} = " \
     streamlink \
     llmnr-query \
     mc \
+    mediamtx \
     mergerfs \
     minidlna \
     minisatip \
@@ -192,6 +193,8 @@ RDEPENDS:${PN} = " \
     tcpdump \
     tmux \
     transmission \
+    tsanalyze \
+    tsduck \
     uhubctl \
     upx \
     ushare \
