@@ -10,7 +10,6 @@ LIC_FILES_CHKSUM:beyonwiz = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263
 LIC_FILES_CHKSUM:openeight = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 LIC_FILES_CHKSUM:opendroid = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 LIC_FILES_CHKSUM:openspa = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
-LIC_FILES_CHKSUM:openaaf = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 DEPENDS = " \
     curl \
@@ -211,7 +210,6 @@ SRCREV ?= "${AUTOREV}"
 SRC_URI = "${ENIGMA2_URI}"
 
 SRC_URI:append:openatv = " file://swig-4.3.patch"
-SRC_URI:append:openaaf = " file://swig-4.3.patch"
 
 SRC_URI:append:opendroid = " file://swig-4.3.patch"
 
@@ -224,10 +222,6 @@ SRC_URI:append:vuduo = " \
     "
 
 do_patch:append:openatv() {
-    bb.build.exec_func('do_usesigc3', d)
-}
-
-do_patch:append:openaaf() {
     bb.build.exec_func('do_usesigc3', d)
 }
 
