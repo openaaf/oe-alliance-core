@@ -37,7 +37,6 @@ PROVIDES += " \
     enigma2-plugin-extensions-libvupldemo \
     enigma2-plugin-extensions-witaispeechtotext \
     enigma2-plugin-extensions-webkithbbtv \
-    enigma2-plugin-extensions-stalkerclient \
     ${@bb.utils.contains('MACHINE_FEATURES', 'operahbbtv', 'enigma2-plugin-extensions-hbbtv ' , ' ', d)} \
     enigma2-plugin-systemplugins-transcodingsetup \
     enigma2-plugin-systemplugins-micomupgrade \
@@ -71,6 +70,7 @@ DEPENDS = "\
     bluez-conf \
     bluez-hidd \
     bluez-alsa \
+    btinit \
     ${@bb.utils.contains('MACHINE_FEATURES', 'legacykernel', '' , 'hostapd bridge-utils', d)} \
     wvdial wvstreams \
     ${@bb.utils.contains("MACHINE_FEATURES", "chromiumos", "chromium-browser", "", d)} \
@@ -85,7 +85,7 @@ DEPENDS = "\
 DESCRIPTION:enigma2-plugin-systemplugins-audioeffect = "Audio Effect setup"
 DESCRIPTION:enigma2-plugin-systemplugins-aboutboxbranding = "View Boxbranding data from the GUI"
 DESCRIPTION:enigma2-plugin-extensions-btdevicesmanager = "this is bt devices manger to pair e.x keyboard or mouse"
-RDEPENDS:enigma2-plugin-extensions-btdevicesmanager = "bluez5-testtools bluez5 bluez-hcidump bluez-conf bluez-hidd bluez-alsa alsa-utils-aplay python3-pexpect"
+RDEPENDS:enigma2-plugin-extensions-btdevicesmanager = "btinit bluez5-testtools bluez5 bluez-hcidump bluez-conf bluez-hidd bluez-alsa alsa-utils-aplay python3-pexpect"
 DESCRIPTION:enigma2-plugin-systemplugins-blindscan = "blindscan..."
 RRECOMMENDS:enigma2-plugin-systemplugins-blindscan = "virtual-blindscan-dvbs"
 DESCRIPTION:enigma2-plugin-extensions-dlnabrowser = "this is dlna/upnp browser using djmount"
@@ -151,7 +151,6 @@ DESCRIPTION:enigma2-plugin-extensions-witaispeechtotext = "Vuplus wit.ai speech 
 RDEPENDS:enigma2-plugin-extensions-witaispeechtotext = "python3-requests"
 DESCRIPTION:enigma2-plugin-extensions-webkithbbtv = "E2 HbbTV Plugin"
 RDEPENDS:enigma2-plugin-extensions-webkithbbtv = "vuplus-webkithbbtv-dumpait webkit-hbbtv-browser libupnp1.6"
-DESCRIPTION:enigma2-plugin-extensions-stalkerclient = "E2 Staker Client Plugin"
 DESCRIPTION:enigma2-plugin-extensions-tvspielfilm = "TVSpielfilm Plugin"
 RDEPENDS:enigma2-plugin-extensions-tvspielfilm = "python3-yt-dlp"
 
@@ -160,7 +159,7 @@ inherit autotools-brokensep gitpkgv gettext python3targetconfig
 SRCREV = "${AUTOREV}"
 PV = "${IMAGE_VERSION}+gitr"
 PKGV = "${IMAGE_VERSION}+gitr${GITPKGV}"
-PR = "r2"
+PR = "r3"
 
 SRC_URI = "${OEA_PLUGINS_URI}"
 
@@ -173,6 +172,7 @@ EXTRA_OECONF = " \
     --with-arch=${TARGET_ARCH} \
     --with-pythonver=python3 \
     ${@bb.utils.contains("MACHINE_FEATURES", "aml-plugins", "--with-amlplugins" , "", d)} \
+    ${@bb.utils.contains("MACHINE_FEATURES", "inibt", "--with-btsupport" , "", d)} \
     "
 
 ALLOW_EMPTY:${PN} = "1"
