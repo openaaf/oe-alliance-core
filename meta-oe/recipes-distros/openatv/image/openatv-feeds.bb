@@ -7,7 +7,7 @@ ALLOW_EMPTY:${PN} = "1"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 PV = "1.0"
-PR = "r56"
+PR = "r57"
 
 inherit packagegroup
 
@@ -44,6 +44,7 @@ RRECOMMENDS:${PN} = "\
     enigma2-plugin-skins-blue-line-oe-4atv \
     enigma2-plugin-skins-blueaccents-fhd-4atv \
     enigma2-plugin-skins-pli-hd-fullnight-4atv \
+    enigma2-plugin-skins-gradient-fhd-4atv \
     enigma2-plugin-skins-steampunk \
     enigma2-plugin-skins-iflatfhd \
     enigma2-plugin-skins-glamouraurafhd-atv \
@@ -57,6 +58,7 @@ RRECOMMENDS:${PN} = "\
     ncdu \
     ${@bb.utils.contains("MACHINE_FEATURES", "nogui", "packagegroup-openatv-nogui", "", d)} \
     ${@bb.utils.contains("MACHINE_FEATURES", "smallflash", "packagegroup-openatv-small", "", d)} \
+    ${@bb.utils.contains("MACHINE_FEATURES", "dreamboxv2", "enigma2-plugin-extensions-dbackup", "", d)} \
     "
 
 # remove close cant update to py3
