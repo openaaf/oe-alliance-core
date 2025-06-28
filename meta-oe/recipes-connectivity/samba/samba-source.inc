@@ -60,6 +60,9 @@ SRC_URI:append:arm = " \
 SRC_URI:append:openatv = " \
            file://smb-local.conf \
           "
+SRC_URI:append:openaaf = " \
+           file://smb-local.conf \
+          "
 SRC_URI:append:openvix = " \
            file://smb-local.conf \
           "
