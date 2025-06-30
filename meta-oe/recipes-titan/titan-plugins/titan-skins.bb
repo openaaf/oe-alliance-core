@@ -127,7 +127,7 @@ do_package_qa() {
 }
 
 do_package_write_ipk:append() {
-    bb.process.run("cp -a ../deploy-png/* .")
+	if [ -e "../deploy-png" ]; then cp -a ../deploy-png/* .; fi
 }
 
 PACKAGES_DYNAMIC = "titan-plugin-skins-*"
