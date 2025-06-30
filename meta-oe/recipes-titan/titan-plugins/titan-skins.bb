@@ -127,6 +127,10 @@ do_package_qa() {
 }
 
 do_package_write_ipk:append() {
+    bb.build.exec_func("do_copypng", d)
+}
+
+do_copypng() {
 	if [ -e "../deploy-png" ]; then cp -a ../deploy-png/* .; fi
 }
 
