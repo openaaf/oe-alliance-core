@@ -17,7 +17,7 @@ SRC_URI = "svn://svn.dyndns.tv/svn/titan;module=libipkg;protocol=http;user=build
 DEPENDS = "libarchive"
 RDEPENDS:${PN} = "libarchive"
 
-S = "${WORKDIR}/libipkg"
+S = "${UNPACKDIR}/libipkg"
 
 CFLAGS:append = " \
     -Wno-implicit-function-declaration -Wno-incompatible-pointer-types \

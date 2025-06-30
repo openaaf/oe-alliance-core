@@ -23,8 +23,8 @@ SRCREV = "${AUTOREV}"
 SRCREV_FORMAT = "svn_git"
 PV = "1.0"
 
-E = "${WORKDIR}/svn"
-UNPACKDIR = "${E}"
+#E = "${UNPACKDIR}/svn"
+#UNPACKDIR = "${E}"
 EMUDIR = "${UNPACKDIR}/emus_oscam"
 
 DEPENDS = "libusb openssl libdvbcsa"
@@ -32,8 +32,8 @@ RDEPENDS:${PN} += "libdvbcsa libusb1"
 
 LDFLAGS:prepend = "-ldvbcsa "
 
-#S = "${WORKDIR}/trunk"
-S = "${WORKDIR}/git"
+#S = "${UNPACKDIR}/trunk"
+#S = "${UNPACKDIR}/git"
 
 EXTRA_OECMAKE += "\
 	-DWEBIF=1 \
@@ -51,6 +51,26 @@ EXTRA_OECMAKE += "\
 	-DHAVE_LIBDVBCSA=1 \
 "
 
+do_install1() {
+    install -d ${D}/bin
+    install -m 0755 ${UNPACKDIR}/build/oscam ${D}/bin/oscam
+    cd ${UNPACKDIR}/emus_oscam
+    cp -a _path_/keys ${D}/
+    cp -a _path_/etc ${D}/
+
+#    SVNVERSION=$(svnversion ${UNPACKDIR}/trunk)
+#    sed "s/Description:.*/Description: Latest Version $SVNVERSION of OScam/" -i ${E}/CONTROL/control
+
+#	 which git > /dev/null 2>&1 && revision=`git log -10 --pretty=%B | grep git-svn-id | head -n 1 | sed -n -e 's/^.*trunk@\([0-9]*\) .*$/\1/p'`
+#    sed "s/Description:.*/Description: Latest Version $revision of OScam/" -i ${E}/CONTROL/control
+
+	offset="1103"
+	revision=$(git -C ${UNPACKDIR}/git rev-list --no-merges --count HEAD)
+	SVNVERSION="$(expr $offset + $revision)"
+    sed "s/Description:.*/Description: Latest Version $SVNVERSION of OScam/" -i ${EMUDIR}/CONTROL/control
+    sed "s/Version:.*/Version: $SVNVERSION/" -i ${EMUDIR}/CONTROL/control
+}
+
 do_install() {
     install -d ${D}/bin
     install -m 0755 ${WORKDIR}/build/oscam ${D}/bin/oscam
@@ -58,14 +78,14 @@ do_install() {
     cp -a _path_/keys ${D}/
     cp -a _path_/etc ${D}/
 
-#    SVNVERSION=$(svnversion ${WORKDIR}/trunk)
+#    SVNVERSION=$(svnversion ${UNPACKDIR}/trunk)
 #    sed "s/Description:.*/Description: Latest Version $SVNVERSION of OScam/" -i ${E}/CONTROL/control
 
 #	 which git > /dev/null 2>&1 && revision=`git log -10 --pretty=%B | grep git-svn-id | head -n 1 | sed -n -e 's/^.*trunk@\([0-9]*\) .*$/\1/p'`
 #    sed "s/Description:.*/Description: Latest Version $revision of OScam/" -i ${E}/CONTROL/control
 
 	offset="1103"
-	revision=$(git -C ${WORKDIR}/git rev-list --no-merges --count HEAD)
+	revision=$(git -C ${S} rev-list --no-merges --count HEAD)
 	SVNVERSION="$(expr $offset + $revision)"
     sed "s/Description:.*/Description: Latest Version $SVNVERSION of OScam/" -i ${EMUDIR}/CONTROL/control
     sed "s/Version:.*/Version: $SVNVERSION/" -i ${EMUDIR}/CONTROL/control

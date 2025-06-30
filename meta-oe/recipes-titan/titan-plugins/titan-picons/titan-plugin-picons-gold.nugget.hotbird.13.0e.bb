@@ -14,7 +14,7 @@ PV = "${@bb.fetch2.get_srcrev(d)}"
 SVNDIR = "svn/${PN}"
 SRC_URI = "svn://svn.dyndns.tv/svn/ipk/source;module=picons_gold_SAT13_0;protocol=http;user=public;pswd=public;externals=allowed"
 
-S = "${WORKDIR}/picons_gold_SAT13_0"
+S = "${UNPACKDIR}/picons_gold_SAT13_0"
 
 FILES:${PN} = "/usr/local/share/titan/picons"
 

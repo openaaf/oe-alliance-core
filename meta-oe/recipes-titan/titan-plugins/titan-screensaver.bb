@@ -14,7 +14,7 @@ PV = "${@bb.fetch2.get_srcrev(d)}"
 SVNDIR = "svn/${PN}"
 SRC_URI = "svn://svn.dyndns.tv/svn/ipk;module=source;protocol=http;user=public;pswd=public;externals=allowed"
 
-S = "${WORKDIR}/source"
+S = "${UNPACKDIR}/source"
 
 FILES:${PN} = "/usr/local/share/titan/saver"
 
@@ -119,7 +119,7 @@ python populate_packages:prepend() {
             print("prerm ", prerm)
             d.setVar('pkg_prerm:' + full_package, prerm)
 
-    mydir = d.getVar('D', True) + "/../source/"
+    mydir = d.getVar('D', True) + "/../sources/source/"
     print("1mydir ", mydir)
     for package in d.getVar('PACKAGES', d, 1).split():
         getControlLines(mydir, d, package.split('-'))

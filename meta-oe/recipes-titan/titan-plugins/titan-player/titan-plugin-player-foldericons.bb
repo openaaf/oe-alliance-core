@@ -14,7 +14,7 @@ PV = "${@bb.fetch2.get_srcrev(d)}"
 SVNDIR = "svn/${PN}"
 SRC_URI = "svn://svn.dyndns.tv/svn/ipk/source;module=players_foldericons_1_0;protocol=http;user=public;pswd=public;externals=allowed"
 
-S = "${WORKDIR}/players_foldericons_1_0"
+S = "${UNPACKDIR}/players_foldericons_1_0"
 
 FILES:${PN} = "/usr/local/share/titan/imdbfolder"
 

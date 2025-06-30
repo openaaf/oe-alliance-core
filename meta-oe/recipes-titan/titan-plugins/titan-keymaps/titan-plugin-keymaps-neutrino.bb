@@ -14,7 +14,7 @@ PV = "${@bb.fetch2.get_srcrev(d)}"
 SVNDIR = "svn/${PN}"
 SRC_URI = "svn://svn.dyndns.tv/svn/ipk/source.arm;module=keymaps_neutrino;protocol=http;user=public;pswd=public;externals=allowed"
 
-S = "${WORKDIR}/keymaps_neutrino"
+S = "${UNPACKDIR}/keymaps_neutrino"
 
 FILES:${PN} = "/mnt/config"
 

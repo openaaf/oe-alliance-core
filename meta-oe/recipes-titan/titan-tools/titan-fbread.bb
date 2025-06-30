@@ -21,7 +21,7 @@ DEPENDS = " \
 	libusb \
 	"
 
-S = "${WORKDIR}/fbread"
+S = "${UNPACKDIR}/fbread"
 
 CFLAGS:append:sh4 = " -DSH4"
 CFLAGS:append:mipsel = " -DMIPSEL"

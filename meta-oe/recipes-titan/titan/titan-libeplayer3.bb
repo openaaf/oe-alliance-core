@@ -26,7 +26,7 @@ inherit gitpkgv upx-compress
 
 SSTATE_ALLOW_OVERLAP_FILES += "${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0.0.0"
 
-S = "${WORKDIR}/libeplayer3"
+S = "${UNPACKDIR}/libeplayer3"
 
 CFLAGS:append = " -Wall -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE -DHAVE_FLV2MPEG4_CONVERTER"
 
@@ -104,7 +104,7 @@ output/writer/mipsel/wmv.c \
 output/writer/mipsel/vc1.c ", d)}"
 
 do_compile() {
-	cd ${WORKDIR}/libeplayer3
+	cd ${UNPACKDIR}/libeplayer3
 #	make clean
 	if [ -e ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so ]; then rm ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so; fi
 	if [ -e ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0 ]; then rm ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0; fi

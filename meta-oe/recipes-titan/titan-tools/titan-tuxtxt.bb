@@ -19,7 +19,7 @@ DEPENDS = " \
 	tuxtxt-enigma2 \
 	"
 
-S = "${WORKDIR}/tuxtxt"
+S = "${UNPACKDIR}/tuxtxt"
 
 CFLAGS:append:sh4 = " -DSH4"
 CFLAGS:append:mipsel = " -DMIPSEL"
