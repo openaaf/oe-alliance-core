@@ -1,4 +1,5 @@
 OWI_REV ?= "1"
+OWI_REV:openaaf = "2"
 OWI_REV:openatv = "2"
 OWI_REV:openbh = "2"
 OWI_REV:openvix = "2"
