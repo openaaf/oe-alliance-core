@@ -188,6 +188,8 @@ NORMAL_IMAGE = "\
 	xfsprogs \
 "
 
+RRECOMMENDS:${PN}:append:sf8008 = " kodi"
+
 #RRECOMMENDS:${PN}:append:sf8008 = " webkit-hbbtv-plugin"
 #RRECOMMENDS:${PN}:append:sf8008m = " webkit-hbbtv-plugin"
 #RRECOMMENDS:${PN}:append:dm900 = " webkit-hbbtv-plugin"
