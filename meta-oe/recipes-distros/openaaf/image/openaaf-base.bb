@@ -162,6 +162,7 @@ NORMAL_IMAGE = "\
 	evtest \
 	hdparm \
 	libavahi-client \
+	libdvbcsa \
 	libusb1 \
 	nfs-utils \
 	nfs-utils-client \
