@@ -48,6 +48,8 @@ DEPENDS = " \
 #openaaf tasks 19861
 #openaaf tasks 20644
 
+DEPENDS:append:sf8008 = " kodi"
+
 TITANPACKAGES += "\
 	titan-autorestore \
 	titan-fbread \
@@ -122,7 +124,7 @@ RDEPENDS:${PN} = "\
     enigma2-dhcp-wait \
     enigma-info \
 	\
-    \
+    \RRECOMMENDS:${PN}:append:sf8008 = " kodi"
     oe-alliance-feeds-configs \
     oe-alliance-botfeed-configs \
     ${@bb.utils.contains("MACHINE_FEATURES", "wol", "vuplus-coldboot vuplus-ethwol", "", d)} \
@@ -188,7 +190,7 @@ NORMAL_IMAGE = "\
 	xfsprogs \
 "
 
-RRECOMMENDS:${PN}:append:sf8008 = " kodi"
+#RRECOMMENDS:${PN}:append:sf8008 = " kodi"
 
 #RRECOMMENDS:${PN}:append:sf8008 = " webkit-hbbtv-plugin"
 #RRECOMMENDS:${PN}:append:sf8008m = " webkit-hbbtv-plugin"
