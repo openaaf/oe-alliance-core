@@ -124,7 +124,7 @@ RDEPENDS:${PN} = "\
     enigma2-dhcp-wait \
     enigma-info \
 	\
-    \RRECOMMENDS:${PN}:append:sf8008 = " kodi"
+    \
     oe-alliance-feeds-configs \
     oe-alliance-botfeed-configs \
     ${@bb.utils.contains("MACHINE_FEATURES", "wol", "vuplus-coldboot vuplus-ethwol", "", d)} \
