@@ -38,7 +38,6 @@ DEPENDS:append:sh4 = " \
 
 RDEPENDS:${PN} = " \
 	glibc-gconv-iso8859-15 \
-	hotplug-e2-helper \
 	gawk \
 	bash \
 	${@bb.utils.contains("MACHINE_FEATURES", "uianimation", "vuplus-libgles-${MACHINE} libvugles2" , "", d)} \
