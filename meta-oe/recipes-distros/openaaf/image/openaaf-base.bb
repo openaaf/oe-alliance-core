@@ -154,7 +154,7 @@ SMALLBOXWIZARD_IMAGE = "\
 
 NORMAL_IMAGE = "\
 	cryptsetup \
-	curlftpfs \
+	curlftpfs-ng \
 	djmount \
     e2fsprogs-e2fsck \
     e2fsprogs-tune2fs \
