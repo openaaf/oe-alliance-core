@@ -3,14 +3,11 @@ MAINTAINER = "OE-Alliance"
 LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=751419260aa954499f7abaabaa882bbe"
 LIC_FILES_CHKSUM:teamblue = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
+LIC_FILES_CHKSUM:openaaf = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 LIC_FILES_CHKSUM:openatv = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 LIC_FILES_CHKSUM:openvix = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 LIC_FILES_CHKSUM:openbh = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
-LIC_FILES_CHKSUM:beyonwiz = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
-LIC_FILES_CHKSUM:openeight = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 LIC_FILES_CHKSUM:opendroid = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
-LIC_FILES_CHKSUM:openspa = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
-LIC_FILES_CHKSUM:openaaf = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 DEPENDS = " \
     curl \
@@ -19,12 +16,11 @@ DEPENDS = " \
     gstreamer1.0-plugins-base gstreamer1.0 \
     jpeg \
     libdreamdvd libdvbsi++ fribidi libmad libpng giflib libxml2 libxmlccwrap \
-    ${@bb.utils.contains_any("DISTRO_NAME", "openaaf openatv openvix openbh teamblue opendroid", "libsigc++-3" , "libsigc++-2.0", d)} \
+    ${@bb.utils.contains_any("DISTRO_NAME", "openatv openatv openvix openbh teamblue opendroid", "libsigc++-3" , "libsigc++-2.0", d)} \
     openssl avahi libudfread \
     python3-pillow python3-twisted python3-wifi python3-six-native \
     swig-native \
     tuxtxt-enigma2 \
-    ${@bb.utils.contains("DISTRO_NAME", "openspa", "uchardet" , "", d)} \
     ${@bb.utils.contains("DISTRO_NAME", "openatv", "ffmpeg" , "", d)} \
     ${@bb.utils.contains("MACHINE_FEATURES", "uianimation", "vuplus-libgles-${MACHINE} libvugles2" , "", d)} \
     ${@bb.utils.contains("MACHINE_FEATURES", "hiaccel", "dinobot-libs-${MACHINE}" , "", d)} \
@@ -34,6 +30,7 @@ DEPENDS = " \
 RDEPENDS:${PN} = " \
     alsa-conf \
     libdreamdvd \
+    libudfread \
     enigma2-fonts \
     font-valis-enigma \
     ethtool \
@@ -41,7 +38,7 @@ RDEPENDS:${PN} = " \
     glibc-gconv-cp1250 \
     ${PYTHON_RDEPS} \
     ${@bb.utils.contains("DISTRO_FEATURES", "e2hotplug", "" , "hotplug-e2-helper", d)} \
-    ${@bb.utils.contains("DISTRO_NAME", "openatv", "ffmpeg openatv-autorestore socketdaemon" , "", d)} \
+    ${@bb.utils.contains("DISTRO_NAME", "openatv", "openatv-autorestore socketdaemon" , "", d)} \
     ${@bb.utils.contains("MACHINE_FEATURES", "uianimation", "vuplus-libgles-${MACHINE} libvugles2" , "", d)} \
     ${@bb.utils.contains("MACHINE_FEATURES", "hiaccel", "dinobot-libs-${MACHINE}" , "", d)} \
     oe-alliance-branding \
@@ -56,6 +53,7 @@ NORMAL_IMAGE_DEPEND = "\
     ${E2DEFAULTSKIN} \
     enigma2-plugin-font-wqy-microhei \
     ${@bb.utils.contains("MACHINE_FEATURES", "blindscan-dvbc", "virtual-blindscan-dvbc" , "", d)} \
+    ${@bb.utils.contains("DISTRO_NAME", "openatv", "ffmpeg" , "", d)} \
 "
 
 RRECOMMENDS:${PN} = " \
@@ -211,9 +209,12 @@ PKGV = "${IMAGE_VERSION}+git${GITPKGV}"
 
 SRCREV ?= "${AUTOREV}"
 SRC_URI = "${ENIGMA2_URI}"
+PR = "r1"
 
 SRC_URI:append:openatv = " file://swig-4.3.patch"
+
 SRC_URI:append:openaaf = " file://swig-4.3.patch"
+
 SRC_URI:append:opendroid = " file://swig-4.3.patch"
 
 #SRC_URI_append_spycatminiv2 = " \
@@ -224,11 +225,11 @@ SRC_URI:append:vuduo = " \
     file://duo_VFD.patch \
     "
 
-do_patch:append:openatv() {
+do_patch:append:openaaf() {
     bb.build.exec_func('do_usesigc3', d)
 }
 
-do_patch:append:openaaf() {
+do_patch:append:openatv() {
     bb.build.exec_func('do_usesigc3', d)
 }
 
