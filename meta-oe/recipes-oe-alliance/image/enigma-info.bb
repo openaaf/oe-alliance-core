@@ -30,10 +30,11 @@ inherit python3-dir
 
 INFOFILE = "${libdir}/enigma.info"
 
+do_populate_sysroot[depends] += "rust-native:do_populate_sysroot upx-native:do_populate_sysroot"
+
 do_install[nostamp] = "1"
 
 do_install() {
-    YOCTO=`cd "${COREBASE}" && git describe --match=yocto* | cut -d '-' -f 2`
     if [ "${MACHINE}" = "vusolo4k" -o "${MACHINE}" = "vusolo2" -o "${MACHINE}" = "vusolose" -o "${MACHINE}" = "vuduo2" -o "${MACHINE}" = "vuuno4k" -o "${MACHINE}" = "vuuno4kse" -o "${MACHINE}" = "vuultimo4k" -o "${MACHINE}" = "vuzero4k" -o "${MACHINE}" = "vuduo4k" -o "${MACHINE}" = "vuduo4kse" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-VUPLUS-BASE}/recipes-drivers/vuplus-dvb-proxy-${MACHINE}.bb | cut -b 12-19`
     elif [ "${BRAND_OEM}" = "vuplus" ]; then
@@ -149,6 +150,12 @@ do_install() {
     else
         DRIVERSDATE='N/A'
     fi
+    if [ -e ${COMPONENTS_DIR}/${BUILD_ARCH}/upx-native${bindir}/upx ]; then
+        UPX_VER=`${COMPONENTS_DIR}/${BUILD_ARCH}/upx-native${bindir}/upx --version | awk 'NR==1{print $2}'`
+    fi
+    if [ -e ${COMPONENTS_DIR}/${BUILD_ARCH}/rust-native${bindir}/rustc ]; then
+        RUST_VER=`${COMPONENTS_DIR}/${BUILD_ARCH}/rust-native${bindir}/rustc --version | awk 'NR==1{print $2}'`
+    fi
 
     install -d ${D}${libdir}
     printf "architecture='${DEFAULTTUNE}'\n" > ${D}${INFOFILE}
@@ -212,6 +219,7 @@ do_install() {
     printf "rcname='${RCNAME}'\n" >> ${D}${INFOFILE}
     printf "rctype=${RCTYPE}\n" >> ${D}${INFOFILE}
     printf "rootfile='${ROOTFS_FILE}'\n" >> ${D}${INFOFILE}
+    printf "rust='${RUST_VER}'\n" >> ${D}${INFOFILE}
     printf "scart=${HAVE_SCART}\n" >> ${D}${INFOFILE}
     printf "noscartswitch=${HAVE_NO_SCART_SWITCH}\n" >> ${D}${INFOFILE}
     printf "scartyuv=${HAVE_SCART_YUV}\n" >> ${D}${INFOFILE}
@@ -221,10 +229,11 @@ do_install() {
     printf "timerwakeupmode=${TIMERWAKEUP_MODE}\n" >> ${D}${INFOFILE}
     printf "transcoding=${HAVE_TRANSCODING}\n" >> ${D}${INFOFILE}
     printf "ubinize='${UBINIZE_ARGS}'\n" >> ${D}${INFOFILE}
+    grep -q "inherit.*upx-compress" ${OEA-META-OE-BASE}/recipes-oe-alliance/enigma2/enigma2.bb && printf "upx='${UPX_VER}'\n" >> ${D}${INFOFILE}
     printf "vfdsymbol=${HAVE_VFDSYMBOL}\n" >> ${D}${INFOFILE}
     printf "wol=${HAVE_WOL}\n" >> ${D}${INFOFILE}
     printf "wwol=${HAVE_WWOL}\n" >> ${D}${INFOFILE}
-    printf "yocto='${YOCTO}'\n" >> ${D}${INFOFILE}
+    printf "yocto='${YOCTO_VERSION}'\n" >> ${D}${INFOFILE}
     printf "yuv=${HAVE_YUV}\n" >> ${D}${INFOFILE}
     printf "checksum=%s\n" $(md5sum "${D}${INFOFILE}" | awk '{print $1}') >> ${D}${INFOFILE}
 }

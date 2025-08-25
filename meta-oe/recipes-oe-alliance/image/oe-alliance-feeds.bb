@@ -35,6 +35,7 @@ RDEPENDS:${PN} = " \
     enigma2-plugin-extensions-youtube \
     enigma2-plugin-extensions-autobouquets \
     enigma2-plugin-extensions-bouquetcleanup \
+    enigma2-plugin-extensions-e2embyclient \
     enigma2-plugin-extensions-e2m3u2bouquet \
     enigma2-plugin-extensions-e2piconizer \
     enigma2-plugin-extensions-gerbera \
@@ -60,6 +61,7 @@ RDEPENDS:${PN} = " \
     enigma2-plugin-extensions-xmodem  \
     enigma2-plugin-extensions-e2iplayer \
     enigma2-plugin-extensions-e2iplayer-deps \
+    enigma2-plugin-extensions-estalker \
     ${@bb.utils.contains("MACHINE_FEATURES", "legacykernel", "" , "gdb v4l-utils evtest strace", d)} \
     ${@bb.utils.contains("MACHINE_FEATURES", "omb", "enigma2-plugin-extensions-openmultiboot openmultiboot", "", d)} \
     ${@bb.utils.contains("MACHINE_FEATURES", "webkithbbtv", "enigma2-plugin-extensions-webkithbbtv", "", d)} \
@@ -117,6 +119,7 @@ RDEPENDS:${PN} = " \
     mediamtx \
     mergerfs \
     minidlna \
+    minilocale \
     minisatip \
     mpd \
     mtd-utils \
@@ -211,7 +214,7 @@ RDEPENDS:${PN} = " \
     zerotier \
     "
 
-WIREGUARD_MODULE = "${@bb.utils.contains_any("MACHINE", "osmini4k osmio4k osmio4kplus", "", "wireguard-module", d)}"
+WIREGUARD_MODULE = "${@bb.utils.contains_any("MACHINE", "osmini4k osmio4k osmio4kplus u5pvr", "", "wireguard-module", d)}"
 
 GST_BASE_DVD = "\
     gstreamer1.0-plugins-bad-videoparsersbad \

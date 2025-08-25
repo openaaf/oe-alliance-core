@@ -4,6 +4,8 @@ PRIORITY = "optional"
 LICENSE = "CLOSED"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
+COMPATIBLE_MACHINE = "^(sf8008|sf8008m)$"
+
 PROVIDES += "virtual/blindscan-dvbs"
 RPROVIDES:${PN} += "virtual-blindscan-dvbs"
 
@@ -12,7 +14,7 @@ SRCDATE = "20190305"
 PV = "${SRCDATE}"
 PR = "r0"
 
-SRC_URI  = "https://source.mynonpublic.com/octagon/${SOC_FAMILY}-blindscan-${SRCDATE}.zip"
+SRC_URI  = "https://source.mynonpublic.com/octagon/octagon-${SOC_FAMILY}-blindscan-${SRCDATE}.zip"
 
 S = "${UNPACKDIR}"
 

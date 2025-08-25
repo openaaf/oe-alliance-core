@@ -4,6 +4,8 @@ PRIORITY = "optional"
 LICENSE = "CLOSED"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
+COMPATIBLE_MACHINE = "og2ott4k"
+
 PROVIDES += "virtual/blindscan-dvbs"
 RPROVIDES:${PN} += "virtual-blindscan-dvbs"
 
@@ -12,7 +14,7 @@ SRCDATE = "20211220"
 PV = "${SRCDATE}"
 PR = "r0"
 
-SRC_URI  = "https://source.mynonpublic.com/qviart/${SOC_FAMILY}-blindscan-${SRCDATE}.zip"
+SRC_URI  = "https://source.mynonpublic.com/qviart/qviart-${SOC_FAMILY}-blindscan-${SRCDATE}.zip"
 
 S = "${UNPACKDIR}"
 

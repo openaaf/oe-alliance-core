@@ -23,7 +23,7 @@ RRECOMMENDS:${PN} = "\
     oe-alliance-skins \
     enigma2-skins \
     enigma2-plugin-systemplugins-crossepg \
-    curlftpfs \
+    curlftpfs-ng \
     cdfs \
     tvheadend \
     openssl-old \
@@ -54,6 +54,7 @@ RRECOMMENDS:${PN} = "\
     enigma2-plugin-extensions-chocholousek-picons \
     enigma2-plugin-extensions-oaweather \
     enigma2-plugin-systemplugins-m3uiptv \
+    enigma2-plugin-extensions-plutotv \
     mediainfo \
     ncdu \
     ${@bb.utils.contains("MACHINE_FEATURES", "nogui", "packagegroup-openatv-nogui", "", d)} \

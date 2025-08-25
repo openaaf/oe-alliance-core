@@ -6,7 +6,7 @@ require conf/license/license-close.inc
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 PV = "1.3"
-PR = "${SRCDATE}-r0"
+PR = "${SRCDATE}-r1"
 
 SRC_URI = "https://source.mynonpublic.com/vuplus/chromium/chromium-vuplus_${MACHINE}_${SRCDATE}.tar.gz \
            file://run.patch;striplevel=0"
@@ -21,7 +21,7 @@ S = "${UNPACKDIR}/chromium"
 
 do_install() {
 	install -d ${D}/usr/local/chromium
-	cp -afR ${S}/* ${D}/usr/local/chromium/
+	cp -afR --no-preserve=ownership ${S}/* ${D}/usr/local/chromium/
 	chmod 755 ${D}/usr/local/chromium/run.sh
 	chmod 755 ${D}/usr/local/chromium/bin/browser_shell
 	chmod 755 ${D}/usr/local/chromium/bin/chrome

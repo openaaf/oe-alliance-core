@@ -38,6 +38,8 @@ SRC_URI += "https://source.mynonpublic.com/zgemma/linux-${PV}-${ARCH}.tar.gz;nam
     file://fix-multiple-defs-yyloc.patch \
     file://fix-build-with-binutils-2.41.patch \
     file://Hauppauge-dualHD.patch \
+    file://quirks.patch \
+    file://dib0700.patch \
     "
 
 SRC_URI:append:mipsel = " \
@@ -45,6 +47,8 @@ SRC_URI:append:mipsel = " \
     file://0002-nand-ecc-strength-and-bitflip.patch \
     file://sdio-pinmux.patch \
     file://fix-never-be-null_outside-array-bounds-gcc-12.patch \
+    file://block2mtd.patch \
+    file://initramfs-mipsel.cpio.xz;unpack=0 \
     "
 
 SRC_URI:append:arm = " \
@@ -64,20 +68,27 @@ KERNEL_IMAGEDEST = "tmp"
 
 KERNEL_EXTRA_ARGS = 'EXTRA_CFLAGS="-std=gnu17 -Wno-attribute-alias"'
 
+RPROVIDES:${KERNEL_PACKAGE_NAME}-image:mipsel += "kernel-${KERNEL_IMAGETYPE}"
+
 # Linux MIPS Models
 
-KERNEL_OUTPUT:mips = "vmlinux"
-KERNEL_IMAGETYPE:mips = "vmlinux"
+KERNEL_OUTPUT:mipsel = "vmlinux"
+KERNEL_IMAGETYPE:mipsel = "vmlinux"
 
-FILES:${KERNEL_PACKAGE_NAME}-image:mips = "/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}*"
+FILES:${KERNEL_PACKAGE_NAME}-image:mipsel = "/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}*"
 
-kernel_do_install:append:mips () {
+kernel_do_configure:prepend:mipsel() {
+	install -d ${B}/usr
+	install -m 0644 ${UNPACKDIR}/initramfs-mipsel.cpio.xz ${B}/
+}
+
+kernel_do_install:append:mipsel () {
 	${STRIP} ${D}/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}-${KERNEL_VERSION}
 	gzip -9c ${D}/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}-${KERNEL_VERSION} > ${D}/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz
 	rm ${D}/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}-${KERNEL_VERSION}
 }
 
-pkg_postinst:kernel-image:mips () {
+pkg_postinst:kernel-image:mipsel () {
 	if [ "x$D" == "x" ]; then
 		if [ -f /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz ] ; then
 			flash_erase /dev/${MTD_KERNEL} 0 0
