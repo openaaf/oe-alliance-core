@@ -1,4 +1,4 @@
-DESCRIPTION = "Gmediarender DLNA Renderer"
+DESCRIPTION = "RarFs is a virtual filesystem to mount an rar archives"
 MAINTAINER = "TitanNit Developer"
 LICENSE = "GPLv2"
 require conf/license/license-gplv2.inc
