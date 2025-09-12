@@ -82,8 +82,6 @@ output/writer/sh4/pcm.c \
 output/writer/sh4/vc1.c \
 output/writer/sh4/wma.c \
 output/writer/sh4/wmv.c ", " \
-tools/debug.c \
-tools/strbuffer.c \
 output/linuxdvb_mipsel.c \
 output/writer/mipsel/writer.c \
 output/writer/mipsel/aac.c \
@@ -103,6 +101,9 @@ output/writer/mipsel/divx3.c \
 output/writer/mipsel/vp.c \
 output/writer/mipsel/wmv.c \
 output/writer/mipsel/vc1.c ", d)}"
+
+#tools/debug.c
+#tools/strbuffer.c
 
 do_compile() {
 	cd ${UNPACKDIR}/libeplayer3
