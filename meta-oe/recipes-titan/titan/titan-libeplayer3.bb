@@ -15,7 +15,7 @@ SRCREV = "${AUTOREV}"
 PV = "${@bb.fetch2.get_srcrev(d)}"
 
 SVNDIR = "svn/${PN}"
-SRC_URI = "svn://svn.dyndns.tv/svn/tools/;module=exteplayer3_179;protocol=http;user=buildbin;pswd=buildbin \
+SRC_URI = "svn://svn.dyndns.tv/svn/titan/;module=libeplayer3;protocol=http;user=buildbin;pswd=buildbin \
           "
 
 DEPENDS = "ffmpeg libbluray"
@@ -26,7 +26,7 @@ inherit gitpkgv upx-compress
 
 SSTATE_ALLOW_OVERLAP_FILES += "${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0.0.0"
 
-S = "${UNPACKDIR}/exteplayer3_179"
+S = "${UNPACKDIR}/libeplayer3"
 
 CFLAGS:append = " -Wall -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE -DHAVE_FLV2MPEG4_CONVERTER"
 
@@ -106,7 +106,7 @@ output/writer/mipsel/wmv.c \
 output/writer/mipsel/vc1.c ", d)}"
 
 do_compile() {
-	cd ${UNPACKDIR}/exteplayer3_179
+	cd ${UNPACKDIR}/libeplayer3
 #	make clean
 	if [ -e ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so ]; then rm ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so; fi
 	if [ -e ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0 ]; then rm ${STAGING_DIR_TARGET}/usr/lib/libeplayer3.so.0; fi
