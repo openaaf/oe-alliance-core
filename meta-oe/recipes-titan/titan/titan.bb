@@ -388,6 +388,7 @@ FILES:${PN} = " \
 	/etc/init.d \
 	/etc/mdev \
 	/etc/network \
+	/lib \
 	/sbin \
 	/usr/bin \
 	/usr/local/bin \
