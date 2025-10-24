@@ -14,7 +14,7 @@ PV = "${@bb.fetch2.get_srcrev(d)}"
 SVNDIR = "svn/${PN}"
 SRC_URI = "svn://svn.dyndns.tv/svn/ipk/source;module=bootlogos_Titan_0_5;protocol=http;user=public;pswd=public;externals=allowed"
 
-S = "${WORKDIR}/bootlogos_Titan_0_5"
+S = "${UNPACKDIR}/bootlogos_Titan_0_5"
 
 FILES:${PN} = "/etc/boot"
 

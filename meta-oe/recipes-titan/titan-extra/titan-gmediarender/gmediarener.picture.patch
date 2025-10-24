@@ -1,6 +1,19 @@
-diff -ruN a/src/output.c a/src/output.c.patched
---- a/src/output.c	2020-12-14 16:50:56.990432574 +0100
-+++ a/src/output.c.patched	2020-12-14 17:08:49.566441852 +0100
+From 54d955ad0f5d10125040f637bf60632eff157a95 Mon Sep 17 00:00:00 2001
+From: obi <_obiwan_@web.de>
+Date: Sat, 28 Jun 2025 13:57:47 +0200
+Subject: [PATCH] add titan stuff
+
+---
+ src/output.c           | 135 +++++++++++++++++++++++++++++++++++++++++
+ src/output.h           |   7 +++
+ src/output_gstreamer.c |  57 +++++++++++++++++
+ src/output_gstreamer.h |   6 ++
+ 4 files changed, 205 insertions(+)
+
+diff --git a/src/output.c b/src/output.c
+index 6e30585..ab3f24b 100644
+--- a/src/output.c
++++ b/src/output.c
 @@ -39,6 +39,9 @@
  #include "output_module.h"
  #ifdef HAVE_GST
@@ -11,7 +24,7 @@ diff -ruN a/src/output.c a/src/output.c.patched
  #endif
  #include "output.h"
  
-@@ -194,13 +197,28 @@
+@@ -194,13 +197,28 @@ int output_get_position(gint64 *track_dur, gint64 *track_pos) {
  }
  
  int output_get_volume(float *value) {
@@ -40,7 +53,7 @@ diff -ruN a/src/output.c a/src/output.c.patched
  		return output_module->set_volume(value);
  	}
  	return -1;
-@@ -217,3 +235,120 @@
+@@ -217,3 +235,120 @@ int output_set_mute(int value) {
  	}
  	return -1;
  }
@@ -161,9 +174,28 @@ diff -ruN a/src/output.c a/src/output.c.patched
 +	return buf;
 +}
 +//obi end
-diff -ruN a/src/output_gstreamer.c a/src/output_gstreamer.c.patched
---- a/src/output_gstreamer.c	2020-12-14 16:50:56.990432574 +0100
-+++ a/src/src/output_gstreamer.c.patched	2020-12-14 17:12:00.426436380 +0100
+diff --git a/src/output.h b/src/output.h
+index 9230752..5e35687 100644
+--- a/src/output.h
++++ b/src/output.h
+@@ -27,6 +27,13 @@
+ #include <glib.h>
+ #include "song-meta-data.h"
+ 
++//obi start
++int writesys(const char *filename, char *value, int flag);
++char* ostrcat(char* value1, char* value2, int free1, int free2);
++char* oitoa(int value);
++char* ostrshrink(char* value);
++//obi end
++
+ // Feedback for the controlling part what is happening with the
+ // output.
+ enum PlayFeedback {
+diff --git a/src/output_gstreamer.c b/src/output_gstreamer.c
+index e144d5f..f59414b 100644
+--- a/src/output_gstreamer.c
++++ b/src/output_gstreamer.c
 @@ -36,6 +36,9 @@
  #include <string.h>
  #include <unistd.h>
@@ -174,8 +206,8 @@ diff -ruN a/src/output_gstreamer.c a/src/output_gstreamer.c.patched
  
  #include "logging.h"
  #include "upnp_connmgr.h"
-@@ -158,7 +161,61 @@
- 	SongMetaData_clear(&song_meta_);
+@@ -143,7 +146,61 @@ static GstState get_current_player_state() {
+ 	return state;
  }
  
 +// obi start
@@ -236,9 +268,10 @@ diff -ruN a/src/output_gstreamer.c a/src/output_gstreamer.c.patched
  	play_trans_callback_ = callback;
  	if (get_current_player_state() != GST_STATE_PAUSED) {
  		if (gst_element_set_state(player_, GST_STATE_READY) ==
-diff -ruN a/src/output_gstreamer.h a/src/src/output_gstreamer.h.patched
---- a/src/output_gstreamer.h	2020-12-14 16:50:56.990432574 +0100
-+++ a/src/src/output_gstreamer.h.patched	2020-12-14 16:59:39.606449951 +0100
+diff --git a/src/output_gstreamer.h b/src/output_gstreamer.h
+index 6e89010..3a837a6 100644
+--- a/src/output_gstreamer.h
++++ b/src/output_gstreamer.h
 @@ -26,4 +26,10 @@
  
  extern struct output_module gstreamer_output;
@@ -250,20 +283,3 @@ diff -ruN a/src/output_gstreamer.h a/src/src/output_gstreamer.h.patched
 +// obi end
 +
  #endif /*  _OUTPUT_GSTREAMER_H */
-diff -ruN a/src/output.h a/src/output.h.patched
---- a/src/output.h	2020-12-14 16:50:56.990432574 +0100
-+++ a/src/output.h.patched	2020-12-14 17:00:27.654449942 +0100
-@@ -27,6 +27,13 @@
- #include <glib.h>
- #include "song-meta-data.h"
- 
-+//obi start
-+int writesys(const char *filename, char *value, int flag);
-+char* ostrcat(char* value1, char* value2, int free1, int free2);
-+char* oitoa(int value);
-+char* ostrshrink(char* value);
-+//obi end
-+
- // Feedback for the controlling part what is happening with the
- // output.
- enum PlayFeedback {

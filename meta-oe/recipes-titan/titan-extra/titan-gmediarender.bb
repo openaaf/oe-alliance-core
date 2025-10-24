@@ -1,4 +1,4 @@
-DESCRIPTION="Gmediarender DLNA Renderer"
+DESCRIPTION = "Gmediarender DLNA Renderer"
 MAINTAINER = "TitanNit Developer"
 LICENSE = "GPLv2"
 require conf/license/license-gplv2.inc
@@ -134,13 +134,14 @@ SRCREV = "${AUTOREV}"
 PV = "${IMAGE_VERSION}+git"
 PKGV = "${IMAGE_VERSION}+git${GITPKGV}"
 
-SRC_URI="git://github.com/hzeller/gmrender-resurrect.git;protocol=https;branch=master"
+SRC_URI = "git://github.com/hzeller/gmrender-resurrect.git;protocol=https;branch=master"
 
 SRC_URI += " \
 		file://gmediarener.picture.patch \
 "
 
-S = "${WORKDIR}/git"
+#S = "${UNPACKDIR}/${BB_GIT_DEFAULT_DESTSUFFIX}"
+#S = "${UNPACKDIR}/git"
 
 inherit autotools pkgconfig
 

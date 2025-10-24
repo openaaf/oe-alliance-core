@@ -36,7 +36,7 @@ DEPENDS = "titan \
 
 RDEPENDS:${PN} = "${PYTHON_PN}-ctypes"
 
-S = "${WORKDIR}/svn/titan/plugins"
+S = "${UNPACKDIR}/svn/titan/plugins"
 
 #inherit autotools-brokensep pkgconfig
 #inherit autotools-brokensep
@@ -54,10 +54,10 @@ CFLAGS = "\
 	-I${STAGING_DIR_TARGET}/usr/include/openssl \
 	-I${STAGING_DIR_TARGET}/usr/include/dreamdvd \
 	-I${STAGING_DIR_TARGET}/usr/include/libdreamdvd \
-	-I${WORKDIR}/svn/titan/libdreamdvd \
-	-I${WORKDIR}/svn/titan/titan \
-	-I${WORKDIR}/svn/titan/titan/include \
-	-I${WORKDIR}/svn/titan/libeplayer3/include"
+	-I${UNPACKDIR}/svn/titan/libdreamdvd \
+	-I${UNPACKDIR}/svn/titan/titan \
+	-I${UNPACKDIR}/svn/titan/titan/include \
+	-I${UNPACKDIR}/svn/titan/libeplayer3/include"
 
 CFLAGS:append:arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
 	-I${STAGING_DIR_TARGET}/usr/include \
@@ -69,8 +69,8 @@ CFLAGS:append:arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
 	-I${STAGING_DIR_TARGET}/usr/include/freetype2 \
 	-I${STAGING_DIR_TARGET}/usr/include/dreamdvd \
 	-I${STAGING_DIR_TARGET}/usr/include/libdreamdvd \	
-	-I${WORKDIR}/titan/libdreamdvd \
-	-I${WORKDIR}/titan/titan \
+	-I${UNPACKDIR}/titan/libdreamdvd \
+	-I${UNPACKDIR}/titan/titan \
     ', ' \
 	-I${STAGING_DIR_TARGET}/usr/include \
 	-I${STAGING_DIR_TARGET}/usr/include/gstreamer-0.10 \
@@ -80,8 +80,8 @@ CFLAGS:append:arm = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
 	-I${STAGING_DIR_TARGET}/usr/include/freetype2 \
 	-I${STAGING_DIR_TARGET}/usr/include/dreamdvd \
 	-I${STAGING_DIR_TARGET}/usr/include/libdreamdvd \	
-	-I${WORKDIR}/titan/libdreamdvd \
-	-I${WORKDIR}/titan/titan \
+	-I${UNPACKDIR}/titan/libdreamdvd \
+	-I${UNPACKDIR}/titan/titan \
 ', d)}"
 
 CFLAGS:append:sh4 = " \
@@ -207,7 +207,7 @@ python populate_packages:prepend() {
             print("prerm ", prerm)
             d.setVar('pkg_prerm:' + full_package, prerm)
 
-    mydir = d.getVar('D', True) + "/../svn/titan/plugins/"
+    mydir = d.getVar('D', True) + "/../sources/svn/titan/plugins/"
     print("1mydir ", mydir)
     for package in d.getVar('PACKAGES', d, 1).split():
         getControlLines(mydir, d, package.split('-'))
@@ -217,8 +217,10 @@ do_package_qa() {
 }
 
 do_package_write_ipk:append() {
-    bb.process.run("cp -a ../deploy-png/* .")
-#    bb.process.run("cp -a ../preview .")
+    bb.build.exec_func("do_copypng", d)
 }
 
+do_copypng() {
+	if [ -e "../deploy-png" ]; then cp -a ../deploy-png/* .; fi
+}
 

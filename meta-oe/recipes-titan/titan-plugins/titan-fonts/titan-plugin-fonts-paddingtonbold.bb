@@ -14,7 +14,7 @@ PV = "${@bb.fetch2.get_srcrev(d)}"
 SVNDIR = "svn/${PN}"
 SRC_URI = "svn://svn.dyndns.tv/svn/ipk/source;module=fonts_paddingtonbold_1_0;protocol=http;user=public;pswd=public;externals=allowed"
 
-S = "${WORKDIR}/fonts_paddingtonbold_1_0"
+S = "${UNPACKDIR}/fonts_paddingtonbold_1_0"
 
 FILES:${PN} = "/usr/share/fonts"
 

@@ -14,7 +14,7 @@ PV = "${@bb.fetch2.get_srcrev(d)}"
 SVNDIR = "svn/${PN}"
 SRC_URI = "svn://svn.dyndns.tv/svn/ipk/source;module=lcdsamsungskins_Holzuhr_Standby;protocol=http;user=public;pswd=public;externals=allowed"
 
-S = "${WORKDIR}/lcdsamsungskins_Holzuhr_Standby"
+S = "${UNPACKDIR}/lcdsamsungskins_Holzuhr_Standby"
 
 FILES:${PN} = "/usr/local/share/titan"
 

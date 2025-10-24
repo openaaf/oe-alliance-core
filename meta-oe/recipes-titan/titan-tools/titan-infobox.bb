@@ -21,7 +21,7 @@ DEPENDS = " \
 	jpeg \
 	"
 
-S = "${WORKDIR}/infobox"
+S = "${UNPACKDIR}/infobox"
 
 CFLAGS:append:sh4 = " -DSH4"
 CFLAGS:append:mipsel = " -DMIPSEL"

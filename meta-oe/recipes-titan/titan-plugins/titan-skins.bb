@@ -14,7 +14,7 @@ PV = "${@bb.fetch2.get_srcrev(d)}"
 SVNDIR = "svn/${PN}"
 SRC_URI = "svn://svn.dyndns.tv/svn/titan;module=skins;protocol=http;user=buildbin;pswd=buildbin;externals=allowed"
 
-S = "${WORKDIR}/skins"
+S = "${UNPACKDIR}/skins"
 
 FILES:${PN} = "/usr/local/share/titan/skin"
 
@@ -117,7 +117,7 @@ python populate_packages:prepend() {
             print("prerm ", prerm)
             d.setVar('pkg_prerm:' + full_package, prerm)
 
-    mydir = d.getVar('D', True) + "/../skins/"
+    mydir = d.getVar('D', True) + "/../sources/skins/"
     print("1mydir ", mydir)
     for package in d.getVar('PACKAGES', d, 1).split():
         getControlLines(mydir, d, package.split('-'))
@@ -127,7 +127,11 @@ do_package_qa() {
 }
 
 do_package_write_ipk:append() {
-    bb.process.run("cp -a ../deploy-png/* .")
+    bb.build.exec_func("do_copypng", d)
+}
+
+do_copypng() {
+	if [ -e "../deploy-png" ]; then cp -a ../deploy-png/* .; fi
 }
 
 PACKAGES_DYNAMIC = "titan-plugin-skins-*"

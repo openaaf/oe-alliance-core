@@ -11,8 +11,8 @@ PACKAGE_ARCH = "${MACHINEBUILD}"
 
 SSTATE_SKIP_CREATION = "1"
 
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
+S = "${UNPACKDIR}/sources"
+#UNPACKDIR = "${S}"
 
 PACKAGES = "${PN}"
 

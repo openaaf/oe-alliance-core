@@ -1,7 +1,7 @@
-SUMMARY = "openATV bootlogo"
+SUMMARY = "openAAF bootlogo"
 SECTION = "base"
 PRIORITY = "required"
-MAINTAINER = "openATV Team"
+MAINTAINER = "openAAF Team"
 PACKAGE_ARCH = "${MACHINEBUILD}"
 
 require conf/license/license-gplv2.inc
@@ -9,10 +9,9 @@ require conf/license/license-gplv2.inc
 RDEPENDS:${PN} += "showiframe"
 
 PV = "${IMAGE_VERSION}"
-PR = "r2.7"
+PR = "r9"
 
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
+S = "${UNPACKDIR}"
 
 INITSCRIPT_NAME = "bootlogo"
 INITSCRIPT_PARAMS = "start 06 S ."
@@ -25,6 +24,7 @@ INITSCRIPT_PARAMS:vuuno4kse = "start 70 S ."
 INITSCRIPT_PARAMS:vuultimo4k = "start 70 S ."
 INITSCRIPT_PARAMS:vuzero4k = "start 70 S ."
 INITSCRIPT_PARAMS:vuduo4k = "start 70 S ."
+INITSCRIPT_PARAMS:vuduo4kse = "start 70 S ."
 INITSCRIPT_PARAMS:gb7252 = "start 70 S ."
 INITSCRIPT_PARAMS:gb72604 = "start 70 S ."
 PRECOMPILED_ARCH = "${MACHINE}"
@@ -35,6 +35,13 @@ inherit update-rc.d
 SRC_URI = "file://bootlogo_hd.mvi file://restore_hd.mvi file://bootlogo_fhd.mvi file://restore_fhd.mvi file://radio.mvi file://bootlogo.sh file://splash576.bmp file://splash480.bmp file://splash1280.jpg \
     ${@bb.utils.contains("MACHINE_FEATURES", "gigabluelcd220", "file://lcdsplash220.bin file://lcdwaitkey220.bin file://lcdwarning220.bin" , "", d)} \
     ${@bb.utils.contains("MACHINE_FEATURES", "gigabluelcd400", "file://lcdsplash400.bin file://lcdwaitkey400.bin file://lcdwarning400.bin" , "", d)} \
+    ${@bb.utils.contains("MACHINE_FEATURES", "displayvfd", "${DISPLAYVFD_LOGO}" , "", d)} \
+"
+
+DISPLAYVFD_LOGO = "\
+    ${@bb.utils.contains("MACHINE_FEATURES", "colorlcd400", "file://400.png" , "", d)} \
+    ${@bb.utils.contains("MACHINE_FEATURES", "colorlcd480", "file://480.png" , "", d)} \
+    ${@bb.utils.contains("MACHINE_FEATURES", "colorlcd800", "file://800.png" , "", d)} \
 "
 
 SRC_URI:append:vuduo2 = " file://lcdbootlogo.png file://bootlogo.py"
@@ -42,8 +49,8 @@ SRC_URI:append:dags7356 = " file://splash1.bmp file://splash1_os1.bmp file://spl
 SRC_URI:append:dags7362 = " file://splash1_power.bmp file://splash1_os1.bmp file://splash1_os2.bmp file://splash2.bmp file://splash3.bmp"
 SRC_URI:append:dags73625 = " file://splash1_power.bmp file://splash1_os1.bmp file://splash1_os2.bmp file://splash2.bmp file://splash3.bmp"
 SRC_URI:append:dags7252 = " file://atv_splash.bmp"
-SRC_URI:append:dags72604 =" file://atv_splash.bmp"
-SRC_URI:append:dagsmv200 =" file://dagsmv200/radio.mvi"
+SRC_URI:append:dags72604 = " file://atv_splash.bmp"
+SRC_URI:append:dagsmv200 = " file://dagsmv200/radio.mvi"
 SRC_URI:append:7100s = " file://lcdsplash220.bin file://7100s/lcdwaitkey220.bin file://7100s/lcdwarning220.bin file://7100s/lcdcomplete220.bin"
 SRC_URI:append:7210s = " file://lcdsplash220.bin file://7100s/lcdwaitkey220.bin file://7100s/lcdwarning220.bin file://7100s/lcdcomplete220.bin"
 SRC_URI:append:7105s = " file://lcdsplash220.bin file://7100s/lcdwaitkey220.bin file://7100s/lcdwarning220.bin file://7100s/lcdcomplete220.bin"
@@ -73,7 +80,9 @@ SRC_URI:append:sx88v2 = " file://logo.img"
 SRC_URI:append:sfx6008 = " file://logo.img"
 SRC_URI:append:ustym4kpro = " file://logo.img"
 SRC_URI:append:ustym4kottpremium = " file://logo.img"
+SRC_URI:append:ustym4ks2ottx = " file://logo.img"
 SRC_URI:append:og2ott4k = " file://logo.img"
+SRC_URI:append:og2s4k = " file://logo.img"
 SRC_URI:append:multiboxpro = " file://logo.img"
 SRC_URI:append:multiboxse = " file://logo.img"
 SRC_URI:append:multibox = " file://logo.img"
@@ -84,7 +93,7 @@ SRC_URI:append:ip8 = " file://logo.img"
 
 BINARY_VERSION = "1.3"
 
-SRC_URI += "${@bb.utils.contains("MACHINE_FEATURES", "dreamboxv1", "http://dreamboxupdate.com/download/opendreambox/2.0.0/dreambox-bootlogo/dreambox-bootlogo_${BINARY_VERSION}_${PRECOMPILED_ARCH}.tar.bz2;name=${PRECOMPILED_ARCH}" , "", d)}"
+SRC_URI += "${@bb.utils.contains("MACHINE_FEATURES", "dreamboxv1", "https://source.mynonpublic.com/dreambox/dreambox-bootlogo_${BINARY_VERSION}_${PRECOMPILED_ARCH}.tar.bz2;name=${PRECOMPILED_ARCH}" , "", d)}"
 
 SRC_URI[dm8000.md5sum] = "1b63ac7e2bd5c0db0748606acc310d47"
 SRC_URI[dm8000.sha256sum] = "91e4402190fe88cf394ae780141d968a1ebecd8db7b23c1f0ca3f4bfa9c9512a"
@@ -120,6 +129,13 @@ do_install() {
     ${@bb.utils.contains("MACHINE_FEATURES", "gigabluelcd400", "install -m 0644 lcdwarning400.bin ${D}/usr/share/lcdwarning.bin" , "", d)}
     ${@bb.utils.contains("MACHINE_FEATURES", "gigabluelcd220", "install -m 0644 lcdwaitkey220.bin ${D}/usr/share/lcdwaitkey.bin" , "", d)}
     ${@bb.utils.contains("MACHINE_FEATURES", "gigabluelcd220", "install -m 0644 lcdwarning220.bin ${D}/usr/share/lcdwarning.bin" , "", d)}
+    if [ -e 400.png ]; then
+        install -m 0644 400.png ${D}/usr/share/lcd.png
+    elif [ -e 480.png ]; then
+        install -m 0644 480.png ${D}/usr/share/lcd.png
+    elif [ -e 800.png ]; then
+        install -m 0644 800.png ${D}/usr/share/lcd.png
+    fi
 }
 
 do_install:append:vuduo2() {

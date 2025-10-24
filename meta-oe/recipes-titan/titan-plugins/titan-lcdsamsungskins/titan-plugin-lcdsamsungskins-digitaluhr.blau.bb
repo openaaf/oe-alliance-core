@@ -14,7 +14,7 @@ PV = "${@bb.fetch2.get_srcrev(d)}"
 SVNDIR = "svn/${PN}"
 SRC_URI = "svn://svn.dyndns.tv/svn/ipk/source;module=lcdsamsungskins_Digitaluhr_blau;protocol=http;user=public;pswd=public;externals=allowed"
 
-S = "${WORKDIR}/lcdsamsungskins_Digitaluhr_blau"
+S = "${UNPACKDIR}/lcdsamsungskins_Digitaluhr_blau"
 
 FILES:${PN} = "/usr/local/share/titan"
 

@@ -12,13 +12,13 @@ PV = "${IMAGE_VERSION}+git"
 PKGV = "${IMAGE_VERSION}+git${GITPKGV}"
 
 SRC_URI = "git://github.com/openaaf/autorestore.git;protocol=https;branch=master"
-S = "${WORKDIR}/git/src"
+#S = "${UNPACKDIR}/git/src"
 
 RDEPENDS:${PN} += "bash"
 
 do_install() {
 	install -d ${D}/etc/init.d
 	install -d ${D}/etc/rcS.d
-	install -m 755 ${S}/fastrestore_openaaf.sh ${D}/etc/init.d/settings-restore
+	install -m 755 ${S}/src/fastrestore_openaaf.sh ${D}/etc/init.d/settings-restore
 	ln -sf ../init.d/settings-restore ${D}/etc/rcS.d/S75settings-restore
 }

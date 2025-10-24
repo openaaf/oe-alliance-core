@@ -17,11 +17,11 @@ SRCREV = "${AUTOREV}"
 PV = "${IMAGE_VERSION}+git"
 PKGV = "${IMAGE_VERSION}+git${GITPKGV}"
 
-SRC_URI="git://github.com/clark15b/xupnpd.git;protocol=https;branch=master \
+SRC_URI = "git://github.com/clark15b/xupnpd.git;protocol=https;branch=master \
         file://liblua.makefile.patch \
         file://xupnpd.patch"
 
-S = "${WORKDIR}/git/src"
+S = "${UNPACKDIR}/git/src"
 
 SRC     = "main.cpp soap.cpp mem.cpp mcast.cpp luaxlib.cpp luaxcore.cpp luajson.cpp luajson_parser.cpp"
 LUAMYCFLAGS = "-DLUA_USE_LINUX"
@@ -31,12 +31,12 @@ CFLAGS:append = " -DLUA_USE_LINUX -fno-exceptions -fno-rtti -O2 -I${LUA} -L${LUA
 LDFLAGS:prepend = " -llua -lm -ldl -lssl -lcrypto "
 
 do_compile() {
-#	cd ${WORKDIR}/git/src
+#	cd ${UNPACKDIR}/git/src
 #    make clean
-#	cd ${WORKDIR}/git/src/${LUA}
+#	cd ${UNPACKDIR}/git/src/${LUA}
 #    make linux clean
 
-	cd ${WORKDIR}/git/src
+	cd ${UNPACKDIR}/git/src
 
 #	make linux -C ${LUA}
 	${LIBEXEC} make linux -C ${LUA}

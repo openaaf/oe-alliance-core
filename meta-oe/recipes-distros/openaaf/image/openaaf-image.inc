@@ -16,6 +16,9 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 WORKDIR = "${TMPDIR}/work/${MULTIMACH_TARGET_SYS}/${PN}/${EXTENDPE}${PV}"
 
+# We need to add machine rootfs directory to pseudo path after https://github.com/openembedded/openembedded-core/commit/2502da81709f25de499277b28d33c915638c45f6
+PSEUDO_INCLUDE_PATHS .= ",${TMPDIR}/rootfs/${MACHINE}"
+
 do_rootfs[deptask] = "do_rm_work"
 
 SSTATE_ALLOW_OVERLAP_FILES += "${DEPLOY_DIR_IMAGE}"
@@ -39,28 +42,28 @@ IMAGE_INSTALL += "${@bb.utils.contains_any("FLASHSIZE", "64 96 128", "", "mc mc-
 export IMAGE_BASENAME = "openaaf-image"
 
 #ok1
-#CREATE_CACHEDIR:="${@os.system('mkdir -p ${TMPDIR}/svncache/${MACHINEBUILD} > /dev/null 2>&1')}"
-#GIT_VERSION:="${@os.popen('git --git-dir=${OE-ALLIANCE_BASE}/.git log  --pretty=format:"%s" | wc -l').read().rstrip()}"
-#STABLE:="${@os.popen('svn export --force --username buildbin --password buildbin --force -r ${SVN_VERSION} http://svn.dyndns.tv/svn/image/make-flash ${TMPDIR}/svncache/${MACHINEBUILD}/make-flash | cat ${TMPDIR}/svncache/${MACHINEBUILD}/make-flash | grep ^STABLE= | cut -d"=" -f2 | tr -d "\r" | tr -d "\n" | sed -e "s/\t//g" | sed -e "s/ //g"').read().rstrip()}"
-#STABLE_BRANCH:="${@os.popen('svn export --force --username buildbin --password buildbin --force -r ${SVN_VERSION} http://svn.dyndns.tv/svn/titan/titan/tools/oealliance.sh ${TMPDIR}/svncache/${MACHINEBUILD}/oealliance.sh | cat ${TMPDIR}/svncache/${MACHINEBUILD}/oealliance.sh | grep STABLEBRANCH= | sed -nr "s,.*=([^=]+).*,\1,p"').read().rstrip()}"
-#TITAN_VERSION:="${@os.popen('svn export --force --username buildbin --password buildbin --force -r ${SVN_VERSION} http://svn.dyndns.tv/svn/titan/titan/struct.h ${TMPDIR}/svncache/${MACHINEBUILD}/struct.h | cat ${TMPDIR}/svncache/${MACHINEBUILD}/struct.h | grep "#define OVERSION" | cut -d\'"\' -f2 | sed "s/\./-/"').read().rstrip()}"
-#IMAGE_VERSION_STRIP:="${@os.popen('echo ${IMAGE_VERSION} | sed "s/\./-/"').read().rstrip()}"
+#CREATE_CACHEDIR := "${@os.system('mkdir -p ${TMPDIR}/svncache/${MACHINEBUILD} > /dev/null 2>&1')}"
+#GIT_VERSION := "${@os.popen('git --git-dir=${OE-ALLIANCE_BASE}/.git log  --pretty=format:"%s" | wc -l').read().rstrip()}"
+#STABLE := "${@os.popen('svn export --force --username buildbin --password buildbin --force -r ${SVN_VERSION} http://svn.dyndns.tv/svn/image/make-flash ${TMPDIR}/svncache/${MACHINEBUILD}/make-flash | cat ${TMPDIR}/svncache/${MACHINEBUILD}/make-flash | grep ^STABLE= | cut -d"=" -f2 | tr -d "\r" | tr -d "\n" | sed -e "s/\t//g" | sed -e "s/ //g"').read().rstrip()}"
+#STABLE_BRANCH := "${@os.popen('svn export --force --username buildbin --password buildbin --force -r ${SVN_VERSION} http://svn.dyndns.tv/svn/titan/titan/tools/oealliance.sh ${TMPDIR}/svncache/${MACHINEBUILD}/oealliance.sh | cat ${TMPDIR}/svncache/${MACHINEBUILD}/oealliance.sh | grep STABLEBRANCH= | sed -nr "s,.*=([^=]+).*,\1,p"').read().rstrip()}"
+#TITAN_VERSION := "${@os.popen('svn export --force --username buildbin --password buildbin --force -r ${SVN_VERSION} http://svn.dyndns.tv/svn/titan/titan/struct.h ${TMPDIR}/svncache/${MACHINEBUILD}/struct.h | cat ${TMPDIR}/svncache/${MACHINEBUILD}/struct.h | grep "#define OVERSION" | cut -d\'"\' -f2 | sed "s/\./-/"').read().rstrip()}"
+#IMAGE_VERSION_STRIP := "${@os.popen('echo ${IMAGE_VERSION} | sed "s/\./-/"').read().rstrip()}"
 #GROUPOUT = "${@bb.utils.contains("SVN_VERSION", "${STABLE}", "stable", "nightly", d)}"
 #export IMAGE_NAME = "${@bb.utils.contains("IMAGE_VERSION", "${STABLE_BRANCH}", "M${SVN_VERSION}_${MACHINEBUILD}_v${TITAN_VERSION}_${GROUPOUT}_UPDATEUSB_g${GIT_VERSION}", "M${SVN_VERSION}_${MACHINEBUILD}_v${TITAN_VERSION}_beta_UPDATEUSB_oe${IMAGE_VERSION_STRIP}_g${GIT_VERSION}", d)}"
-#WRITE_IMAGE_NAME:="${@os.system('echo "${IMAGE_NAME}" > ${TMPDIR}/svncache/${MACHINEBUILD}/.imagename-oenew')}"
+#WRITE_IMAGE_NAME := "${@os.system('echo "${IMAGE_NAME}" > ${TMPDIR}/svncache/${MACHINEBUILD}/.imagename-oenew')}"
 
 #ok2
-COUNT:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.COUNT').read().rstrip()}"
-SVNVERSION:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.COUNT').read().rstrip()}"
-GITVERSION:="${@os.popen('git --git-dir=${OE-ALLIANCE_BASE}/.git log  --pretty=format:"%s" | wc -l').read().rstrip()}"
-TITANVERSION:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/titanversion').read().rstrip()}"
-STABLE:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.STABLE').read().rstrip()}"
-STABLEBRANCH:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.STABLEBRANCH').read().rstrip()}"
-IMAGE_VERSION_STRIP:="${@os.popen('echo ${IMAGE_VERSION} | sed "s/\./-/"').read().rstrip()}"
-TITANVERSION_STRIP:="${@os.popen('echo ${TITANVERSION} | sed "s/\./-/"').read().rstrip()}"
+COUNT := "${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.COUNT').read().rstrip()}"
+SVNVERSION := "${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.COUNT').read().rstrip()}"
+GITVERSION := "${@os.popen('git --git-dir=${OE-ALLIANCE_BASE}/.git log  --pretty=format:"%s" | wc -l').read().rstrip()}"
+TITANVERSION := "${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/titanversion').read().rstrip()}"
+STABLE := "${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.STABLE').read().rstrip()}"
+STABLEBRANCH := "${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.STABLEBRANCH').read().rstrip()}"
+IMAGE_VERSION_STRIP := "${@os.popen('echo ${IMAGE_VERSION} | sed "s/\./-/"').read().rstrip()}"
+TITANVERSION_STRIP := "${@os.popen('echo ${TITANVERSION} | sed "s/\./-/"').read().rstrip()}"
 GROUPOUT = "${@bb.utils.contains("SVNVERSION", "${STABLE}", "stable", "nightly", d)}"
 export IMAGE_NAME = "${@bb.utils.contains("IMAGE_VERSION", "${STABLEBRANCH}", "M${SVN_VERSION}_${MACHINEBUILD}_${TITANVERSION_STRIP}_${GROUPOUT}_UPDATEUSB_g${GITVERSION}", "M${SVN_VERSION}_${MACHINEBUILD}_${TITANVERSION_STRIP}_beta_UPDATEUSB_oe${IMAGE_VERSION_STRIP}_g${GITVERSION}", d)}"
-WRITE_IMAGE_NAME:="${@os.system('echo "${IMAGE_NAME}" > ${TMPDIR}/svncache/${MACHINEBUILD}/.imagename-oenew')}"
+WRITE_IMAGE_NAME := "${@os.system('echo "${IMAGE_NAME}" > ${TMPDIR}/svncache/${MACHINEBUILD}/.imagename-oenew')}"
 
 #ok3
 ####export IMAGE_NAME:="${@os.popen('cat ${TMPDIR}/svncache/${MACHINEBUILD}/.imagename-svn').read().rstrip()}"

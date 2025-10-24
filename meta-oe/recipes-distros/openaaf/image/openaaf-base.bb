@@ -48,6 +48,8 @@ DEPENDS = " \
 #openaaf tasks 19861
 #openaaf tasks 20644
 
+DEPENDS:append:sf8008 = " kodi"
+
 TITANPACKAGES += "\
 	titan-autorestore \
 	titan-fbread \
@@ -152,7 +154,7 @@ SMALLBOXWIZARD_IMAGE = "\
 
 NORMAL_IMAGE = "\
 	cryptsetup \
-	curlftpfs \
+	curlftpfs-ng \
 	djmount \
     e2fsprogs-e2fsck \
     e2fsprogs-tune2fs \
@@ -160,6 +162,7 @@ NORMAL_IMAGE = "\
 	evtest \
 	hdparm \
 	libavahi-client \
+	libdvbcsa \
 	libusb1 \
 	nfs-utils \
 	nfs-utils-client \
@@ -187,6 +190,8 @@ NORMAL_IMAGE = "\
 	${@bb.utils.contains("MACHINE_FEATURES", "hbbtv-browser-webkit", " webkit-hbbtv-plugin", "", d)} \
 	xfsprogs \
 "
+
+#RRECOMMENDS:${PN}:append:sf8008 = " kodi"
 
 #RRECOMMENDS:${PN}:append:sf8008 = " webkit-hbbtv-plugin"
 #RRECOMMENDS:${PN}:append:sf8008m = " webkit-hbbtv-plugin"

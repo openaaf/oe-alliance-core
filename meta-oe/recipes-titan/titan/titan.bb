@@ -38,7 +38,6 @@ DEPENDS:append:sh4 = " \
 
 RDEPENDS:${PN} = " \
 	glibc-gconv-iso8859-15 \
-	hotplug-e2-helper \
 	gawk \
 	bash \
 	${@bb.utils.contains("MACHINE_FEATURES", "uianimation", "vuplus-libgles-${MACHINE} libvugles2" , "", d)} \
@@ -122,7 +121,7 @@ GST_UGLY_RDEPS = "\
     gstreamer1.0-plugins-ugly-dvdsub \
 "
 
-S = "${WORKDIR}/svn/titan"
+S = "${UNPACKDIR}/svn/titan"
 
 CFLAGS:append = " \
 	-I${STAGING_DIR_TARGET}/usr/include \
@@ -131,10 +130,10 @@ CFLAGS:append = " \
 	-I${STAGING_DIR_TARGET}/usr/include/dreamdvd \
 	-I${STAGING_DIR_TARGET}/usr/include/libdreamdvd \
 	-I${STAGING_DIR_TARGET}/usr/include/curl \
-	-I${WORKDIR}/svn/titan/libdreamdvd \
-	-I${WORKDIR}/svn/titan/titan \
-	-I${WORKDIR}/svn/titan/titan/include \
-	-I${WORKDIR}/svn/titan/libeplayer3/include \
+	-I${UNPACKDIR}/svn/titan/libdreamdvd \
+	-I${UNPACKDIR}/svn/titan/titan \
+	-I${UNPACKDIR}/svn/titan/titan/include \
+	-I${UNPACKDIR}/svn/titan/libeplayer3/include \
 	"
 
 CFLAGS:append = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
@@ -389,6 +388,7 @@ FILES:${PN} = " \
 	/etc/init.d \
 	/etc/mdev \
 	/etc/network \
+	/lib \
 	/sbin \
 	/usr/bin \
 	/usr/local/bin \

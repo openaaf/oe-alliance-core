@@ -14,7 +14,7 @@ PV = "${@bb.fetch2.get_srcrev(d)}"
 SVNDIR = "svn/${PN}"
 SRC_URI = "svn://svn.dyndns.tv/svn/ipk/source;module=settings_andy_2xSat_KabelD_1_0;protocol=http;user=public;pswd=public;externals=allowed"
 
-S = "${WORKDIR}/settings_andy_2xSat_KabelD_1_0"
+S = "${UNPACKDIR}/settings_andy_2xSat_KabelD_1_0"
 
 FILES:${PN} = "/mnt/settings"
 

@@ -14,7 +14,7 @@ PV = "${@bb.fetch2.get_srcrev(d)}"
 SVNDIR = "svn/${PN}"
 SRC_URI = "svn://svn.dyndns.tv/svn/ipk/source;module=lcdpearlskins_atemio_style;protocol=http;user=public;pswd=public;externals=allowed"
 
-S = "${WORKDIR}/lcdpearlskins_atemio_style"
+S = "${UNPACKDIR}/lcdpearlskins_atemio_style"
 
 FILES:${PN} = "/usr/local/share/titan"
 
