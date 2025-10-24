@@ -12,6 +12,8 @@ SRC_URI += " \
     file://modprobe \
     "
 
+SRC_URI:append:openaaf = " file://preinst_dest.patch"
+
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 do_install:prepend() {

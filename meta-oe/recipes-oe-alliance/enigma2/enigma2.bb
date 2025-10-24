@@ -15,7 +15,7 @@ DEPENDS = " \
     gstreamer1.0-plugins-base gstreamer1.0 \
     jpeg \
     libdreamdvd libdvbsi++ fribidi libmad libpng giflib libxml2 libxmlccwrap \
-    ${@bb.utils.contains_any("DISTRO_NAME", "openatv openvix openbh teamblue opendroid", "libsigc++-3" , "libsigc++-2.0", d)} \
+    ${@bb.utils.contains_any("DISTRO_NAME", "openaaf openatv openvix openbh teamblue opendroid", "libsigc++-3" , "libsigc++-2.0", d)} \
     openssl avahi libudfread \
     python3-pillow python3-twisted python3-wifi python3-six-native \
     swig-native \
@@ -211,7 +211,7 @@ SRC_URI = "${ENIGMA2_URI}"
 PR = "r1"
 
 SRC_URI:append:openatv = " file://swig-4.3.patch"
-
+SRC_URI:append:openaaf = " file://swig-4.3.patch"
 SRC_URI:append:opendroid = " file://swig-4.3.patch"
 
 #SRC_URI_append_spycatminiv2 = " \
@@ -223,6 +223,10 @@ SRC_URI:append:vuduo = " \
     "
 
 do_patch:append:openatv() {
+    bb.build.exec_func('do_usesigc3', d)
+}
+
+do_patch:append:openaaf() {
     bb.build.exec_func('do_usesigc3', d)
 }
 
