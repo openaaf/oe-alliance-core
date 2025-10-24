@@ -15,7 +15,7 @@ SRC_URI = "${SOURCEFORGE_MIRROR}/pupnp/libupnp-${PV}.tar.bz2 \
 SRC_URI[md5sum] = "05c2393eee4fbf81c9e1b116b9554039"
 SRC_URI[sha256sum] = "3168f676352e2a6e45afd6ea063721ed674c99f555394903fbd23f7f54f0a503"
 
-S = "${WORKDIR}/libupnp-${PV}"	
+S = "${UNPACKDIR}/libupnp-${PV}"	
 
 inherit autotools pkgconfig
 
