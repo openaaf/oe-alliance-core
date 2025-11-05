@@ -6,9 +6,10 @@ DEPENDS = "cmake-native"
 
 inherit gitpkgv
 
-SRCREV = "${AUTOREV}"
+SRCREV = "f2521b296b21df207cac1ec513c7a56235ad10fc"
 PV = "git"
 PKGV = "git${GITPKGV}"
+PR = "1"
 
 SRC_URI = "git://github.com/openwrt/odhcp6c.git;protocol=https;branch=master \
            file://ifup \
