@@ -162,6 +162,9 @@ NORMAL_IMAGE = "\
 	evtest \
 	hdparm \
 	libavahi-client \
+    libcrypto-compat-0.9.7 \
+    libcrypto-compat-1.0.0 \
+    libxcrypt-compat \
 	libdvbcsa \
 	libusb1 \
 	nfs-utils \
