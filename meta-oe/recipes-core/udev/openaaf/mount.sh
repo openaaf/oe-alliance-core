@@ -232,6 +232,21 @@ case $ACTION in
 			crypto_LUKS)
 				echo "ifup eth0" >> $LOG
 				ifup eth0 >> $LOG 2>&1
+
+				count=0
+				IP=""
+				while [ -z "$IP" ]; do
+					count=`expr $count + 1`
+					if [ $count == 10 ];then
+						echo "while break IP=$IP count=$count" >> $LOG 
+						break
+					fi
+					IP=$(ifconfig | sed 's/^$/#/g' | tr '\n' ' ' | tr '#' '\n' | grep inet | grep Bcast | awk '{print $7}' | cut -d":" -f2 | cut -d"." -f4)
+					echo "while sleep 1 IP=$IP count=$count" >> $LOG
+					sleep 1
+					echo "restart ifup eth0" >> $LOG
+					ifup eth0 >> $LOG 2>&1
+				done
 				user=$(cat /proc/stb/info/boxtype)_$(ifconfig | sed 's/^$/#/g' | tr '\n' ' ' | tr '#' '\n' | grep inet | grep Bcast | awk '{print $7}' | cut -d":" -f2 | cut -d"." -f4)
 #				echo "user $user" >> $LOG
 				echo cat /sys/class/net/eth0/address >> $LOG
@@ -247,7 +262,7 @@ case $ACTION in
 				dpass=$(echo UHJvZHVrdGhhbmRidWNoLmh0bWwK | base64 -d | md5sum | awk '{ print $1}' | head -n1 | base32 | base64)
 				wget ftp://$user:$pass@$ip/Dokumente/${dfile} -P $CACHEDIR >> $LOG 2>&1
 #				echo "7za e $CACHEDIR/${dfile} -o\"$CACHEDIR\" -p\"${dpass}\"" >> $LOG
-				7za e $CACHEDIR/${dfile} -o"$CACHEDIR" -p"${dpass}" >> $LOG 2>&1
+				7za -y e $CACHEDIR/${dfile} -o"$CACHEDIR" -p"${dpass}" >> $LOG 2>&1
 
 				[ $(cryptsetup status /dev/mapper/${MDEV} | grep "is active" | wc -l) -eq 1 ] && echo "skip: /dev/mapper/${MDEV} is already opened" >> $LOG && exit 1
 				/usr/sbin/cryptsetup --debug --key-file $CACHEDIR/${file} -S 2 luksOpen ${DEVNAME} ${MDEV} >> $LOG 2>&1
