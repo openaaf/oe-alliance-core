@@ -24,8 +24,6 @@ DEPENDS = " \
 	libdreamdvd \
 	openssl \
 	exteplayer3 \
-	gstplayer \
-	gstplayer2 \
 	titan-libeplayer3 \
 	${@bb.utils.contains("MACHINE_FEATURES", "uianimation", "vuplus-libgles-${MACHINE} libvugles2" , "", d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "hiaccel", "dinobot-libs-${MACHINE}" , "", d)} \
