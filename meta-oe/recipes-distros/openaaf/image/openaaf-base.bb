@@ -160,6 +160,8 @@ NORMAL_IMAGE = "\
     e2fsprogs-tune2fs \
 	exteplayer3 \
 	evtest \
+	gstplayer \
+	gstplayer2 \
 	hdparm \
 	libavahi-client \
     libcrypto-compat-0.9.7 \
