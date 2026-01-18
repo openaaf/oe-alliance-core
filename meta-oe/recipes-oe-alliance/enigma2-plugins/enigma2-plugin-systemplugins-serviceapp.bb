@@ -14,13 +14,14 @@ SRC_URI = "git://github.com/oe-mirrors/serviceapp.git;branch=develop;protocol=ht
 SRC_URI:openvix = "git://github.com/OpenViX/serviceapp.git;branch=sigc3;protocol=https"
 SRC_URI:openbh = "git://github.com/BlackHole/serviceapp.git;branch=sigc3;protocol=https"
 SRC_URI:openatv = "git://github.com/oe-mirrors/serviceapp.git;branch=openATV;protocol=https"
+SRC_URI:openaaf = "git://github.com/oe-mirrors/serviceapp.git;branch=openATV;protocol=https"
 SRC_URI:openspa = "git://github.com/oe-mirrors/serviceapp.git;branch=openATV;protocol=https"
 SRC_URI:teamblue = "git://github.com/teamblue-e2/serviceapp.git;branch=7.4;protocol=https"
 SRC_URI:opendroid = "git://github.com/opendroid-Team/serviceapp.git;branch=sig3;protocol=https"
 
 inherit autotools gitpkgv python3native pkgconfig gettext python3targetconfig
 
-CXXFLAGS += "${@bb.utils.contains_any("DISTRO_NAME", "openatv openspa openvix openbh teamblue opendroid", "" , " -std=c++11", d)}"
+CXXFLAGS += "${@bb.utils.contains_any("DISTRO_NAME", "openatv openaaf openspa openvix openbh teamblue opendroid", "" , " -std=c++11", d)}"
 
 PV = "0.5+git"
 PKGV = "0.5+git${GITPKGV}"
