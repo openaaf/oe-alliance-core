@@ -26,6 +26,7 @@ RRECOMMENDS:${PN} = "\
     curlftpfs-ng \
     cdfs \
     tvheadend \
+    dnscrypt-proxy \
     openssl-old \
     ${@bb.utils.contains_any('TARGET_ARCH', 'arm aarch64', 'sysbench', '', d)} \
     enigma2-plugin-extensions-enhancedmoviecenter \
@@ -36,6 +37,7 @@ RRECOMMENDS:${PN} = "\
     enigma2-plugin-extensions-blurayplayer \
     enigma2-plugin-extensions-sdgradio \
     enigma2-plugin-extensions-epgimport \
+    enigma2-plugin-extensions-skymultiview \
     enigma2-plugin-systemplugins-autobouquetsmaker \
     enigma2-plugin-extensions-openatvreader \
     enigma2-plugin-extensions-openatvstatus \
@@ -55,6 +57,7 @@ RRECOMMENDS:${PN} = "\
     enigma2-plugin-extensions-oaweather \
     enigma2-plugin-systemplugins-m3uiptv \
     enigma2-plugin-extensions-plutotv \
+    enigma2-plugin-extensions-bootlogoswitcher \
     mediainfo \
     ncdu \
     ${@bb.utils.contains("MACHINE_FEATURES", "nogui", "packagegroup-openatv-nogui", "", d)} \

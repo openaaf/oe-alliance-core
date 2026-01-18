@@ -5,7 +5,7 @@ SRC_URI:append = " \
            file://0009-glimagesink-Downrank-to-marginal.patch \
            file://0002-subparse-set-need_segment-after-sink-pad-received-GS.patch \
            file://0003-riff-media-added-fourcc-to-all-ffmpeg-mpeg4-video-caps.patch \
-		   file://0004-add-missing-mesa-define.patch \
+           file://0004-add-missing-mesa-define.patch \
 "
 
 PACKAGECONFIG:append = " \
@@ -22,5 +22,5 @@ do_install:append() {
 
 INSANE_SKIP:libgstgl-1.0 += "file-rdeps"
 
-PV = "1.26.7"
-SRC_URI[sha256sum] = "969e3cbf05dfab92cf37e94840fbe398517d7ba3275331d1c216a2e30a7208d0"
+PV = "1.26.10"
+SRC_URI[sha256sum] = "1c1531dd8f2d480c89c57b08a930545a3375077391789762e40e490cdbbf03fd"

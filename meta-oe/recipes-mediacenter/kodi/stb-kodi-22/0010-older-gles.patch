@@ -1,19 +1,20 @@
-From 82ab9689fee8fab75e01c427f33181b3dd195379 Mon Sep 17 00:00:00 2001
-From: NickerSK <nickersk@gmail.com>
-Date: Wed, 8 Jan 2025 18:37:36 +0000
+From 71745e4c9fc93d5e57509e8012349d40bd34a6c3 Mon Sep 17 00:00:00 2001
+From: atvcaptain <openatv@gmail.com>
+Date: Mon, 29 Dec 2025 00:32:50 +0100
 Subject: [PATCH] older gles
 
 ---
- .../RetroPlayer/shaders/gles/ShaderPresetGLES.h     |  7 +++++++
+ .../RetroPlayer/shaders/gles/ShaderPresetGLES.h     | 11 +++++++++++
+ .../VideoShaders/VideoFilterShaderGLES.cpp          |  4 ++++
  xbmc/guilib/TextureGLES.h                           | 13 +++++++++++++
  xbmc/utils/EGLUtils.h                               |  3 +++
- 3 files changed, 23 insertions(+)
+ 4 files changed, 31 insertions(+)
 
 diff --git a/xbmc/cores/RetroPlayer/shaders/gles/ShaderPresetGLES.h b/xbmc/cores/RetroPlayer/shaders/gles/ShaderPresetGLES.h
-index 9f7f1d0262..eaed6564a4 100644
+index 9f7f1d0262..a6deb6bba5 100644
 --- a/xbmc/cores/RetroPlayer/shaders/gles/ShaderPresetGLES.h
 +++ b/xbmc/cores/RetroPlayer/shaders/gles/ShaderPresetGLES.h
-@@ -10,6 +10,13 @@
+@@ -10,6 +10,17 @@
  
  #include "cores/RetroPlayer/shaders/ShaderPreset.h"
  
@@ -23,10 +24,29 @@ index 9f7f1d0262..eaed6564a4 100644
 +#ifndef GL_RGBA32F
 +#define GL_RGBA32F  0x8814
 +#endif
++#ifndef GL_RGBA16F_EXT
++#define GL_RGBA16F_EXT 0x881A
++#endif
++
 +
  namespace KODI
  {
  namespace RETRO
+diff --git a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp
+index ed6c086381..1109833a56 100644
+--- a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp
++++ b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp
+@@ -19,6 +19,10 @@
+ #include <math.h>
+ #include <string>
+ 
++#ifndef GL_RGBA16F_EXT
++#define GL_RGBA16F_EXT 0x881A
++#endif
++
+ using namespace Shaders::GLES;
+ 
+ //////////////////////////////////////////////////////////////////////
 diff --git a/xbmc/guilib/TextureGLES.h b/xbmc/guilib/TextureGLES.h
 index 634760c813..9c3dfa32d4 100644
 --- a/xbmc/guilib/TextureGLES.h
@@ -65,3 +85,6 @@ index 9f6c3c19cd..ebc99e0876 100644
    PFNEGLSETDAMAGEREGIONKHRPROC m_eglSetDamageRegionKHR{nullptr};
    bool m_partialUpdateSupport{false};
    bool m_bufferAgeSupport{false};
+-- 
+2.45.2.windows.1
+
