@@ -18,8 +18,11 @@ SVNDIR = "svn/${PN}"
 SRC_URI = "svn://svn.dyndns.tv/svn/titan/;module=libeplayer3;protocol=http;user=buildbin;pswd=buildbin \
           "
 
-DEPENDS = "ffmpeg libbluray"
-RDEPENDS:${PN} = "ffmpeg libbluray"
+DEPENDS = "ffmpeg-ext zlib bzip2 libxml2 xz libbluray openssl librtmp libudfread"
+RDEPENDS:${PN} += "ffmpeg-ext-libs libxml2 zlib bzip2 liblzma libbluray openssl librtmp libudfread"
+
+#DEPENDS = "ffmpeg libbluray"
+#RDEPENDS:${PN} = "ffmpeg libbluray"
 
 inherit gitpkgv upx-compress
 
@@ -31,16 +34,24 @@ S = "${UNPACKDIR}/libeplayer3"
 CFLAGS:append = " -Wall -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE -DHAVE_FLV2MPEG4_CONVERTER"
 
 CFLAGS:append = " \
-	-I${S}/include \
-	-I${S}/external \
+    -I${S}/include \
+    -I${S}/external \
     -I${S}/external/flv2mpeg4 \
+    -I${STAGING_INCDIR} \
 	"
 	
 CFLAGS:append:arm = " -DARM -DMIPSEL"
 CFLAGS:append:mipsel = " -DMIPSEL"
 CFLAGS:append:sh4 = " -DSH4"
 
-LDFLAGS:prepend = " -lswscale -ldl -lpthread -lavformat -lavcodec -lavutil -lswresample "
+#LDFLAGS:prepend = " -lswscale -ldl -lpthread -lavformat -lavcodec -lavutil -lswresample "
+LDFLAGS:prepend = " -lavformat -lavcodec -lavutil -lswresample -lswscale -lxml2 -lz -lbz2 -llzma -lbluray -lssl -lcrypto -lrtmp -ludfread -ldl -lpthread -lm "
+
+LDFLAGS:append = " \
+    -L${STAGING_LIBDIR}/ffmpeg-ext \
+    -Wl,-rpath,/usr/lib/ffmpeg-ext \
+    -Wl,-rpath-link,${STAGING_LIBDIR}/ffmpeg-ext \
+"
 
 SOURCE_FILES:BIN = "main/exteplayer.c"
 
