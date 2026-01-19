@@ -27,12 +27,12 @@ DEPENDS = "titan \
     ${PYTHON_PN}-youtube-dl \
     ${PYTHON_PN}-yt-dlp \
     ${PYTHON_PN}-six-native \
-    libav \
     libshowiframe \
     libcddb \
     libtirpc \
     nmap \
     "
+#libav
 
 RDEPENDS:${PN} = "${PYTHON_PN}-ctypes"
 
