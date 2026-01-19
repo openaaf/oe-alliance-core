@@ -160,6 +160,7 @@ NORMAL_IMAGE = "\
     e2fsprogs-tune2fs \
 	exteplayer3 \
 	evtest \
+	ffmpeg \
 	gstplayer \
 	gstplayer2 \
 	hdparm \
