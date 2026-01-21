@@ -4,7 +4,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=0636e73ff0215e8d672dc4c32c317bb3"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/$PN}:"
 
-SRC_URI = "http://www.ibiblio.org/pub/Linux/system/network/misc/${BPN}-${PV}.tar.gz \
+SRC_URI = "https://www.ibiblio.org/pub/Linux/system/network/misc/${BPN}-${PV}.tar.gz \
             file://fix-headers-gcc14.patch"
 
 inherit autotools-brokensep
