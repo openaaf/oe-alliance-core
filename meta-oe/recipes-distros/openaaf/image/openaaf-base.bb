@@ -25,6 +25,7 @@ DEPENDS = " \
     ${PYTHON_PN}-future \
     ${PYTHON_PN}-pexpect \
     ${PYTHON_PN}-six \
+    ${PYTHON_PN}-flask \
     rtmpdump \
     zip \
     ${@bb.utils.contains("TUNE_FEATURES", "armv", "glibc-compat", "", d)} \
