@@ -101,6 +101,7 @@ RDEPENDS:${PN} = "\
 	libdvdcss \
 	module-init-tools-depmod \
 	modutils-loadscript \
+	ntp-utils \
 	ofgwrite \
     openssh-sftp-server \
 	openssl \
