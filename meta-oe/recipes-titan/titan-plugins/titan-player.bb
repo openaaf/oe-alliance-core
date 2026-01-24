@@ -6,6 +6,7 @@ require conf/license/license-gplv2.inc
 DEPENDS = "\
     titan-plugin-player-foldericons \
     titan-plugin-player-codecpack \
+    titan-plugin-player-vavoo \
 "
 
 PR = "r0"
