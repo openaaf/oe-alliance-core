@@ -12,6 +12,7 @@ inherit packagegroup
 DEPENDS = "\
 	titan-gmediarender \
 	titan-netsurf \
+	titan-xupnpd \
    	titan-plugins \
    	titan-skins \
     titan-screensaver \

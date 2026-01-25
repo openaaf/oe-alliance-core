@@ -21,7 +21,7 @@ SRC_URI = "git://github.com/clark15b/xupnpd.git;protocol=https;branch=master \
         file://liblua.makefile.patch \
         file://xupnpd.patch"
 
-S = "${UNPACKDIR}/git/src"
+S = "${UNPACKDIR}/titan-xupnpd-${PV}/src"
 
 SRC     = "main.cpp soap.cpp mem.cpp mcast.cpp luaxlib.cpp luaxcore.cpp luajson.cpp luajson_parser.cpp"
 LUAMYCFLAGS = "-DLUA_USE_LINUX"
@@ -36,7 +36,8 @@ do_compile() {
 #	cd ${UNPACKDIR}/git/src/${LUA}
 #    make linux clean
 
-	cd ${UNPACKDIR}/git/src
+#	cd ${UNPACKDIR}/git/src
+	cd ${S}
 
 #	make linux -C ${LUA}
 	${LIBEXEC} make linux -C ${LUA}
