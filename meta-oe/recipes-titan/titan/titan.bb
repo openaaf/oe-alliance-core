@@ -167,6 +167,7 @@ CFLAGS:append:mipsel = " -DMIPSEL"
 CFLAGS:append:mipsel:dm7020hd = " -DDREAMBOX"
 CFLAGS:append:mipsel:dm520 = " -DDREAMBOX -DCONFIG_ION"
 CFLAGS:append:mipsel:dm525 = " -DDREAMBOX -DCONFIG_ION"
+CFLAGS:append:mipsel:atemio5x00 = " -Doff64_t=__off64_t -D_LARGEFILE64_SOURCE -D_GNU_SOURCE"
 
 CFLAGS:append:sh4 = " -DSSLNEW -DOEBUILD -DEXTGST -DEPLAYER4 -DEXTEPLAYER3 -DEPLAYER3 -DSH4 -DSH4NEW -DCAMSUPP -Os -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration"
 CFLAGS:append:mipsel = " -DSSLNEW -DOEBUILD -DEXTGST -DEPLAYER4 -DEXTEPLAYER3 -DEPLAYER3 -DCAMSUPP -Os -mhard-float -export-dynamic -Wall -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-unused-variable -Wno-format-overflow -Wno-format-truncation -Wno-nonnull -Wno-restrict"
