@@ -11,7 +11,7 @@ DEPENDS = " \
     titan-libdpf \
 	"
 
-inherit gitpkgv
+inherit autotools pkgconfig gitpkgv
 
 SRCREV = "${AUTOREV}"
 PV = "${IMAGE_VERSION}+git"
