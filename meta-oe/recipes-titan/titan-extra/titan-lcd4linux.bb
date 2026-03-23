@@ -29,6 +29,8 @@ CFLAGS:append = " -Wno-incompatible-pointer-types -std=gnu17"
 do_compile() {
 	cd ${S}
 
+	./bootstrap
+
 #	libtoolize --force
 #	aclocal -I ${STAGING_DIR_TARGET}/usr/share/aclocal
 #	autoconf
