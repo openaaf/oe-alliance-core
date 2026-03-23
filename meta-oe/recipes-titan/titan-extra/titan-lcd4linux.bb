@@ -29,10 +29,10 @@ CFLAGS:append = " -Wno-incompatible-pointer-types -std=gnu17"
 do_compile() {
 	cd ${S}
 
-	libtoolize --force
-	aclocal -I ${STAGING_DIR_TARGET}/usr/share/aclocal
-	autoconf
-	automake --foreign --add-missing
+#	libtoolize --force
+#	aclocal -I ${STAGING_DIR_TARGET}/usr/share/aclocal
+#	autoconf
+#	automake --foreign --add-missing
 
 	#LCD4LINUX_EXTRA_DRIVER = VUPLUS4K
 	#./configure --host=${HOST_SYS} --build=${BUILD_SYS} --with-drivers='DPF,SamsungSPF,PNG,$(LCD4LINUX_EXTRA_DRIVER)' --with-plugins='all,!apm,!asterisk,!dbus,!dvb,!gps,!hddtemp,!huawei,!imon,!isdn,!kvv,!mpd,!mpris_dbus,!mysql,!pop3,!ppp,!python,!qnaplog,!raspi,!sample,!seti,!w1retap,!wireless,!xmms' --without-ncurses
