@@ -25,5 +25,5 @@ DEPENDS = "\
     titan-player \
     titan-keymaps \
     titan-emus \
-    titan-lcdlinux \
+    titan-lcd4linux \
     "
