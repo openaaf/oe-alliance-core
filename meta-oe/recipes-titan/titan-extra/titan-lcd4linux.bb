@@ -12,7 +12,7 @@ DEPENDS = " \
  	ncurses \
 	sqlite3 \
 	\
-	libgd  \
+	gd  \
 	\
 	libusb-compat \
     libusb \
