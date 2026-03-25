@@ -25,7 +25,7 @@ SRCREV = "${AUTOREV}"
 PV = "${IMAGE_VERSION}+git"
 PKGV = "${IMAGE_VERSION}+git${GITPKGV}"
 
-SRC_URI = "git://github.com/TangoCash/lcd4linux.git;protocol=https;branch=master"
+SRC_URI = "git://github.com/MaxWiesel/lcd4linux-max;protocol=https;branch=master"
 SRC_URI += "file://lcd4linux"
 SRC_URI += "file://lcd4linux.conf"
 
@@ -58,9 +58,9 @@ do_install() {
 	install -d ${D}/usr/bin ${D}/etc/init.d
 	cp ${S}/lcd4linux ${D}/usr/bin/
     install -d ${D}${sysconfdir}
-    install -m 0755 ${UNPACKDIR}/lcd4linux       ${D}${sysconfdir}
+    install -m 0755 ${UNPACKDIR}/lcd4linux.conf       ${D}${sysconfdir}
     install -d ${D}${sysconfdir}/init.d
-    install -m 0755 ${UNPACKDIR}/lcd4linux.conf       ${D}${sysconfdir}/init.d
+    install -m 0755 ${UNPACKDIR}/lcd4linux       ${D}${sysconfdir}/init.d
 }
 
 FILES:${PN} += "${sysconfdir}/lcd4linux.conf ${sysconfdir}/etc/init.d/lcd4linux"
