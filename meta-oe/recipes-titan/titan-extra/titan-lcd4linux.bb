@@ -12,6 +12,8 @@ DEPENDS = " \
  	ncurses \
 	sqlite3 \
 	\
+	libgd  \
+	\
 	libusb-compat \
     libusb \
     titan-libdpf \
