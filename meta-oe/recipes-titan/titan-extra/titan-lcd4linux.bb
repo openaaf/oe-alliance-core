@@ -27,7 +27,7 @@ SRCREV = "${AUTOREV}"
 PV = "${IMAGE_VERSION}+git"
 PKGV = "${IMAGE_VERSION}+git${GITPKGV}"
 
-SRC_URI = "git://github.com/MaxWiesel/lcd4linux-max;protocol=https;branch=master"
+SRC_URI = "git://github.com/TangoCash/lcd4linux.git;protocol=https;branch=master"
 SRC_URI += "file://lcd4linux"
 SRC_URI += "file://lcd4linux.conf"
 
