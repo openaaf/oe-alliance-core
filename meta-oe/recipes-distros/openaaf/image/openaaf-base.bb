@@ -59,6 +59,7 @@ TITANPACKAGES += "\
 	titan-tuxtxt \
 	titan-portscan \
 	titan-bouquet2m3u \
+	titan-lcd4linux \
 	"
 
 TITANGUI += "\
