@@ -161,6 +161,7 @@ NORMAL_IMAGE = "\
 	djmount \
     e2fsprogs-e2fsck \
     e2fsprogs-tune2fs \
+	enigma2-plugin-extensions-e2iplayer-deps \
 	exteplayer3 \
 	evtest \
 	ffmpeg \
