@@ -100,6 +100,7 @@ RDEPENDS:${PN} = "\
 	kernel-module-keyspan \
 	libdreamdvd \
 	libdvdcss \
+	librsvg \
 	module-init-tools-depmod \
 	modutils-loadscript \
 	ntp-utils \
