@@ -7,13 +7,20 @@ SRC_URI:append = " \
            file://0002-Revert-souphttpsrc-Always-use-the-content-decoder.patch \
 "
 
-PACKAGECONFIG_SOUP = "soup2"
+PACKAGECONFIG:remove = "soup3"
 RDEPENDS:${PN}-soup += "libsoup-2.4"
 
+PACKAGECONFIG[soup2] = "-Dsoup=enabled,-Dsoup=disabled,libsoup-2.4"
+
 PACKAGECONFIG:append = " \
+    soup2 \
     ${@bb.utils.contains('MACHINE_FEATURES', 'novp9', '', 'vpx',d)} \
     wavpack gudev amrnb amrwb \
 "
 
-PV = "1.26.10"
-SRC_URI[sha256sum] = "7beacb5daba3c6751ebc1c85017d9b1d6de64e24798125932c73c8b1dbeb3bc9"
+PACKAGECONFIG_CONFARGS:remove = "-Dsoup=disabled"
+EXTRA_OEMESON:append = " -Dsoup=enabled"
+
+PV = "1.28.4"
+ 
+SRC_URI[sha256sum] = "c825ea737c59cea0e4a0c41da2388045ff5dd32d162220ac93a7a82ee4a04e61"

@@ -52,7 +52,7 @@ SMALLBOXWIZARD_NORMAL_IMAGE = "\
 NORMAL_IMAGE_DEPEND = "\
     ${E2DEFAULTSKIN} \
     enigma2-plugin-font-wqy-microhei \
-    ${@bb.utils.contains("MACHINE_FEATURES", "blindscan-dvbc", "virtual-blindscan-dvbc" , "", d)} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'blindscan-dvbc', d.getVar('VIRTUAL-RUNTIME_blindscan_dvbc') or '', '', d)} \
     ${@bb.utils.contains("DISTRO_NAME", "openatv", "ffmpeg" , "", d)} \
 "
 
@@ -242,6 +242,8 @@ PACKAGES += "${PN}-meta"
 PACKAGE_ARCH = "${MACHINEBUILD}"
 
 PACKAGES =+ "enigma2-plugin-font-wqy-microhei enigma2-fonts"
+PACKAGES_DYNAMIC += "^enigma2-plugin-.*"
+PACKAGES_DYNAMIC += "^enigma2-locale-.*"
 FILES:enigma2-plugin-font-wqy-microhei = "${datadir}/fonts/wqy-microhei.ttc ${datadir}/fonts/fallback.font"
 FILES:enigma2-fonts = "${datadir}/fonts"
 
@@ -258,6 +260,7 @@ EXTRA_OECONF = " \
     --enable-dependency-tracking \
     --with-gstversion=1.0 \
     --with-e2rev=${GITPKGV} \
+    --with-oarev=${@bb.process.run('git -C %s rev-parse --short HEAD' % d.getVar('OEA-META-OE-BASE'))[0].strip()} \
     ${@bb.utils.contains("MACHINE_FEATURES", "fcc", "--with-fcc" , "", d)} \
     ${@bb.utils.contains("MACHINE_FEATURES", "textlcd", "--with-textlcd" , "", d)} \
     ${@bb.utils.contains("MACHINE_FEATURES", "colorlcd", "--with-colorlcd" , "", d)} \

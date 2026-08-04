@@ -10,8 +10,6 @@ PR = "r73"
 
 inherit packagegroup
 
-DEPENDS = "enigma2-pliplugins"
-
 RRECOMMENDS:${PN} = " \
     enigma2-skindefault \
     socketdaemon \
@@ -33,7 +31,6 @@ NORMAL_IMAGE = "\
     enigma2-plugin-extensions-filecommander \
     enigma2-plugin-extensions-imdb \
     enigma2-plugin-extensions-openwebif-themes \
-    enigma2-plugin-extensions-openwebif-vxg \
     enigma2-plugin-extensions-volume-adjust \
     enigma2-plugin-extensions-atilehd \
     enigma2-plugin-systemplugins-videotune \

@@ -25,7 +25,7 @@ OPTIONAL_WIFIDRIVERS = "${@bb.utils.contains("MACHINE_FEATURES", "wifiusblegacy"
     enigma2-plugin-drivers-network-usb-r8712u \
     "
 
-DEPENDS = "enigma2 enigma2-plugins enigma2-oe-alliance-plugins network-usb-drivers-meta"
+DEPENDS = "enigma2 network-usb-drivers-meta"
 
 RDEPENDS:${PN} = "\
     ${@bb.utils.contains("MACHINE", "vuduo2", "enigma2-plugin-drivers-network-usb-rt3070", "", d)} \
@@ -66,6 +66,7 @@ RDEPENDS:${PN} = "\
     ${@bb.utils.contains("MACHINE", "h9", "enigma2-plugin-drivers-network-usb-rtl8192eu enigma2-plugin-drivers-network-usb-mt7601u enigma2-plugin-drivers-network-usb-rtl8192fu", "", d)} \
     ${@bb.utils.contains("MACHINE", "h9se", "enigma2-plugin-drivers-network-usb-rtl8192eu enigma2-plugin-drivers-network-usb-mt7601u enigma2-plugin-drivers-network-usb-rtl8192fu", "", d)} \
     ${@bb.utils.contains("MACHINE", "h8", "enigma2-plugin-drivers-network-usb-rtl8192eu enigma2-plugin-drivers-network-usb-mt7601u enigma2-plugin-drivers-network-usb-rtl8192fu", "", d)} \
+    ${@bb.utils.contains("MACHINE", "h8se", "enigma2-plugin-drivers-network-usb-rtl8192eu enigma2-plugin-drivers-network-usb-mt7601u enigma2-plugin-drivers-network-usb-rtl8192fu", "", d)} \
     ${@bb.utils.contains("MACHINE", "hzero", "enigma2-plugin-drivers-network-usb-rtl8192eu enigma2-plugin-drivers-network-usb-mt7601u enigma2-plugin-drivers-network-usb-rtl8192fu", "", d)} \
     ${@bb.utils.contains("MACHINE", "h9combo", "enigma2-plugin-drivers-network-usb-rtl8192eu enigma2-plugin-drivers-network-usb-mt7601u enigma2-plugin-drivers-network-usb-rtl8192fu", "", d)} \
     ${@bb.utils.contains("MACHINE", "h9combose", "enigma2-plugin-drivers-network-usb-rtl8192eu enigma2-plugin-drivers-network-usb-mt7601u enigma2-plugin-drivers-network-usb-rtl8192fu", "", d)} \

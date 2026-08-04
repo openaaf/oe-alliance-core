@@ -5,11 +5,11 @@ LICENSE = "Proprietary"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=84dcc94da3adb52b53ae4fa38fe49e5d"
 require conf/python/python3-compileall.inc
 
-inherit autotools-brokensep gettext gitpkgv python3targetconfig python3native
+inherit autotools-brokensep gettext gittag python3targetconfig python3native
 
 SRCREV = "${AUTOREV}"
-PV = "3.4+git"
-PKGV = "3.4+git${GITPKGV}"
+PV = "git"
+PKGV = "${GITPKGVTAG}"
 PR = "r0"
 
 SRC_URI = "git://github.com/oe-alliance/AutoBouquetsMaker.git;protocol=https;branch=master"
@@ -42,4 +42,12 @@ if [ -f /usr/lib/enigma2/python/Plugins/SystemPlugins/AutoBouquetsMaker/provider
 else
 	echo "No cache file found, continuing."
 fi
+}
+
+pkg_prerm:${PN}() {
+#!/bin/sh
+echo " Deleting ABM's providers.cache file because it will not be removed when uninstalling the plugin. It was not created by opkg."
+
+rm -f /usr/lib/enigma2/python/Plugins/SystemPlugins/AutoBouquetsMaker/providers/providers.cache
+
 }
