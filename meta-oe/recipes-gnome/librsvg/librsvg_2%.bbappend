@@ -9,3 +9,8 @@ do_configure:prepend() {
         -e '/^\[package.metadata.system-deps.cairo-gobject.v1_18\]/{n;s/.*/version = "1.17"/}' \
         ${UNPACKDIR}/cargo_home/bitbake/cairo-sys-rs-0.21.1/Cargo.toml
 }
+
+do_install:append:openaaf() {
+    mkdir -p ${D}/usr/bin
+    install -m 644 ${S}/../../build/rsvg_convert/rsvg-convert ${D}/usr/bin/rsvg-convert
+}
