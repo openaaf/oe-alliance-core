@@ -14,3 +14,5 @@ do_install:append:openaaf() {
     mkdir -p ${D}/usr/bin
     install -m 644 ${S}/../../build/rsvg_convert/rsvg-convert ${D}/usr/bin/rsvg-convert
 }
+
+FILES:${PN} += "/usr/bin"
