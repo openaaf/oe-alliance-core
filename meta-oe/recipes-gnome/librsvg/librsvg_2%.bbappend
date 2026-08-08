@@ -10,9 +10,9 @@ do_configure:prepend() {
         ${UNPACKDIR}/cargo_home/bitbake/cairo-sys-rs-0.21.1/Cargo.toml
 }
 
+FILES:${PN} = "/usr/bin"
+
 do_install:append:openaaf() {
     mkdir -p ${D}/usr/bin
     install -m 644 ${S}/../../build/rsvg_convert/rsvg-convert ${D}/usr/bin/rsvg-convert
 }
-
-FILES:${PN} += "/usr/bin"
