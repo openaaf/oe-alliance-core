@@ -12,7 +12,7 @@ do_configure:prepend() {
 
 do_install:append:openaaf() {
     mkdir -p ${D}/bin
-    install -m 644 ${S}/../../build/rsvg_convert/rsvg-convert ${D}/bin/rsvg-convert
+    install -m 755 ${S}/../../build/rsvg_convert/rsvg-convert ${D}/bin/rsvg-convert
 }
 
 FILES:${PN}:append:openaaf = " /bin/rsvg-convert"
