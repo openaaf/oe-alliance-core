@@ -100,7 +100,6 @@ RDEPENDS:${PN} = "\
 	kernel-module-keyspan \
 	libdreamdvd \
 	libdvdcss \
-	librsvg \
 	module-init-tools-depmod \
 	modutils-loadscript \
 	ntp-utils \
@@ -165,7 +164,6 @@ NORMAL_IMAGE = "\
 	enigma2-plugin-extensions-e2iplayer-deps \
 	exteplayer3 \
 	evtest \
-	ffmpeg \
 	ffmpeg-ext \
 	gstplayer \
 	gstplayer2 \
