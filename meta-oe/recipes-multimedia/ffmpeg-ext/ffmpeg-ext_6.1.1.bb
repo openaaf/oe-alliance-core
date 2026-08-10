@@ -176,3 +176,15 @@ FILES:${PN}-dev += " \
 "
 
 FILES:${PN} = ""
+
+PACKAGECONFIG:append:openaaf = " librsvg"
+PACKAGECONFIG[librsvg] = "--enable-librsvg,--disable-librsvg,librsvg"
+
+EXTRA_OECONF:append:openaaf = " --enable-ffmpeg"
+EXTRA_OECONF:append:openaaf = " --enable-librsvg"
+
+FILES:${PN}:append:openaaf = " /usr/bin/ffmpeg-ext /usr/share/ffmpeg-ext"
+
+do_install:append:openaaf() {
+	mv -f ${D}/usr/bin/ffmpeg ${D}/usr/bin/ffmpeg-ext
+}

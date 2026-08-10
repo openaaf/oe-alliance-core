@@ -166,6 +166,7 @@ NORMAL_IMAGE = "\
 	exteplayer3 \
 	evtest \
 	ffmpeg \
+	ffmpeg-ext \
 	gstplayer \
 	gstplayer2 \
 	hdparm \
