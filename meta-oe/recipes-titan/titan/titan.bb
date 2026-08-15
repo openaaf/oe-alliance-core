@@ -177,7 +177,7 @@ CFLAGS:append = " -Wno-format -Wno-address -Wno-use-after-free -Wno-deprecated-d
 
 LDFLAGS:prepend = "${@bb.utils.contains('GST_VERSION', '1.0', ' -lglib-2.0 -lgobject-2.0 -lxml2 -lgstreamer-1.0 ', '', d)}"
 
-LDFLAGS:prepend = " -leplayer3 -lpthread -ldl -lm -lz -lpng -lfreetype -ldreamdvd -ljpeg -lssl -lcrypto -lcurl -lipkg "
+LDFLAGS:prepend = " -leplayer3 -lpthread -ldl -lm -lz -lpng -lfreetype -ldreamdvd -ljpeg -lssl -lcrypto -lcurl -lipkg -rdynamic"
 LDFLAGS:prepend:sh4 = " -lmmeimage "
 
 SOURCE_FILES = "titan.c"
