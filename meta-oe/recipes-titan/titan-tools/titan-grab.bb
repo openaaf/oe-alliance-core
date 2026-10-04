@@ -10,8 +10,9 @@ inherit gitpkgv
 TARGET_CC_ARCH:remove = "-D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64"
 INSANE_SKIP = "32bit-time"
 
-PV = "2.0+git"
-PKGV = "2.0+git${GITPKGV}"
+SRCREV = "${AUTOREV}"
+PV = "${IMAGE_VERSION}+git"
+PKGV = "${IMAGE_VERSION}+git${GITPKGV}"
 
 SRC_URI = "git://github.com/openaaf/aio-grab.git;protocol=https;branch=master"
 
