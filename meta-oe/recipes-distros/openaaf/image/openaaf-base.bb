@@ -60,6 +60,7 @@ TITANPACKAGES += "\
 	titan-portscan \
 	titan-bouquet2m3u \
 	titan-lcd4linux \
+	titan-grab \
 	"
 
 TITANGUI += "\
@@ -79,7 +80,6 @@ TITANGUI += "\
 	"
 
 RDEPENDS:${PN} = "\
-	aio-grab \
 	alsa-conf \
 	alsa-utils \
 	autofs \
