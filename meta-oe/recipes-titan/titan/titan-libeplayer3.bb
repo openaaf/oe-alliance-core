@@ -18,11 +18,13 @@ SVNDIR = "svn/${PN}"
 SRC_URI = "svn://svn.dyndns.tv/svn/titan/;module=libeplayer3;protocol=http;user=buildbin;pswd=buildbin \
           "
 
-DEPENDS = "ffmpeg-ext zlib bzip2 libxml2 xz libbluray openssl librtmp libudfread"
-RDEPENDS:${PN} += "ffmpeg-ext-libs libxml2 zlib bzip2 liblzma libbluray openssl librtmp libudfread"
+#DEPENDS = "ffmpeg-ext zlib bzip2 libxml2 xz libbluray openssl librtmp libudfread"
+#RDEPENDS:${PN} += "ffmpeg-ext-libs libxml2 zlib bzip2 liblzma libbluray openssl librtmp libudfread"
 
 #DEPENDS = "ffmpeg libbluray"
 #RDEPENDS:${PN} = "ffmpeg libbluray"
+DEPENDS = "ffmpeg libbluray libxml2 zlib bzip2 libbluray openssl librtmp libudfread"
+RDEPENDS:${PN} = "ffmpeg libbluray libxml2 zlib bzip2 liblzma libbluray openssl librtmp libudfread"
 
 inherit gitpkgv upx-compress
 
